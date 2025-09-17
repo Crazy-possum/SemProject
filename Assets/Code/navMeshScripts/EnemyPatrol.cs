@@ -7,53 +7,47 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private Transform[] _points;
     [SerializeField] private NavMeshAgent _enemyAgent;
     private bool _followPlayer;
-    void Start()
-    {
-        StartCoroutine(ChangePoint(0));
-    }
+    /* void Start()
+     {
+         StartCoroutine(ChangePoint(0));
+     }
 
-    private IEnumerator ChangePoint(int point)
+     private IEnumerator ChangePoint(int point)
+     {
+         for (int i = point; i < _points.Length; i++)
+         {
+             _enemyAgent.SetDestination(_points[i].localPosition);
+             Debug.Log(i);
+             while (_enemyAgent.remainingDistance <  0.1f)
+             {
+                 yield return new WaitForSeconds(0.2f);
+                 Debug.Log(i + " wait");
+             }
+             //yield return new WaitForSeconds(0.5f);
+         }
+         StartCoroutine(ChangePoint(0));
+     }*/
+
+   
+  
+    private int _currentWayPoint;
+    private void Awake()
     {
-        for (int i = point; i < _points.Length; i++)
+        _currentWayPoint = 0;
+        _enemyAgent.SetDestination(_points[_currentWayPoint].position);
+    }
+    private
+    void Update()
+    {
+        if (_enemyAgent.remainingDistance < .1f)
         {
-            _enemyAgent.SetDestination(_points[i].position);
-            while (_enemyAgent.transform.position.x != _points[i].position.x &&
-                _enemyAgent.transform.position.z != _points[i].position.z)
-            {
-                yield return new WaitForSeconds(0.2f);
-            }
-            yield return new WaitForSeconds(1f);
+            if (_currentWayPoint < _points.Length - 1)
+                _currentWayPoint++;
+            else
+                _currentWayPoint = 0;
         }
-        StartCoroutine(ChangePoint(0));
+        _enemyAgent.SetDestination(_points[_currentWayPoint].position);
+
     }
 
-    public void SetPlayerDestonation(Vector3 player)
-    {
-        _enemyAgent.SetDestination(player);
-        _followPlayer = true;
-    }
-
-    public void SetPointDestonation()
-    {
-        if (_followPlayer)
-        {
-            StartCoroutine(ChangePoint(FindClosePoint()));
-            _followPlayer = false;
-        }
-    }
-
-    private int FindClosePoint()
-    {
-        Vector3 previousPointPosition = _points[0].position;
-        int closePointIndex = 0;
-        for (int i = 0; i < _points.Length; i++)
-        {
-            if (Vector3.Distance(_enemyAgent.transform.position, previousPointPosition) > Vector3.Distance(_enemyAgent.transform.position, _points[i].position))
-            {
-                previousPointPosition = _points[i].position;
-                closePointIndex = i;
-            }
-        }
-        return closePointIndex;
-    }
 }
