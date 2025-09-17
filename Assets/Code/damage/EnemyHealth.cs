@@ -2,24 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
-
-    
+public class EnemyHealth : MonoBehaviour  
 {
     [SerializeField] private float _maxHealth = 10;
-    private float _currentHealth;
 
-        
-        
-    // Start is called before the first frame update
+    public float CurrentHealth;
+
+    private healthBar _healthBar;
+
     void Start()
     {
-        _currentHealth = _maxHealth;
+        CurrentHealth = _maxHealth;
+        _healthBar = GetComponentInChildren<healthBar>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        _healthBar.UpdateHealth(CurrentHealth, _maxHealth);
+
+        if (CurrentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
