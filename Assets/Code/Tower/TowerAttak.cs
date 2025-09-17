@@ -15,7 +15,7 @@ public class TowerAttak : MonoBehaviour
 
     private void Start()
     {
-        _attakTimer.MaxTimerValue = 2;
+        _attakTimer.MaxTimerValue = 1;
     }
 
     private void Update()
@@ -29,12 +29,14 @@ public class TowerAttak : MonoBehaviour
             if (!_attakTimer.StartTimer)
             {
                 _attakTimer.StartCountdown();
+            }
 
-                if (_attakTimer.ReachingTimerMaxValue == true)
-                {
-                    Attak();
-                    _attakTimer.StopCountdown();
-                }
+            if (_attakTimer.ReachingTimerMaxValue == true)
+            {
+                Debug.Log(1111);
+                Attak();
+                _attakTimer.TimerCurrentTime = 0;
+                _attakTimer.StopCountdown();
             }
         }
     }
@@ -42,7 +44,7 @@ public class TowerAttak : MonoBehaviour
     public void Attak()
     {
         _currentEnemyHealth.CurrentHealth = _currentEnemyHealth.CurrentHealth - 2;
-        Debug.Log(_currentEnemyHealth);
+        Debug.Log(_currentEnemyHealth.CurrentHealth);
 
         //Vector3 position = _bulletSpawner.position;
         //GameObject localBullet = GameObject.Instantiate(_bullet, position, Quaternion.identity, _bulletSpawner);
