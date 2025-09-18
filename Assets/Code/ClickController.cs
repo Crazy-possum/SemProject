@@ -12,7 +12,6 @@ public class ClickController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(1);
             if (ObjectUnderMouse.TryGetComponent(out TowerBehavior towerBehavior))
             {
                 _towerBuilder.BuildPointObject = ObjectUnderMouse;

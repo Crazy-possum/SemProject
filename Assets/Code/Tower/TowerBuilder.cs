@@ -28,7 +28,6 @@ public class TowerBuilder : MonoBehaviour
 
         Destroy(BuildPointObject);
         TakeMoney();
-
     }
 
     private void TakeMoney()
