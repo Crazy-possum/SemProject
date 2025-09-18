@@ -603,6 +603,7 @@ MonoBehaviour:
   - {fileID: 5648003054501644383, guid: ba96c31d9bf67014eac0b3da34ec979e, type: 3}
   - {fileID: 5648003054501644383, guid: 810378bb92639cc4d913e87bdeeda7a9, type: 3}
   - {fileID: 5648003054501644383, guid: 0ac0f61b4d4b43f4184bc0d1c07f0fb9, type: 3}
+  - {fileID: 2645635149183288804, guid: 42d6f7f0a73396a4d9ead7018b0c832c, type: 3}
   _enemyAgent: {fileID: 5266349592053031842}
 --- !u!195 &5266349592053031842
 NavMeshAgent:
