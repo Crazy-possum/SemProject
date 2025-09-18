@@ -557,6 +557,7 @@ GameObject:
   - component: {fileID: 1880873695436029967}
   - component: {fileID: 1056980064518057618}
   - component: {fileID: 1000140957336893062}
+  - component: {fileID: 878310091976100002}
   m_Layer: 0
   m_Name: _emptyEnemy
   m_TagString: Enemy
@@ -644,10 +645,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.67
+  m_Radius: 0.52
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.92, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &1056980064518057618
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -690,6 +691,29 @@ MonoBehaviour:
   _healthSlider: {fileID: 8389875973304560059}
   _maxHealth: 10
   CurrentHealth: 0
+--- !u!136 &878310091976100002
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111786390779411511}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.55
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4386652340302182224
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +776,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e8bed5b17c16e8e4a8aa723203b22c30, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

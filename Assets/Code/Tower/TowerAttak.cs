@@ -11,8 +11,6 @@ public class TowerAttak : MonoBehaviour
 
     public GameObject CurrentTarget;
 
-    private EnemyHealth _currentEnemyHealth;
-
     private void Start()
     {
         _attakTimer.MaxTimerValue = 1;
@@ -22,10 +20,6 @@ public class TowerAttak : MonoBehaviour
     {
         if (CurrentTarget != null)
         {
-            Debug.Log(CurrentTarget);
-            Debug.Log(_attakTimer.MaxTimerValue);
-            _currentEnemyHealth = CurrentTarget.GetComponent<EnemyHealth>();
-
             if (!_attakTimer.StartTimer)
             {
                 _attakTimer.StartCountdown();
@@ -33,8 +27,8 @@ public class TowerAttak : MonoBehaviour
 
             if (_attakTimer.ReachingTimerMaxValue == true)
             {
-                Debug.Log(1111);
                 Attak();
+                TowerRotate();
                 _attakTimer.TimerCurrentTime = 0;
                 _attakTimer.StopCountdown();
             }
@@ -43,13 +37,17 @@ public class TowerAttak : MonoBehaviour
 
     public void Attak()
     {
-        _currentEnemyHealth.CurrentHealth = _currentEnemyHealth.CurrentHealth - 2;
-        Debug.Log(_currentEnemyHealth.CurrentHealth);
+        Vector3 position = _bulletSpawner.position;
+        GameObject localBullet = GameObject.Instantiate(_bullet, position, Quaternion.identity, _bulletSpawner);
 
-        //Vector3 position = _bulletSpawner.position;
-        //GameObject localBullet = GameObject.Instantiate(_bullet, position, Quaternion.identity, _bulletSpawner);
+        localBullet.GetComponent<BulletBehavior>().BulletsCurrentTarget = CurrentTarget;
+    }
 
-        //localBullet.GetComponent<BulletBehavior>().BulletsCurrentTarget = CurrentTarget;
+    private void TowerRotate()
+    {
+       // Ray ray = new Ray(transform.position, transform.forward);
+
+            gameObject.transform.LookAt(CurrentTarget.transform);
     }
 
 }

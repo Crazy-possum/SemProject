@@ -4,17 +4,47 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
+    [SerializeField] private float _speed = 1f;
+    [SerializeField] private float _damage = 2;
+
     public GameObject BulletsCurrentTarget;
 
+    private EnemyHealth _currentEnemyHealth;
+
     private Rigidbody _bulletRB;
+    private Vector3 _movement;
 
     private void Start()
     {
+        _currentEnemyHealth = BulletsCurrentTarget.GetComponent<EnemyHealth>();
         _bulletRB = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        float deltaX = BulletsCurrentTarget.transform.position.x - gameObject.transform.position.x;
+        float deltaZ = BulletsCurrentTarget.transform.position.z - gameObject.transform.position.z;
+
+        Vector3 move = new Vector3(deltaX, 0, deltaZ);
+        move.Normalize();
+
+        _movement.Set(_speed * move.x, _speed * move.y, _speed * move.z);
     }
 
     private void FixedUpdate()
     {
-        
+        _bulletRB.velocity = _movement;
+    }
+
+    private void OnTriggerEnter (Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out EnemyPatrol enemy))
+        {
+            Debug.Log("damage" + _damage);
+            _currentEnemyHealth.CurrentHealth = _currentEnemyHealth.CurrentHealth - _damage;
+            Debug.Log(_currentEnemyHealth.CurrentHealth);
+
+            Destroy(gameObject);
+        }
     }
 }
