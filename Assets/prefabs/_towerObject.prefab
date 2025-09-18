@@ -52,7 +52,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3.5
+  m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &161741558618904443
 MonoBehaviour:
@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerAttak: {fileID: 1149599272347735001}
+  _targetsList: []
 --- !u!1 &2375045743494085731
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,4 +403,5 @@ MonoBehaviour:
   _attakTimer: {fileID: 5927911307616589837}
   _bullet: {fileID: 6493727303628258625, guid: 4ede4f1198493ee41b24716123f9f2d8, type: 3}
   _bulletSpawner: {fileID: 3327819595199404135}
+  _rotationSpeed: 2
   CurrentTarget: {fileID: 0}

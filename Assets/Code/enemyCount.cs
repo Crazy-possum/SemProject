@@ -1,27 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class enemyCount : MonoBehaviour
+public class EnemyCount : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private TMP_Text _enemyScore;
+
+    private int _maxScore = 5;
     private int _score = 0;
 
-    // Вызывается когда другой коллайдер входит в триггер
     private void OnTriggerEnter(Collider other)
     {
-        
-        // Проверяем тэг объекта
-        if (other.CompareTag("Enemy"))
+        if (other.TryGetComponent(out EnemyPatrol enemy))
         {
-            // Увеличиваем счет
             _score++;
+            _enemyScore.text = "Врагов прошло:" + _score / 2 + "/" + _maxScore;
 
-            // Выводим в консоль
+            Destroy(enemy.gameObject);
+
             Debug.Log("Счет: " + _score.ToString());
-
-            // Опционально: уничтожаем объект врага после столкновения
-            // Destroy(other.gameObject);
         }
     }
 }

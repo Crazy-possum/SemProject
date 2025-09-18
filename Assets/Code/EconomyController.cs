@@ -9,6 +9,7 @@ public class EconomyController : MonoBehaviour
 
     public int GeneralCurrency;
     public int CurrentCost;
+    public int CurrentIncome;
 
     private void Start()
     {
@@ -19,6 +20,12 @@ public class EconomyController : MonoBehaviour
     public void SpendCurrency()
     {
         GeneralCurrency -= CurrentCost;
+        _currencyText.text = GeneralCurrency.ToString();
+    }
+
+    public void GetCurrency()
+    {
+        GeneralCurrency = GeneralCurrency + CurrentIncome;
         _currencyText.text = GeneralCurrency.ToString();
     }
 }

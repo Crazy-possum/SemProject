@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
-    [SerializeField] private float _speed = 1f;
+    [SerializeField] private float _speed = 100f;
     [SerializeField] private float _damage = 2;
 
     public GameObject BulletsCurrentTarget;
 
+    private EconomyController _economyController;
     private EnemyHealth _currentEnemyHealth;
 
     private Rigidbody _bulletRB;
     private Vector3 _movement;
+
+    public EconomyController EconomyController { get => _economyController; set => _economyController = value; }
 
     private void Start()
     {
@@ -43,6 +46,9 @@ public class BulletBehavior : MonoBehaviour
             Debug.Log("damage" + _damage);
             _currentEnemyHealth.CurrentHealth = _currentEnemyHealth.CurrentHealth - _damage;
             Debug.Log(_currentEnemyHealth.CurrentHealth);
+
+            _economyController.CurrentIncome = 1;
+            _economyController.GetCurrency();
 
             Destroy(gameObject);
         }

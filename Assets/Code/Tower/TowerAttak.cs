@@ -11,6 +11,7 @@ public class TowerAttak : MonoBehaviour
     [SerializeField] private Transform _bulletSpawner;
     [SerializeField] private float _rotationSpeed = 2;
 
+    public EconomyController EconomyController;
     public GameObject CurrentTarget;
 
     private void Start()

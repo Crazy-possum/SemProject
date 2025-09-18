@@ -12,7 +12,7 @@ public class TowerTriggerZone : MonoBehaviour
 
     private void Start()
     {
-        _currentTarget = null;
+        //_currentTarget = null;
     }
 
     private void Update()
