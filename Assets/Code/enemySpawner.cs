@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab; // Assign your enemy prefab in the Inspector
-    [SerializeField] private Transform[] spawnPoints; // Assign your spawn point GameObjects in the Inspector
+    [SerializeField] private GameObject _enemyPrefab; // Assign your enemy prefab in the Inspector
+    [SerializeField] private Transform[] _spawnPointsList; // Assign your spawn point GameObjects in the Inspector
     [SerializeField] private float spawnInterval = 3f; // Time between spawns
 
     void Start()
@@ -19,14 +19,9 @@ public class enemySpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnInterval);
 
-            if (spawnPoints.Length > 0)
+            if (_spawnPointsList.Length > 0)
             {
-                // Choose a random spawn point
-                int randomIndex = Random.Range(0, spawnPoints.Length);
-                Transform randomSpawnPoint = spawnPoints[randomIndex];
-
-                // Instantiate the enemy at the chosen spawn point's position and rotation
-                Instantiate(enemyPrefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
+                Instantiate(_enemyPrefab, _spawnPointsList[0].position, _spawnPointsList[0].rotation);
             }
             else
             {

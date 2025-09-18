@@ -9,13 +9,10 @@ public class BulletBehavior : MonoBehaviour
 
     public GameObject BulletsCurrentTarget;
 
-    private EconomyController _economyController;
     private EnemyHealth _currentEnemyHealth;
 
     private Rigidbody _bulletRB;
     private Vector3 _movement;
-
-    public EconomyController EconomyController { get => _economyController; set => _economyController = value; }
 
     private void Start()
     {
@@ -47,8 +44,8 @@ public class BulletBehavior : MonoBehaviour
             _currentEnemyHealth.CurrentHealth = _currentEnemyHealth.CurrentHealth - _damage;
             Debug.Log(_currentEnemyHealth.CurrentHealth);
 
-            _economyController.CurrentIncome = 1;
-            _economyController.GetCurrency();
+            //_economyController.CurrentIncome = 1;
+            //_economyController.GetCurrency();
 
             Destroy(gameObject);
         }
