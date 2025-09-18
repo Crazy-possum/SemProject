@@ -38,6 +38,11 @@ public class TowerTriggerZone : MonoBehaviour
                     {
                         _targetsList.RemoveAt(i + 1);
                     }
+
+                    if (_targetsList[i] == null)
+                    {
+                        _targetsList.RemoveAt(i);
+                    }
                 }
             }
         }
@@ -51,5 +56,5 @@ public class TowerTriggerZone : MonoBehaviour
             _currentTarget = null;
             _towerAttak.CurrentTarget = _currentTarget;
         }
-    }
+    }   
 }

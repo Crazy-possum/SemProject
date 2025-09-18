@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class TowerAttak : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class TowerAttak : MonoBehaviour
 
     [SerializeField] private GameObject _bullet;
     [SerializeField] private Transform _bulletSpawner;
+    [SerializeField] private float _rotationSpeed = 2;
 
     public GameObject CurrentTarget;
 
@@ -33,6 +35,10 @@ public class TowerAttak : MonoBehaviour
                 _attakTimer.StopCountdown();
             }
         }
+
+        Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation, _rotationSpeed * Time.fixedDeltaTime);
     }
 
     public void Attak()
@@ -45,9 +51,8 @@ public class TowerAttak : MonoBehaviour
 
     private void TowerRotate()
     {
-       // Ray ray = new Ray(transform.position, transform.forward);
 
-            gameObject.transform.LookAt(CurrentTarget.transform);
+           // gameObject.transform.LookAt(CurrentTarget.transform);
     }
 
 }
