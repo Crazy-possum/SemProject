@@ -793,55 +793,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 632380252}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &670542800
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 670542801}
-  - component: {fileID: 670542802}
-  m_Layer: 0
-  m_Name: SpawnTimer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &670542801
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670542800}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1039642781}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &670542802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670542800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67ef449057ab73d41b81ae5ecf24c8eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TimerBaseTime: 0
-  TimerCurrentTime: 0
-  StartTimer: 0
-  ReachingTimerMaxValue: 0
-  MaxTimerValue: 0
 --- !u!1001 &792149684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -916,55 +867,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 792149684}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &831186103
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 831186104}
-  - component: {fileID: 831186105}
-  m_Layer: 0
-  m_Name: WaveTimer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &831186104
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831186103}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1039642781}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &831186105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 831186103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67ef449057ab73d41b81ae5ecf24c8eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TimerBaseTime: 0
-  TimerCurrentTime: 0
-  StartTimer: 0
-  ReachingTimerMaxValue: 0
-  MaxTimerValue: 0
 --- !u!1 &896674819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,39 +1029,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96a912f24f5fe434ab3815a251d05a30, type: 3}
---- !u!1 &1039642780
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1039642781}
-  m_Layer: 0
-  m_Name: Timer Keeper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1039642781
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039642780}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6609925, y: 0.80807143, z: 16.936672}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 831186104}
-  - {fileID: 670542801}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1051774176 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 215982156812208202, guid: a4c1f126e9c552f4d936ea4e2143e2e1,
@@ -1281,10 +1150,8 @@ MonoBehaviour:
   - {fileID: 2069101555}
   - {fileID: 517317944}
   - {fileID: 2028483353}
-  _waveTimer: {fileID: 831186105}
-  _spawnTimer: {fileID: 670542802}
-  _waveTimerValue: 3
-  _spawnTimerValue: 2
+  _waveTimerValue: 6
+  _spawnTimerValue: 1
 --- !u!1001 &1293279030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2392,4 +2259,3 @@ SceneRoots:
   - {fileID: 1009887675}
   - {fileID: 4643706314594176692}
   - {fileID: 426956113}
-  - {fileID: 1039642781}

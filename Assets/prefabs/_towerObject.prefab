@@ -68,55 +68,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _towerAttak: {fileID: 1149599272347735001}
   _targetsList: []
---- !u!1 &2375045743494085731
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 739136688747090372}
-  - component: {fileID: 5927911307616589837}
-  m_Layer: 0
-  m_Name: _timerKeeper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &739136688747090372
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2375045743494085731}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9154061628886403770}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5927911307616589837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2375045743494085731}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67ef449057ab73d41b81ae5ecf24c8eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TimerBaseTime: 0
-  TimerCurrentTime: 0
-  StartTimer: 0
-  ReachingTimerMaxValue: 0
-  MaxTimerValue: 0
 --- !u!1 &3877358077996934474
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +218,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3327819595199404135}
-  - {fileID: 739136688747090372}
   - {fileID: 2874511233823111884}
   - {fileID: 5156110117099744810}
   - {fileID: 1008696731603523957}
@@ -297,7 +247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d593c037e557a434c8f2a186bffc8bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attakTimer: {fileID: 5927911307616589837}
   _bullet: {fileID: 6493727303628258625, guid: 4ede4f1198493ee41b24716123f9f2d8, type: 3}
   _bulletSpawner: {fileID: 3327819595199404135}
   _rotationSpeed: 2

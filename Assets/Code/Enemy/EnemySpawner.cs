@@ -8,32 +8,34 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
     [SerializeField] private GameObject _enemiesGroup;
     [SerializeField] private Transform[] _enemyWayPintsList;
-    //[SerializeField] private Transform _enemySpawner;
-    [SerializeField] private Timer _waveTimer;
-    [SerializeField] private Timer _spawnTimer;
 
     [SerializeField] private int _waveTimerValue;
     [SerializeField] private int _spawnTimerValue;
+
+    private Timer _waveTimer;
+    private Timer _spawnTimer;
 
     private EnemyMovement _enemyMovement;
 
     private void Start()
     {
-        _waveTimer.MaxTimerValue = _waveTimerValue;
-        _spawnTimer.MaxTimerValue = _spawnTimerValue;
+        _waveTimer = new Timer(_waveTimerValue);
+        _spawnTimer = new Timer(_spawnTimerValue);
 
         WaveBegins();
     }
 
     private void Update()
     {
+        _waveTimer.Wait();
+        _spawnTimer.Wait();
+
         if (!_waveTimer.ReachingTimerMaxValue)
         {
             if (_spawnTimer.ReachingTimerMaxValue)
             {
                 SpawnEnemy();
 
-                _spawnTimer.TimerCurrentTime = 0;
                 _spawnTimer.StopCountdown();
                 _spawnTimer.StartCountdown();
             }

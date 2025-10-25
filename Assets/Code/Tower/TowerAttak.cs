@@ -5,22 +5,24 @@ using static UnityEngine.GraphicsBuffer;
 
 public class TowerAttak : MonoBehaviour
 {
-    [SerializeField] private Timer _attakTimer;
-
     [SerializeField] private GameObject _bullet;
     [SerializeField] private Transform _bulletSpawner;
     [SerializeField] private float _rotationSpeed = 2;
+
+    private Timer _attakTimer;
 
     //public EconomyController EconomyController;
     public GameObject CurrentTarget;
 
     private void Start()
     {
-        _attakTimer.MaxTimerValue = 1;
+        _attakTimer = new Timer(1);
     }
 
     private void Update()
     {
+        _attakTimer.Wait();
+
         if (CurrentTarget != null)
         {
             if (!_attakTimer.StartTimer)
@@ -32,7 +34,6 @@ public class TowerAttak : MonoBehaviour
             {
                 Attak();
                 TowerRotate();
-                _attakTimer.TimerCurrentTime = 0;
                 _attakTimer.StopCountdown();
             }
         }

@@ -1,38 +1,46 @@
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+public class Timer
 {
-    public int TimerBaseTime = 0;
-    public float TimerCurrentTime;
-    public bool StartTimer = false;
+    private int _timerBaseTime = 0;
+    private float _timerCurrentTime;
+    private bool _startTimer = false;
 
-    public bool ReachingTimerMaxValue = false;
-    public float MaxTimerValue;
+    private bool _reachingTimerMaxValue = false;
+    private float _maxTimerValue;
+
+    public bool ReachingTimerMaxValue { get => _reachingTimerMaxValue; set => _reachingTimerMaxValue = value; }
+    public bool StartTimer { get => _startTimer; set => _startTimer = value; }
+
+    public Timer(float maxTimerValue) 
+    {
+        _maxTimerValue = maxTimerValue;
+    }
 
     public void StartCountdown()
     {
-        StartTimer = true;
+        _startTimer = true;
     }
     public void PauseCountdown()
     {
-        StartTimer = false;
+        _startTimer = false;
     }
     public void StopCountdown()
     {
-        StartTimer = false;
-        TimerCurrentTime = TimerBaseTime;
-        ReachingTimerMaxValue = false;
+        _startTimer = false;
+        _timerCurrentTime = _timerBaseTime;
+        _reachingTimerMaxValue = false;
     }
 
-    void Update()
+    public void Wait()
     {
-        if (StartTimer == true)
+        if (_startTimer == true)
         {
-            TimerCurrentTime += Time.deltaTime;
+            _timerCurrentTime += Time.deltaTime;
 
-            if (TimerCurrentTime > MaxTimerValue)
+            if (_timerCurrentTime > _maxTimerValue)
             {
-                ReachingTimerMaxValue = true;
+                _reachingTimerMaxValue = true;
             }
         }
     }
