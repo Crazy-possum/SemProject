@@ -5,21 +5,30 @@ using UnityEngine;
 
 public class EnemyCount : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _enemyScore;
+    [SerializeField] private TMP_Text _enemyScoreText;
 
     private int _maxScore = 5;
     private int _score = 0;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.TryGetComponent(out EnemyPatrol enemy))
-        {
-            _score++;
-            _enemyScore.text = "Врагов прошло:" + _score / 2 + "/" + _maxScore;
+        _enemyScoreText.text = "Врагов прошло:" + 0 + "/" + _maxScore;
+    }
 
-            Destroy(enemy.gameObject);
+    private void OnEnable()
+    {
+        EnemyMovement.EnemyEnter += EnemyEnterExit;
+    }
 
-            Debug.Log("Счет: " + _score.ToString());
-        }
+    private void OnDisable()
+    {
+        EnemyMovement.EnemyEnter -= EnemyEnterExit;
+    }
+
+    private void EnemyEnterExit()
+    {
+        _score++;
+        _enemyScoreText.text = "Врагов прошло:" + _score + "/" + _maxScore;
+
     }
 }

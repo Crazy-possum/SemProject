@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private int _speed;
 
     public Transform[] EnemyWayPintsList;
+
+    public static event Action EnemyEnter;
 
     private Rigidbody _rb;
     private Vector3 _wayPointVector;
@@ -21,6 +24,7 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         SearchWayPoint();
+        CheckExitEnter();
     }
 
     void FixedUpdate()
@@ -43,7 +47,17 @@ public class EnemyMovement : MonoBehaviour
         if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[_currentIndex].position) < tolerance)
         {
            _currentIndex += 1;
-           //_currentIndex = _currentIndex + 1;
+        }
+    }
+
+    private void CheckExitEnter()
+    {
+        float tolerance = 0.05f;
+        int lastObject = EnemyWayPintsList.Length - 1;
+        if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[lastObject].position) < tolerance)
+        {
+            EnemyEnter?.Invoke();
+            Destroy(gameObject);
         }
     }
 }

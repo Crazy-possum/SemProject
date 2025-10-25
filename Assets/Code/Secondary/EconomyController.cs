@@ -8,8 +8,6 @@ public class EconomyController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _currencyText;
 
-    public static event Action EnemyKill;
-
     public int GeneralCurrency;
     public int CurrentCost;
     public int CurrentIncome;
@@ -21,30 +19,25 @@ public class EconomyController : MonoBehaviour
         _currencyText.text = GeneralCurrency.ToString();
     }
 
-    public static void GetCurrency()
-    {
-        EnemyKill?.Invoke();
-    }
-
-    public void SpendCurrency()
-    {
-        GeneralCurrency -= CurrentCost;
-        _currencyText.text = GeneralCurrency.ToString();
-    }
-
     private void OnEnable()
     {
-        EconomyController.EnemyKill += CurrencySum;
+        EnemyHealth.EnemyDied += CurrencySum;
     }
 
     private void OnDisable()
     {
-        EconomyController.EnemyKill -= CurrencySum;
+        EnemyHealth.EnemyDied -= CurrencySum;
     }
 
     private void CurrencySum()
     {
         GeneralCurrency = GeneralCurrency + CurrentIncome;
+        _currencyText.text = GeneralCurrency.ToString();
+    }
+
+    public void SpendCurrency()
+    {
+        GeneralCurrency -= CurrentCost;
         _currencyText.text = GeneralCurrency.ToString();
     }
 }

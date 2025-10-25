@@ -9,15 +9,14 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private Slider _healthSlider;
     [SerializeField] private float _maxHealth = 10;
 
-    public float CurrentHealth;
+    public static event Action EnemyDied;
 
-    private healthBar _healthBar;
+    public float CurrentHealth;
 
     void Start()
     {
         CurrentHealth = _maxHealth;
         _healthSlider.maxValue = CurrentHealth;
-        _healthBar = GetComponentInChildren<healthBar>();
     }
 
     private void Update()
@@ -26,7 +25,7 @@ public class EnemyHealth : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            EconomyController.GetCurrency();
+            EnemyDied?.Invoke();
             Destroy(gameObject);
         }
     }

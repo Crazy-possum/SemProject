@@ -9,10 +9,9 @@ public class TowerAttak : MonoBehaviour
     [SerializeField] private Transform _bulletSpawner;
     [SerializeField] private float _rotationSpeed = 2;
 
-    private Timer _attakTimer;
-
-    //public EconomyController EconomyController;
     public GameObject CurrentTarget;
+
+    private Timer _attakTimer;
 
     private void Start()
     {
