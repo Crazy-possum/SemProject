@@ -51,16 +51,6 @@ public class TowerTriggerZone : MonoBehaviour
 
     private void SearchMissingObject()
     {
-        foreach (GameObject target in _targetsList)
-        {
-            for (int i = 0; i < _targetsList.Count; i++)
-            {
-                if (_targetsList[i] == null)
-                {
-                    Destroy(_targetsList[i]);
-                    _targetsList.RemoveAt(i);
-                }
-            }
-        }
+        _targetsList.RemoveAll(t => t.gameObject == null);
     }
 }

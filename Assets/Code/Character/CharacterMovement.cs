@@ -10,7 +10,12 @@ public class CharacterMovement : MonoBehaviour
     private Rigidbody _characterRb;
     private Transform _charP;
     private Vector3 _move;
-    private int _sideIndex = 1;
+
+    private SideIndexEnum _sideIndex = SideIndexEnum.Upper;
+    private float _upSV = 10.8f;
+    private float _riSV = 20f;
+    private float _loSV = -10.8f;
+    private float _leSV = -20f;
 
     private void Start()
     {
@@ -22,248 +27,274 @@ public class CharacterMovement : MonoBehaviour
     {
         switch (_sideIndex)
         {
-            case 1:
+            case SideIndexEnum.Upper:
                 OnUpperSide();break;
-            case 2:
+            case SideIndexEnum.Right:
                 OnRightSide();break;
-            case 3:
+            case SideIndexEnum.Lower:
                 OnLowerSide();break;
-            case 4:
+            case SideIndexEnum.Left:
                 OnLeftSide();break;
             default: break;
         }
-
-        Debug.Log(_sideIndex);
     }
 
     private void OnUpperSide()
-    // index = 1
     {
         if (Input.GetKey(KeyCode.A))
         {
-            if (_charP.position.x > -20f)
+            if (_charP.position.x > _leSV && _charP.position.y >= _upSV)
             {
                 _move = new Vector3(-1, 0, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
-            else
+            else if (_charP.position.x <= _leSV && _charP.position.y > _loSV)
             {
                 _move = new Vector3(0, -1, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
+            else if (_charP.position.x < _riSV && _charP.position.y <= _loSV)
+            {
+                _move = new Vector3(1, 0, 0);
+            }
+            else if (_charP.position.x >= _riSV && _charP.position.y < _upSV)
+            {
+                _move = new Vector3(0, 1, 0);
+            }
+            _characterRb.velocity = _move * _characterSpeed;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            _charP.position = new Vector3(_charP.position.x, -10.8f, _charP.position.z);
-            _sideIndex = 3;
+            _charP.position = new Vector3(_charP.position.x, _loSV, _charP.position.z);
+            _sideIndex = SideIndexEnum.Lower;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            if (_charP.position.x < 20f)
+            if (_charP.position.x < _riSV && _charP.position.y >= _upSV)
             {
                 _move = new Vector3(1, 0, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
-            else
+            else if (_charP.position.x >= _riSV && _charP.position.y > _loSV)
             {
                 _move = new Vector3(0, -1, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
+            else if (_charP.position.x > _leSV && _charP.position.y <= _loSV)
+            {
+                _move = new Vector3(-1, 0, 0);
+            }
+            else if (_charP.position.x <= _leSV && _charP.position.y < _upSV)
+            {
+                _move = new Vector3(0, 1, 0);
+            }
+            _characterRb.velocity = _move * _characterSpeed;
         }
         else
         {
             _characterRb.velocity = Vector3.zero;
-            if (_charP.position.x < -20f)
+            if (_charP.position.y <= _loSV)
             {
-                _sideIndex = 4;
-                _charP.position = new Vector3(-20f, _charP.position.y, _charP.position.z);
+                _sideIndex = SideIndexEnum.Left;
             }
-            else if (_charP.position.x > 20f)
+            else if ((_charP.position.x <= _leSV))
             {
-                _sideIndex = 2;
-                _charP.position = new Vector3(20f, _charP.position.y, _charP.position.z);
+                _sideIndex = SideIndexEnum.Lower;
             }
-            else if (_charP.position.x == -20f)
+            else if (_charP.position.x >= _riSV)
             {
-                _sideIndex = 4;
-            }
-            else if (_charP.position.x == 20f)
-            {
-                _sideIndex = 2;
+                _sideIndex = SideIndexEnum.Right;
             }
         }
     }
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private void OnRightSide()
-    // index = 2
     {
         if (Input.GetKey(KeyCode.W))
         {
-            if (_charP.position.y < 10.8f)
+            if (_charP.position.x >= _riSV && _charP.position.y < _upSV)
             {
                 _move = new Vector3(0, 1, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
-            else
+            else if (_charP.position.x > _loSV && _charP.position.y >= _upSV)
             {
                 _move = new Vector3(-1, 0, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
+            else if (_charP.position.x <= _leSV && _charP.position.y > _loSV)
+            {
+                _move = new Vector3(0, -1, 0);
+            }
+            else if (_charP.position.x < _riSV && _charP.position.y <= _loSV)
+            {
+                _move = new Vector3(1, 0, 0);
+            }
+            _characterRb.velocity = _move * _characterSpeed;
         }
         else if (Input.GetKey(KeyCode.A))
         {
             _charP.position = new Vector3(-20f, _charP.position.y, _charP.position.z);
-            _sideIndex = 4;
+            _sideIndex = SideIndexEnum.Left;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            if (_charP.position.y > -10.8f)
+            if (_charP.position.x >= _riSV && _charP.position.y > _loSV)
             {
                 _move = new Vector3(0, -1, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
-            else
+            else if (_charP.position.x < _leSV && _charP.position.y <= _loSV)
             {
                 _move = new Vector3(-1, 0, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
+            else if (_charP.position.x <= _leSV && _charP.position.y < _upSV)
+            {
+                _move = new Vector3(0, 1, 0);
+            }
+            else if (_charP.position.x < _riSV && _charP.position.y >= _upSV)
+            {
+                _move = new Vector3(1, 0, 0);
+            }
+            _characterRb.velocity = _move * _characterSpeed;
         }
         else
         {
             _characterRb.velocity = Vector3.zero;
-            if (_charP.position.y < -10.8f)
+            if (_charP.position.y <= _loSV)
             {
-                _sideIndex = 3;
-                _charP.position = new Vector3(_charP.position.x, -10.8f, _charP.position.z);
+                _sideIndex = SideIndexEnum.Lower;
             }
-            else if (_charP.position.y > 10.8f)
+            else if (_charP.position.y >= _upSV)
             {
-                _sideIndex = 1;
-                _charP.position = new Vector3(_charP.position.x, 10.8f, _charP.position.z);
+                _sideIndex = SideIndexEnum.Upper;
             }
-            else if (_charP.position.y == -10.8f)
+            else if ((_charP.position.x <= _leSV))
             {
-                _sideIndex = 3;
-            }
-            else if (_charP.position.y == 10.8f)
-            {
-                _sideIndex = 1;
+                _sideIndex = SideIndexEnum.Left;
             }
         }
     }
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private void OnLowerSide()
-    // index = 3
     {
         if (Input.GetKey(KeyCode.W))
         {
-            _charP.position = new Vector3(_charP.position.x, 10.8f, _charP.position.z);
-            _sideIndex = 1;
+            _charP.position = new Vector3(_charP.position.x, _upSV, _charP.position.z);
+            _sideIndex = SideIndexEnum.Upper;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            if (_charP.position.x > -20f)
+            if (_charP.position.x > _leSV && _charP.position.y <= _loSV)
             {
                 _move = new Vector3(-1, 0, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
-            else
+            else if (_charP.position.x <= _leSV && _charP.position.y < _upSV)
             {
                 _move = new Vector3(0, 1, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
+            else if (_charP.position.x < _riSV && _charP.position.y >= _upSV)
+            {
+                _move = new Vector3(1, 0, 0);
+            }
+            else if (_charP.position.x >= _riSV && _charP.position.y > _loSV)
+            {
+                _move = new Vector3(0, -1, 0);
+            }
+            _characterRb.velocity = _move * _characterSpeed;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            if (_charP.position.x < 20f)
+            if (_charP.position.x < _riSV && _charP.position.y <= _loSV)
             {
                 _move = new Vector3(1, 0, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
-            else
+            else if (_charP.position.x >= _riSV && _charP.position.y < _upSV)
             {
                 _move = new Vector3(0, 1, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
+            else if (_charP.position.x > _leSV && _charP.position.y >= _upSV)
+            {
+                _move = new Vector3(-1, 0, 0);
+            }
+            else if (_charP.position.x <= _leSV && _charP.position.y > _loSV)
+            {
+                _move = new Vector3(0, -1, 0);
+            }
+            _characterRb.velocity = _move * _characterSpeed;
         }
         else
         {
             _characterRb.velocity = Vector3.zero;
-            if (_charP.position.x < -20)
+            if (_charP.position.x <= _leSV)
             {
-                _sideIndex = 4;
-                _charP.position = new Vector3(-20, _charP.position.y, _charP.position.z);
+                _sideIndex = SideIndexEnum.Left;
             }
-            else if (_charP.position.x > 20)
+            else if (_charP.position.x >= _riSV)
             {
-                _sideIndex = 2;
-                _charP.position = new Vector3(20, _charP.position.y, _charP.position.z);
+                _sideIndex = SideIndexEnum.Right;
             }
-            else if (_charP.position.x == -20)
+            else if (_charP.position.y >= _upSV)
             {
-                _sideIndex = 4;
-            }
-            else if (_charP.position.x == 20)
-            {
-                _sideIndex = 2;
+                _sideIndex = SideIndexEnum.Upper;
             }
         }
     }
     //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private void OnLeftSide()
-    // index = 4
     {
         if (Input.GetKey(KeyCode.W))
         {
-            if (_charP.position.y < 10.8f)
+            if (_charP.position.x <= _leSV && _charP.position.y < _upSV)
             {
                 _move = new Vector3(0, 1, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
-            else
+            else if (_charP.position.x < _riSV && _charP.position.y >= _upSV)
             {
                 _move = new Vector3(1, 0, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
+            else if (_charP.position.x >= _riSV && _charP.position.y > _loSV)
+            {
+                _move = new Vector3(0, -1, 0);
+            }
+            else if (_charP.position.x > _leSV && _charP.position.y <= _loSV)
+            {
+                _move = new Vector3(-1, 0, 0);
+            }
+            _characterRb.velocity = _move * _characterSpeed;
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            if (_charP.position.y > -10.8f)
+            if (_charP.position.x <= _leSV && _charP.position.y > _loSV)
             {
                 _move = new Vector3(0, -1, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
-            else
+            else if (_charP.position.x < _riSV && _charP.position.y <= _loSV)
             {
                 _move = new Vector3(1, 0, 0);
-                _characterRb.velocity = _move * _characterSpeed;
             }
+            else if (_charP.position.x >= _riSV && _charP.position.y < _upSV)
+            {
+                _move = new Vector3(0, 1, 0);
+            }
+            else if (_charP.position.x > _leSV && _charP.position.y >= _upSV)
+            {
+                _move = new Vector3(-1, 0, 0);
+            }
+            _characterRb.velocity = _move * _characterSpeed;
         }
         else if (Input.GetKey(KeyCode.D))
         {
             _charP.position = new Vector3(20f, _charP.position.y, _charP.position.z);
-            _sideIndex = 2;
+            _sideIndex = SideIndexEnum.Right;
         }
         else
         {
             _characterRb.velocity = Vector3.zero;
-            if (_charP.position.y < -10.8f)
+            if (_charP.position.y <= _loSV)
             {
-                _sideIndex = 3;
-                _charP.position = new Vector3(_charP.position.x, -10.8f, _charP.position.z);
+                _sideIndex = SideIndexEnum.Lower;
             }
-            else if (_charP.position.y > 10.8f)
+            else if (_charP.position.y >= _upSV)
             {
-                _sideIndex = 1;
-                _charP.position = new Vector3(_charP.position.x, 10.8f, _charP.position.z);
+                _sideIndex = SideIndexEnum.Upper;
             }
-            else if (_charP.position.y == -10.8f)
+            else if (_charP.position.x >= _riSV)
             {
-                _sideIndex = 3;
-            }
-            else if (_charP.position.y == 10.8f)
-            {
-                _sideIndex = 1;
+                _sideIndex = SideIndexEnum.Right;
             }
         }
     }

@@ -43,7 +43,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void SearchWayPoint()
     {
-        float tolerance = 0.03f;
+        float tolerance = 0.04f;
         if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[_currentIndex].position) < tolerance)
         {
            _currentIndex += 1;
