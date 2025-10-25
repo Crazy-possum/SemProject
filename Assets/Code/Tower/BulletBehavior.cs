@@ -22,13 +22,7 @@ public class BulletBehavior : MonoBehaviour
 
     private void Update()
     {
-        float deltaX = BulletsCurrentTarget.transform.position.x - gameObject.transform.position.x;
-        float deltaZ = BulletsCurrentTarget.transform.position.z - gameObject.transform.position.z;
-
-        Vector3 move = new Vector3(deltaX, 0, deltaZ);
-        move.Normalize();
-
-        _movement.Set(_speed * move.x, _speed * move.y, _speed * move.z);
+        MoveToTarget();
     }
 
     private void FixedUpdate()
@@ -38,16 +32,21 @@ public class BulletBehavior : MonoBehaviour
 
     private void OnTriggerEnter (Collider other)
     {
-        if (other.gameObject.TryGetComponent(out EnemyPatrol enemy))
+        if (other.gameObject.TryGetComponent(out EnemyMovement enemy))
         {
-            Debug.Log("damage" + _damage);
             _currentEnemyHealth.CurrentHealth = _currentEnemyHealth.CurrentHealth - _damage;
-            Debug.Log(_currentEnemyHealth.CurrentHealth);
-
-            //_economyController.CurrentIncome = 1;
-            //_economyController.GetCurrency();
 
             Destroy(gameObject);
         }
+    }
+
+    private void MoveToTarget()
+    {
+        float deltaX = BulletsCurrentTarget.transform.position.x - gameObject.transform.position.x;
+        float deltaY = BulletsCurrentTarget.transform.position.y - gameObject.transform.position.y;
+
+        Vector3 move = new Vector3(deltaX, deltaY, 0).normalized;
+
+        _movement.Set(_speed * move.x, _speed * move.y, _speed * move.z);
     }
 }

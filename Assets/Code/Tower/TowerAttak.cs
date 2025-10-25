@@ -11,7 +11,7 @@ public class TowerAttak : MonoBehaviour
     [SerializeField] private Transform _bulletSpawner;
     [SerializeField] private float _rotationSpeed = 2;
 
-    public EconomyController EconomyController;
+    //public EconomyController EconomyController;
     public GameObject CurrentTarget;
 
     private void Start()
@@ -37,9 +37,10 @@ public class TowerAttak : MonoBehaviour
             }
         }
 
-        Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-        transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation, _rotationSpeed * Time.fixedDeltaTime);
+        //Сломаный поворот башни на противника
+       // Vector3 directionToTarget = CurrentTarget.transform.position - transform.position;
+       // Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+        //transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation, _rotationSpeed * Time.fixedDeltaTime);
     }
 
     public void Attak()

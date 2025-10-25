@@ -17,16 +17,19 @@ public class TowerTriggerZone : MonoBehaviour
 
     private void Update()
     {
-        if (_currentTarget == null)
+        if (_targetsList[0] != null)
         {
-            _currentTarget = _targetsList[0];
-            _towerAttak.CurrentTarget = _currentTarget;
+            if (_currentTarget == null)
+            {
+                _currentTarget = _targetsList[0];
+                _towerAttak.CurrentTarget = _currentTarget;
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-         if (other.TryGetComponent(out EnemyPatrol enemy))
+         if (other.TryGetComponent(out EnemyMovement enemy))
          {
              _targetsList.Add(enemy.gameObject);
 
@@ -50,7 +53,7 @@ public class TowerTriggerZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out EnemyPatrol enemy))
+        if (other.TryGetComponent(out EnemyMovement enemy))
         {
             _targetsList.Remove(enemy.gameObject);
             _currentTarget = null;
