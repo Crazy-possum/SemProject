@@ -1,33 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class CharacterShoot : MonoBehaviour
 {
     [SerializeField] private GameObject _bullet;
+    [SerializeField] private GameObject _body;
     [SerializeField] private Transform _bulletSpawner;
-    //[SerializeField] private float _rotationSpeed = 2;
 
     public float AttakReload = 2;
     public float CurrentTime;
 
     private Timer _attakReloadTimer;
+    private Transform _cursorPosition;
+    private Rigidbody _characterRb;
+    private Vector3 _look;
     private bool _canShoot = false;
 
     private void Start()
     {
         _attakReloadTimer = new Timer(AttakReload);
+        _characterRb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        Reload();
-
         if (_canShoot)
         {
             Fire();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Reload();
+        Rotate();
 
         CurrentTime = _attakReloadTimer.TimerCurrentTime;
     }
@@ -59,5 +68,14 @@ public class CharacterShoot : MonoBehaviour
             _attakReloadTimer.StopCountdown();
             _canShoot = false;
         }
+    }
+
+    private void Rotate()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 targetDirection = transform.position - mousePosition;
+
+        Quaternion angle = Quaternion.LookRotation(Vector3.forward, targetDirection);
+        _characterRb.rotation = angle;
     }
 }

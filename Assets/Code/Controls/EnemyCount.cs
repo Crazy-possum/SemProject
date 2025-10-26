@@ -7,8 +7,10 @@ public class EnemyCount : MonoBehaviour
 {
     [SerializeField] private TMP_Text _enemyScoreText;
 
+    public bool Defeat = false;
+    public int Score = 0;
+
     private int _maxScore = 5;
-    private int _score = 0;
 
     private void Start()
     {
@@ -27,8 +29,16 @@ public class EnemyCount : MonoBehaviour
 
     private void EnemyEnterExit()
     {
-        _score++;
-        _enemyScoreText.text = "Врагов прошло:" + _score + "/" + _maxScore;
-
+        if (Score == _maxScore - 1)
+        {
+            Score++;
+            _enemyScoreText.text = "Врагов прошло:" + Score + "/" + _maxScore;
+            Defeat = true;
+        }
+        else if (Score < _maxScore - 1)
+        {
+            Score++;
+            _enemyScoreText.text = "Врагов прошло:" + Score + "/" + _maxScore;
+        }
     }
 }

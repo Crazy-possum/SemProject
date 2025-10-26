@@ -137,7 +137,7 @@ public class CharacterMovement : MonoBehaviour
             {
                 _move = new Vector3(0, -1, 0);
             }
-            else if (_charP.position.x < _leSV && _charP.position.y <= _loSV)
+            else if (_charP.position.x > _leSV && _charP.position.y <= _loSV)
             {
                 _move = new Vector3(-1, 0, 0);
             }

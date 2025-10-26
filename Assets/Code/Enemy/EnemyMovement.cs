@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private int _speed;
+    [SerializeField] private float _tolerance;
 
     public Transform[] EnemyWayPintsList;
 
@@ -14,21 +15,20 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _wayPointVector;
     private int _currentIndex;
+    private float _checkDistanse;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _currentIndex = 0;
-    }
-
-    private void Update()
-    {
-        SearchWayPoint();
-        CheckExitEnter();
+        _checkDistanse = _speed * _tolerance;
     }
 
     void FixedUpdate()
     {
+        SearchWayPoint();
+        CheckExitEnter(); 
+
         if (_currentIndex == 0)
         {
             _wayPointVector = (EnemyWayPintsList[_currentIndex].position - transform.position).normalized;
@@ -43,8 +43,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void SearchWayPoint()
     {
-        float tolerance = 0.04f;
-        if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[_currentIndex].position) < tolerance)
+        if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[_currentIndex].position) < _checkDistanse)
         {
            _currentIndex += 1;
         }
@@ -52,9 +51,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckExitEnter()
     {
-        float tolerance = 0.05f;
         int lastObject = EnemyWayPintsList.Length - 1;
-        if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[lastObject].position) < tolerance)
+        if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[lastObject].position) < _checkDistanse)
         {
             EnemyEnter?.Invoke();
             Destroy(gameObject);
