@@ -10,7 +10,7 @@ public class ClickController : MonoBehaviour
 
     public void ClickBehavior()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             if (ObjectUnderMouse.TryGetComponent(out TowerBehavior towerBehavior))
             {

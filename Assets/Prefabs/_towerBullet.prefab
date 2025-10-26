@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 2949580783053883854}
   - component: {fileID: -6151457049680045851}
   m_Layer: 0
-  m_Name: _bullet
+  m_Name: _towerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 50
-  _damage: 2
+  _damage: 200
+  _firstPaintingStage: 0.25
+  _secondPaintingStage: 0.5
+  _thirdPaintingStage: 0.75
+  _fourthPaintingStage: 1
   BulletsCurrentTarget: {fileID: 0}
 --- !u!135 &2949580783053883854
 SphereCollider:

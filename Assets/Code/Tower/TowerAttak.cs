@@ -7,7 +7,8 @@ public class TowerAttak : MonoBehaviour
 {
     [SerializeField] private GameObject _bullet;
     [SerializeField] private Transform _bulletSpawner;
-    [SerializeField] private float _rotationSpeed = 2;
+    //[SerializeField] private float _rotationSpeed = 2;
+    [SerializeField] private float _attakReload = 1;
 
     public GameObject CurrentTarget;
 
@@ -15,7 +16,7 @@ public class TowerAttak : MonoBehaviour
 
     private void Start()
     {
-        _attakTimer = new Timer(1);
+        _attakTimer = new Timer(_attakReload);
     }
 
     private void Update()
@@ -48,7 +49,7 @@ public class TowerAttak : MonoBehaviour
         Vector3 position = _bulletSpawner.position;
         GameObject localBullet = GameObject.Instantiate(_bullet, position, Quaternion.identity, _bulletSpawner);
 
-        localBullet.GetComponent<BulletBehavior>().BulletsCurrentTarget = CurrentTarget;
+        localBullet.GetComponent<TowerBulletBehavior>().BulletsCurrentTarget = CurrentTarget;
     }
 
     private void TowerRotate()

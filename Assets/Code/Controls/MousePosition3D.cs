@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEditor.Search;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MousePosition3D : MonoBehaviour
 {
     [SerializeField] private ClickController _clickController;
-    
     [SerializeField] private Camera _mainCamera;
 
-    public Transform MauseTransform;
     private GameObject _currentObject;
-
-    private void Start()
-    {
-    }
 
     private void Update()
     {

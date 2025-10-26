@@ -21,12 +21,12 @@ public class EconomyController : MonoBehaviour
 
     private void OnEnable()
     {
-        EnemyHealth.EnemyDied += CurrencySum;
+        EnemyParametrs.EnemyDied += CurrencySum;
     }
 
     private void OnDisable()
     {
-        EnemyHealth.EnemyDied -= CurrencySum;
+        EnemyParametrs.EnemyDied -= CurrencySum;
     }
 
     private void CurrencySum()

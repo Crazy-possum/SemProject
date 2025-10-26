@@ -11,6 +11,7 @@ public class Timer
 
     public bool ReachingTimerMaxValue { get => _reachingTimerMaxValue; set => _reachingTimerMaxValue = value; }
     public bool StartTimer { get => _startTimer; set => _startTimer = value; }
+    public float TimerCurrentTime { get => _timerCurrentTime; set => _timerCurrentTime = value; }
 
     public Timer(float maxTimerValue) 
     {
