@@ -1,24 +1,27 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Tooltip("Префаб противника")]
     [SerializeField] private GameObject _enemyPrefab;
+    [Tooltip("Пустой объект, куда спавнятся противники")]
     [SerializeField] private GameObject _enemiesGroup;
+    [Tooltip("Список всех противников на сцене")]
     [SerializeField] private List<GameObject> _enemyList = new List<GameObject>();
-    [SerializeField] private Transform[] _enemyWayPintsList;
+    [Tooltip("Лист с точками маршрута противников")]
+    [SerializeField] private Transform[] _enemyWayPointsList;
 
+    [Tooltip("Длительность волны в сек")]
     [SerializeField] private int _waveTimerValue;
+    [Tooltip("Время на спавн одного моба в сек")]
     [SerializeField] private int _spawnTimerValue;
-
-    public int CurrentEnemyListLength;
 
     private Timer _waveTimer;
     private Timer _spawnTimer;
+    private int _currentEnemyListLength;
 
-    private EnemyMovement _enemyMovement;
+    public int CurrentEnemyListLength { get => _currentEnemyListLength; set => _currentEnemyListLength = value; }
 
     private void Start()
     {
@@ -28,12 +31,12 @@ public class EnemySpawner : MonoBehaviour
         WaveBegins();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         _waveTimer.Wait();
         _spawnTimer.Wait();
 
-        CurrentEnemyListLength = _enemyList.Count;
+        _currentEnemyListLength = _enemyList.Count;
 
         if (!_waveTimer.ReachingTimerMaxValue)
         {
@@ -62,15 +65,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        _enemyMovement = null;
-
-        Vector3 position = _enemyWayPintsList[0].position;
+        Vector3 position = _enemyWayPointsList[0].position;
         GameObject sceneGObject = GameObject.Instantiate(_enemyPrefab, position, Quaternion.identity, _enemiesGroup.transform);
 
         _enemyList.Add(sceneGObject.gameObject);
 
-        _enemyMovement = sceneGObject.GetComponent<EnemyMovement>();
-        _enemyMovement.EnemyWayPintsList = _enemyWayPintsList;
+        sceneGObject.GetComponent<EnemyMovement>().EnemyWayPintsList = _enemyWayPointsList;
     }
 
     private void SearchMissingObject()

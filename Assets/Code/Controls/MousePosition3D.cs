@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MousePosition3D : MonoBehaviour
 {
+    [Tooltip("Скрипт")]
     [SerializeField] private ClickController _clickController;
+    [Tooltip("Камера")]
     [SerializeField] private Camera _mainCamera;
 
-    private GameObject _currentObject;
+    private const string _interactlayer = "Interactive";
 
-    private void Update()
+    private void FixedUpdate()
     {
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.green);
@@ -21,12 +18,12 @@ public class MousePosition3D : MonoBehaviour
         {
             transform.position = raycastHit.point;
 
-            if (Physics.Raycast(ray, out raycastHit, Mathf.Infinity, LayerMask.GetMask("Interactive")) )
+            if (Physics.Raycast(ray, out raycastHit, Mathf.Infinity, 
+                LayerMask.GetMask(_interactlayer)))
             {
-                _currentObject = raycastHit.collider.gameObject;
-                _clickController.ObjectUnderMouse = _currentObject;
+                GameObject currentObject = raycastHit.collider.gameObject;
 
-                _clickController.ClickBehavior();
+                _clickController.ClickBehavior(currentObject);
             }
         }
     }

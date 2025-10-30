@@ -1,18 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WinLoseController : MonoBehaviour
 {
+    [Tooltip("Скрипт")]
     [SerializeField] private EnemyCount _enemyCount;
+    [Tooltip("Скрипт")]
     [SerializeField] private EnemySpawner _enemySpawner;
+    [Tooltip("Панель с проигрышем")]
     [SerializeField] private GameObject _defeatPanel;
+    [Tooltip("Панель с победой")]
     [SerializeField] private GameObject _winPanel;
 
+    private bool _isAllEnemiesDefeated;
     private bool _isDeafeated;
     private bool _isWin;
     private int _currentEnemyMiss;
     private int _currentEnemyCount;
+
+    private void Start()
+    {
+        _isAllEnemiesDefeated = _currentEnemyCount + _currentEnemyMiss 
+            >= _enemySpawner.CurrentEnemyListLength;
+    }
 
     private void FixedUpdate()
     {
@@ -24,12 +33,12 @@ public class WinLoseController : MonoBehaviour
 
     private void OnEnable()
     {
-        EnemyParametrs.EnemyDied += CheckKillCount;
+        EnemyParametrs.OnEnemyDied += CheckKillCount;
     }
 
     private void OnDisable()
     {
-        EnemyParametrs.EnemyDied -= CheckKillCount;
+        EnemyParametrs.OnEnemyDied -= CheckKillCount;
     }
 
     private void GameStop()
@@ -51,7 +60,7 @@ public class WinLoseController : MonoBehaviour
     {
         _currentEnemyCount += 1;
 
-        if (_currentEnemyCount + _currentEnemyMiss >= _enemySpawner.CurrentEnemyListLength && _currentEnemyCount > 0)
+        if (_isAllEnemiesDefeated && _currentEnemyCount > 0)
         {
             _isWin = true;
         }

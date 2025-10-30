@@ -1,27 +1,28 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    [Tooltip("Скорость врагов")]
     [SerializeField] private int _speed;
+    [Tooltip("Погрешность пересечения с точками маршрута")]
     [SerializeField] private float _tolerance;
 
-    public Transform[] EnemyWayPintsList;
-
-    public static event Action EnemyEnter;
-
+    private static Action _onEnemyEnter;
+    private Transform[] _enemyWayPintsList;
     private Rigidbody _rb;
     private Vector3 _wayPointVector;
     private int _currentIndex;
-    private float _checkDistanse;
+    private float _checkDistance;
+
+    public Transform[] EnemyWayPintsList { get => _enemyWayPintsList; set => _enemyWayPintsList = value; }
+    public static Action OnEnemyEnter { get => _onEnemyEnter; set => _onEnemyEnter = value; }
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _currentIndex = 0;
-        _checkDistanse = _speed * _tolerance;
+        _checkDistance = _speed * _tolerance;
     }
 
     void FixedUpdate()
@@ -31,19 +32,18 @@ public class EnemyMovement : MonoBehaviour
 
         if (_currentIndex == 0)
         {
-            _wayPointVector = (EnemyWayPintsList[_currentIndex].position - transform.position).normalized;
-            _rb.velocity = _wayPointVector * _speed * Time.deltaTime;
+            _wayPointVector = (_enemyWayPintsList[_currentIndex].position - transform.position).normalized;
         }
         else
         {
-            _wayPointVector = (EnemyWayPintsList[_currentIndex].position - EnemyWayPintsList[_currentIndex - 1].position).normalized;
-            _rb.velocity = _wayPointVector * _speed * Time.deltaTime;
+            _wayPointVector = (_enemyWayPintsList[_currentIndex].position - _enemyWayPintsList[_currentIndex - 1].position).normalized;
         }
+        _rb.velocity = _wayPointVector * (_speed * Time.deltaTime);
     }
 
     private void SearchWayPoint()
     {
-        if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[_currentIndex].position) < _checkDistanse)
+        if (Vector3.Distance(gameObject.transform.position, _enemyWayPintsList[_currentIndex].position) < _checkDistance)
         {
            _currentIndex += 1;
         }
@@ -51,10 +51,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckExitEnter()
     {
-        int lastObject = EnemyWayPintsList.Length - 1;
-        if (Vector3.Distance(gameObject.transform.position, EnemyWayPintsList[lastObject].position) < _checkDistanse)
+        int lastObject = _enemyWayPintsList.Length - 1;
+        if (Vector3.Distance(gameObject.transform.position, _enemyWayPintsList[lastObject].position) < _checkDistance)
         {
-            EnemyEnter?.Invoke();
+            _onEnemyEnter?.Invoke();
             Destroy(gameObject);
         }
     }

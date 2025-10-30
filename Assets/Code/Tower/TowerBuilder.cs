@@ -1,32 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TowerBuilder : MonoBehaviour
 {
+    [Tooltip("Скрипт")]
     [SerializeField] private EconomyController _economyController;
 
+    [Tooltip("Пустой объект, куда спанятся башни")]
     [SerializeField] private GameObject _towerGroup;
-    [SerializeField] private GameObject _towerObgect;
+    [Tooltip("Префаб башни")]
+    [SerializeField] private GameObject _towerPrefab;
+    [Tooltip("Стоимость постройки башни")]
+    [SerializeField] private int _buildCost;
 
-    public GameObject BuildPointObject;
-
+    private GameObject _buildPointObject;
     private Transform _buildPointTransform;
+
+    public GameObject BuildPointObject { get => _buildPointObject; set => _buildPointObject = value; }
 
     private void Start()
     {
-        _economyController.CurrentCost = 2;
+        _economyController.CurrentCost = _buildCost;
     }
 
     public void SpawnTower()
     {
-        _buildPointTransform = BuildPointObject.transform;
+        _buildPointTransform = _buildPointObject.transform;
 
         Vector3 position = _buildPointTransform.position;
-        GameObject sceneGObject = GameObject.Instantiate(_towerObgect, position, Quaternion.identity, _towerGroup.transform);
+        GameObject sceneGObject = GameObject.Instantiate(_towerPrefab, position, Quaternion.identity, _towerGroup.transform);
 
-        Destroy(BuildPointObject);
+        Destroy(_buildPointObject);
         TakeMoney();
     }
 

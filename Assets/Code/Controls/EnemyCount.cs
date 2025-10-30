@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -7,24 +5,27 @@ public class EnemyCount : MonoBehaviour
 {
     [SerializeField] private TMP_Text _enemyScoreText;
 
-    public bool Defeat = false;
     public int Score = 0;
 
+    private const string _enemyScore = "Врагов прошло: 0 /" ;
+    private bool _isDefeat = false;
     private int _maxScore = 5;
+
+    public bool Defeat { get => _isDefeat; set => _isDefeat = value; }
 
     private void Start()
     {
-        _enemyScoreText.text = "Врагов прошло:" + 0 + "/" + _maxScore;
+        _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
     }
 
     private void OnEnable()
     {
-        EnemyMovement.EnemyEnter += EnemyEnterExit;
+        EnemyMovement.OnEnemyEnter += EnemyEnterExit;
     }
 
     private void OnDisable()
     {
-        EnemyMovement.EnemyEnter -= EnemyEnterExit;
+        EnemyMovement.OnEnemyEnter -= EnemyEnterExit;
     }
 
     private void EnemyEnterExit()
@@ -32,13 +33,13 @@ public class EnemyCount : MonoBehaviour
         if (Score == _maxScore - 1)
         {
             Score++;
-            _enemyScoreText.text = "Врагов прошло:" + Score + "/" + _maxScore;
-            Defeat = true;
+            _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
+            _isDefeat = true;
         }
         else if (Score < _maxScore - 1)
         {
             Score++;
-            _enemyScoreText.text = "Врагов прошло:" + Score + "/" + _maxScore;
+            _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
         }
     }
 }

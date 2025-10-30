@@ -1,33 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class CharacterShoot : MonoBehaviour
 {
+    [Tooltip("Префаб снаряда")]
     [SerializeField] private GameObject _bullet;
-    [SerializeField] private GameObject _body;
+    [Tooltip("Точка вылета снарядов")]
     [SerializeField] private Transform _bulletSpawner;
 
-    public float AttakReload = 2;
     public float CurrentTime;
 
     private Timer _attakReloadTimer;
-    private Transform _cursorPosition;
     private Rigidbody _characterRb;
-    private Vector3 _look;
-    private bool _canShoot = false;
+    private Camera _camera;
+    private float _attakReload = 2;
+    private bool _isCanShoot = false;
+
+    public float AttakReload { get => _attakReload; set => _attakReload = value; }
 
     private void Start()
     {
-        _attakReloadTimer = new Timer(AttakReload);
+        _attakReloadTimer = new Timer(_attakReload);
         _characterRb = GetComponent<Rigidbody>();
+        _camera = Camera.main;
     }
 
     private void Update()
     {
-        if (_canShoot)
+        if (_isCanShoot)
         {
             Fire();
         }
@@ -45,14 +44,14 @@ public class CharacterShoot : MonoBehaviour
     {
          _attakReloadTimer.Wait();
 
-        if (!_attakReloadTimer.StartTimer && !_canShoot)
+        if (!_attakReloadTimer.StartTimer && !_isCanShoot)
         {
             _attakReloadTimer.StartCountdown();
         }
 
         if (_attakReloadTimer.ReachingTimerMaxValue == true)
         {
-            _canShoot = true;
+            _isCanShoot = true;
             _attakReloadTimer.PauseCountdown();
         }
     }
@@ -66,13 +65,13 @@ public class CharacterShoot : MonoBehaviour
             localBullet.GetComponent<CharacterBulletBehavior>().StartBulletPosition = _bulletSpawner;
 
             _attakReloadTimer.StopCountdown();
-            _canShoot = false;
+            _isCanShoot = false;
         }
     }
 
     private void Rotate()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
         Vector3 targetDirection = transform.position - mousePosition;
 
         Quaternion angle = Quaternion.LookRotation(Vector3.forward, targetDirection);
