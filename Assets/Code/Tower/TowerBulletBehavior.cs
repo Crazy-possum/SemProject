@@ -18,13 +18,15 @@ public class TowerBulletBehavior : MonoBehaviour
     [Tooltip("Процент пробития моба при 4 единичках окрашивания")]
     [SerializeField] private float _fourthPaintingStage = 1f;
 
-    private GameObject _bulletsCurrentTarget;
+    private TowerScriptable _towerSO;
     private EnemyParametrs _currentEnemyHealth;
+    private GameObject _bulletsCurrentTarget;
 
     private Rigidbody _bulletRB;
     private Vector3 _movement;
 
     public GameObject BulletsCurrentTarget { get => _bulletsCurrentTarget; set => _bulletsCurrentTarget = value; }
+    public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
 
     private void Start()
     {

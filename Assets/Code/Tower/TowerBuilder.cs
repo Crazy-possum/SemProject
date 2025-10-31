@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class TowerBuilder : MonoBehaviour
@@ -12,6 +13,8 @@ public class TowerBuilder : MonoBehaviour
     [Tooltip("Стоимость постройки башни")]
     [SerializeField] private int _buildCost;
 
+    private ScriptableListScript _towerObjectListSO;
+    private TowerScriptable _towerSO;
     private GameObject _buildPointObject;
     private Transform _buildPointTransform;
 
@@ -20,14 +23,18 @@ public class TowerBuilder : MonoBehaviour
     private void Start()
     {
         _economyController.CurrentCost = _buildCost;
+        _towerObjectListSO = Resources.Load<ScriptableListScript>("Tower/TowerObjects_SO");
     }
 
-    public void SpawnTower()
+    public void BuildTower(TowerEnum towerEnum)
     {
         _buildPointTransform = _buildPointObject.transform;
 
+        _towerSO = _towerObjectListSO.SOList.Find(item => item.TowerEnum == towerEnum);
+
         Vector3 position = _buildPointTransform.position;
-        GameObject sceneGObject = GameObject.Instantiate(_towerPrefab, position, Quaternion.identity, _towerGroup.transform);
+        GameObject towerGO = GameObject.Instantiate(_towerSO.TowerPrefab, position, Quaternion.identity, _towerGroup.transform);
+        towerGO.GetComponent<TowerAttak>().TowerSO = _towerSO;
 
         Destroy(_buildPointObject);
         TakeMoney();
@@ -35,6 +42,8 @@ public class TowerBuilder : MonoBehaviour
 
     private void TakeMoney()
     {
+        _economyController.CurrentCost = _towerSO.TowerCost;
         _economyController.SpendCurrency();
     }
+
 }

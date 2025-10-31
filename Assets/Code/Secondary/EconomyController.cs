@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EconomyController : MonoBehaviour
 {
-    [Tooltip("текст текущей валюты")]
+    [Tooltip("“екст текущей валюты")]
     [SerializeField] private TMP_Text _currencyText;
 
     public int GeneralCurrency;

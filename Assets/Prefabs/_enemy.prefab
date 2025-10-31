@@ -613,9 +613,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c362942822184b24d8495f7e67a77d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2000
+  _speed: 100
   _tolerance: 0.0004
-  EnemyWayPintsList: []
 --- !u!114 &1771667094165765290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -631,9 +630,7 @@ MonoBehaviour:
   _healthSlider: {fileID: 1160191590600437214}
   _paintSlider: {fileID: 910998076150223797}
   _maxHealth: 1000
-  _maxPaint: 4
-  CurrentHealth: 0
-  CurrentPaint: 0
+  _maxPaintValue: 4
 --- !u!1 &7787451273105642467
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class MousePosition3D : MonoBehaviour
 
     private const string _interactlayer = "Interactive";
 
-    private void FixedUpdate()
+    private void Update()
     {
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.green);

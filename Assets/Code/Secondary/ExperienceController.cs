@@ -3,11 +3,16 @@ using UnityEngine.UI;
 
 public class ExperienceController : MonoBehaviour
 {
+    [Tooltip("Слайдер опыта")]
     [SerializeField] private Slider _experienceSlider;
+    [Tooltip("Количество опыта для набора первого уровня")]
     [SerializeField] private float _levelUpExpValue;
+    [Tooltip("Коэффициент увеличения требований к опыту от уровня")]
     [SerializeField] private float _ratioExpUp;
-    [SerializeField] private float _currentExp;
+    [Tooltip("Значение прироста опыта от убийства")]
     [SerializeField] private float _currentExpIncome;
+
+    private float _currentExp;
 
     private void Start()
     {
