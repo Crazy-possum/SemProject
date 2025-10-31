@@ -20,7 +20,6 @@ public class ClickController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("click");
             if (objectUnderMouse.TryGetComponent(out BuildPointTag towerBehavior))
             {
                 InitializeButton();

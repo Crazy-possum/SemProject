@@ -36,6 +36,7 @@ public class TowerBehavior
         GameObject localBullet = GameObject.Instantiate(_towerBulletPrefab, position, Quaternion.identity, _bulletSpawner);
 
         localBullet.GetComponent<TowerBulletBehavior>().BulletsCurrentTarget = _currentTarget;
+        localBullet.GetComponent<TowerBulletBehavior>().StartBulletPosition = _bulletSpawner;
         localBullet.GetComponent<TowerBulletBehavior>().TowerSO = _towerSO;
     }
 

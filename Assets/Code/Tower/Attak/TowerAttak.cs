@@ -7,22 +7,22 @@ using static CatapultTowerBehavior;
 
 public class TowerAttak : MonoBehaviour
 {
-    [Tooltip("Префаб башенной пули")]
-    [SerializeField] private GameObject _towerBulletPrefab;
     [Tooltip("Точка, из которой вылетают пули")]
     [SerializeField] private Transform _bulletSpawner;
     [Tooltip("Таймер перезарядки в сек")]
-    [SerializeField] private float _attakReload = 1;
 
     private TowerBehavior _towerBehavior;
     private List<GameObject> _targetsList;
     private TowerScriptable _towerSO;
+    private GameObject _towerBulletPrefab;
     private GameObject _currentTarget;
     private Rigidbody _towerRb;
     private Timer _attakTimer;
 
-    private TowerTargetEnum _towerAtkPattern;
     private TowerEnum _towerEnum;
+
+    private float _attakReload;
+
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
     public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
@@ -30,15 +30,17 @@ public class TowerAttak : MonoBehaviour
 
     private void Start()
     {
-        _attakTimer = new Timer(_attakReload);
         _towerRb = GetComponent<Rigidbody>();
-        _towerAtkPattern = _towerSO.TowerAtkPattern;
+
         _towerEnum = _towerSO.TowerEnum;
+        _attakReload = _towerSO.TowerReloadTime;
+        _towerBulletPrefab = _towerSO.BulletPrefab;
+
+        _attakTimer = new Timer(_attakReload);
 
         if (_towerEnum == TowerEnum.Cannon)
         {
             _towerBehavior = new TowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner);
-            //TowerAtkPatternEnum
         }
         else if (_towerEnum == TowerEnum.Shotgun)
         {
@@ -66,7 +68,6 @@ public class TowerAttak : MonoBehaviour
 
         if (_towerBehavior.TargetsList.Count > 0)
         {
-            //PatternDetermine();
             _towerBehavior.TowerRotate();
         }
     }

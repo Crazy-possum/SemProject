@@ -35,7 +35,7 @@ public class CharacterBulletBehavior : MonoBehaviour
         {
             EnemyParametrs enemyParametrs = enemy.GetComponent<EnemyParametrs>();
 
-            if (enemyParametrs.CurrentPaintValue <= 4)
+            if (enemyParametrs.CurrentPaintValue < 4)
             {
                 enemyParametrs.CurrentPaintValue += _painting;
                 Destroy(gameObject);
@@ -46,7 +46,7 @@ public class CharacterBulletBehavior : MonoBehaviour
     private void MoveOnVector()
     {
         Vector3 direction = (_camera.ScreenToWorldPoint(Input.mousePosition) - _startBulletPosition.position).normalized;
-        _movement.Set(direction.x * _speed, direction.y * _speed, direction.z * 0);
+        _movement.Set(direction.x * _speed, direction.y * _speed, 0);
     }
 
     private void CheckDistance()

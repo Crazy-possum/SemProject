@@ -48,7 +48,7 @@ public class EnemyParametrs : MonoBehaviour
 
     private void UpdatePainting()
     {
-        if (_currentPaintValue < _maxPaintValue)
+        if (_currentPaintValue <= _maxPaintValue)
         {
             _paintSlider.value = _currentPaintValue;
         }

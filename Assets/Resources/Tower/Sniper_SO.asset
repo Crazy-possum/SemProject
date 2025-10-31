@@ -15,8 +15,15 @@ MonoBehaviour:
   Name: juhgv
   Description: iujhgbvfcd
   TowerEnum: 13
-  TowerAtkPattern: 4
   TowerPrefab: {fileID: 8247363688570845194, guid: 9b4238f50ab702a48be35e9645fd2c13,
     type: 3}
+  BulletPrefab: {fileID: 3391301395747254911, guid: 1e42a608d1d05334ea53b9397c3103c6,
+    type: 3}
   TowerSprite: {fileID: 0}
-  TowerCost: 1
+  TowerReloadTime: 1
+  BulletDuration: 0
+  BulletDOTTime: 0
+  MaxBulletDistance: 100
+  TowerDamage: 200
+  TowerRange: 0
+  TowerCost: 4

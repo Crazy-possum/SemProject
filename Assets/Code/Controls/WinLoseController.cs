@@ -11,22 +11,26 @@ public class WinLoseController : MonoBehaviour
     [Tooltip("Панель с победой")]
     [SerializeField] private GameObject _winPanel;
 
-    private bool _isAllEnemiesDefeated;
-    private bool _isDeafeated;
-    private bool _isWin;
+    private bool _isDeafeated = false;
+    private bool _isWin = false;
     private int _currentEnemyMiss;
     private int _currentEnemyCount;
+    private int _currentEnemyListLength;
 
     private void Start()
-    {
-        _isAllEnemiesDefeated = _currentEnemyCount + _currentEnemyMiss 
-            >= _enemySpawner.CurrentEnemyListLength;
+    { 
+        _currentEnemyListLength = _enemySpawner.CurrentEnemyListLength;
     }
 
     private void FixedUpdate()
     {
         _isDeafeated = _enemyCount.Defeat;
         _currentEnemyMiss = _enemyCount.Score;
+
+        if (_enemySpawner.CurrentEnemyListLength == 0 && _currentEnemyCount > 0)
+        {
+            _isWin = true;
+        }
 
         CheckGameComplite();
     }
@@ -59,11 +63,6 @@ public class WinLoseController : MonoBehaviour
     private void CheckKillCount()
     {
         _currentEnemyCount += 1;
-
-        if (_isAllEnemiesDefeated && _currentEnemyCount > 0)
-        {
-            _isWin = true;
-        }
     }
 
     private void CheckGameComplite()

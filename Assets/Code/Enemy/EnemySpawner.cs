@@ -13,9 +13,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform[] _enemyWayPointsList;
 
     [Tooltip("Длительность волны в сек")]
-    [SerializeField] private int _waveTimerValue;
+    [SerializeField] private float _waveTimerValue;
     [Tooltip("Время на спавн одного моба в сек")]
-    [SerializeField] private int _spawnTimerValue;
+    [SerializeField] private float _spawnTimerValue;
 
     private Timer _waveTimer;
     private Timer _spawnTimer;

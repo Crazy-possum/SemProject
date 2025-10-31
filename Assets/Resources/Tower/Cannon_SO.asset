@@ -15,8 +15,15 @@ MonoBehaviour:
   Name: uhyg
   Description: ujhygtfrd
   TowerEnum: 1
-  TowerAtkPattern: 1
   TowerPrefab: {fileID: 6552991973653936528, guid: 5f190943a04e7d4448aff3b4f9b39184,
     type: 3}
+  BulletPrefab: {fileID: 2400564409802790823, guid: da74d42fc7411d94daba009a705351da,
+    type: 3}
   TowerSprite: {fileID: 0}
+  TowerReloadTime: 4
+  BulletDuration: 0
+  BulletDOTTime: 0
+  MaxBulletDistance: 100
+  TowerDamage: 200
+  TowerRange: 0
   TowerCost: 3

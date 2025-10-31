@@ -15,8 +15,15 @@ MonoBehaviour:
   Name: j hbv
   Description: nhbgvf
   TowerEnum: 5
-  TowerAtkPattern: 3
   TowerPrefab: {fileID: 3472079420159571412, guid: d06746b34e95610418e05a27713c0d64,
     type: 3}
+  BulletPrefab: {fileID: 7888226068596529505, guid: 2d9bc1a970c823546bd04f56f3d83abf,
+    type: 3}
   TowerSprite: {fileID: 0}
+  TowerReloadTime: 4
+  BulletDuration: 0
+  BulletDOTTime: 0
+  MaxBulletDistance: 100
+  TowerDamage: 200
+  TowerRange: 0
   TowerCost: 1

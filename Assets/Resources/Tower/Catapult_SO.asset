@@ -15,8 +15,15 @@ MonoBehaviour:
   Name: nyhbgv
   Description: imjnhbgv
   TowerEnum: 9
-  TowerAtkPattern: 2
   TowerPrefab: {fileID: 1677010397393443974, guid: 90c1b3d014517c345bb397e39758f246,
     type: 3}
+  BulletPrefab: {fileID: 2919374653318123894, guid: cc7a9110101a29449b6b763070ef2edf,
+    type: 3}
   TowerSprite: {fileID: 0}
+  TowerReloadTime: 4
+  BulletDuration: 10
+  BulletDOTTime: 0.5
+  MaxBulletDistance: 100
+  TowerDamage: 200
+  TowerRange: 0
   TowerCost: 4

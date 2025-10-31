@@ -3213,8 +3213,8 @@ MonoBehaviour:
   - {fileID: 2069101555}
   - {fileID: 517317944}
   - {fileID: 2028483353}
-  _waveTimerValue: 6
-  _spawnTimerValue: 1
+  _waveTimerValue: 10
+  _spawnTimerValue: 0.5
 --- !u!114 &1262381824
 MonoBehaviour:
   m_ObjectHideFlags: 0
