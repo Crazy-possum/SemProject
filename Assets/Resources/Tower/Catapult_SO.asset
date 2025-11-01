@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0653ed133b124ce4db3771392b6c1803, type: 3}
   m_Name: Catapult_SO
   m_EditorClassIdentifier: 
-  Name: nyhbgv
-  Description: imjnhbgv
+  Name: "\u041A\u0430\u0442\u0430\u043F\u0443\u043B\u044C\u0442\u0430"
+  Description: "\u0410\u041E\u0415 \u0443\u0440\u043E\u043D"
   TowerEnum: 9
   TowerPrefab: {fileID: 1677010397393443974, guid: 90c1b3d014517c345bb397e39758f246,
     type: 3}
   BulletPrefab: {fileID: 2919374653318123894, guid: cc7a9110101a29449b6b763070ef2edf,
     type: 3}
-  TowerSprite: {fileID: 0}
+  TowerSprite: {fileID: 21300000, guid: e970cabe949147345a83b974a79c7aa8, type: 3}
   TowerReloadTime: 4
   BulletDuration: 10
   BulletDOTTime: 0.5
+  AttakeAngle: 0
   MaxBulletDistance: 100
+  BulletAmount: 0
   TowerDamage: 200
   TowerRange: 0
   TowerCost: 4

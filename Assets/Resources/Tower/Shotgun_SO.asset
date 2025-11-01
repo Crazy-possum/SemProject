@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0653ed133b124ce4db3771392b6c1803, type: 3}
   m_Name: Shotgun_SO
   m_EditorClassIdentifier: 
-  Name: j hbv
-  Description: nhbgvf
+  Name: "\u0414\u0440\u043E\u0431\u043E\u0432\u0438\u043A"
+  Description: "\u0412\u044B\u0441\u0442\u0440\u0435\u043B \u0434\u0440\u043E\u0431\u044C\u044E
+    \u0432 \u043A\u043E\u043D\u0443\u0441\u0435"
   TowerEnum: 5
   TowerPrefab: {fileID: 3472079420159571412, guid: d06746b34e95610418e05a27713c0d64,
     type: 3}
   BulletPrefab: {fileID: 7888226068596529505, guid: 2d9bc1a970c823546bd04f56f3d83abf,
     type: 3}
-  TowerSprite: {fileID: 0}
-  TowerReloadTime: 4
+  TowerSprite: {fileID: 21300000, guid: 40fd348989a1c1a4dbe46090ef454725, type: 3}
+  TowerReloadTime: 1
   BulletDuration: 0
   BulletDOTTime: 0
-  MaxBulletDistance: 100
+  AttakeAngle: 60
+  MaxBulletDistance: 7
+  BulletAmount: 6
   TowerDamage: 200
   TowerRange: 0
   TowerCost: 1

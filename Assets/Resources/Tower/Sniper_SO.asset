@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0653ed133b124ce4db3771392b6c1803, type: 3}
   m_Name: Sniper_SO
   m_EditorClassIdentifier: 
-  Name: juhgv
-  Description: iujhgbvfcd
+  Name: "\u0421\u043D\u0430\u0439\u043F\u0435\u0440\u043A\u0430"
+  Description: "\u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u0446\u0432\u0435
+    \u0446\u0435\u043B\u0438 \u043D\u0430 \u043F\u0443\u0442\u0438"
   TowerEnum: 13
   TowerPrefab: {fileID: 8247363688570845194, guid: 9b4238f50ab702a48be35e9645fd2c13,
     type: 3}
   BulletPrefab: {fileID: 3391301395747254911, guid: 1e42a608d1d05334ea53b9397c3103c6,
     type: 3}
-  TowerSprite: {fileID: 0}
+  TowerSprite: {fileID: 21300000, guid: 72b14a7a8e4aa6e40927fb406643760a, type: 3}
   TowerReloadTime: 1
   BulletDuration: 0
   BulletDOTTime: 0
+  AttakeAngle: 0
   MaxBulletDistance: 100
+  BulletAmount: 0
   TowerDamage: 200
   TowerRange: 0
   TowerCost: 4

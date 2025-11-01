@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0653ed133b124ce4db3771392b6c1803, type: 3}
   m_Name: Cannon_SO
   m_EditorClassIdentifier: 
-  Name: uhyg
-  Description: ujhygtfrd
+  Name: "\u041F\u0443\u0448\u043A\u0430"
+  Description: "\u041E\u0434\u0438\u043D\u043E\u0447\u043D\u044B\u0439 \u0437\u0430\u043B\u043F
+    \u0432 \u0446\u0435\u043B\u044C"
   TowerEnum: 1
   TowerPrefab: {fileID: 6552991973653936528, guid: 5f190943a04e7d4448aff3b4f9b39184,
     type: 3}
   BulletPrefab: {fileID: 2400564409802790823, guid: da74d42fc7411d94daba009a705351da,
     type: 3}
-  TowerSprite: {fileID: 0}
+  TowerSprite: {fileID: 21300000, guid: 455cfc60bc4072140a870194e2ff97c2, type: 3}
   TowerReloadTime: 4
   BulletDuration: 0
   BulletDOTTime: 0
+  AttakeAngle: 0
   MaxBulletDistance: 100
+  BulletAmount: 0
   TowerDamage: 200
   TowerRange: 0
   TowerCost: 3

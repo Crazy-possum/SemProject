@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class TowerBehavior
 {
@@ -29,16 +31,31 @@ public class TowerBehavior
         _bulletSpawner = bulletSpawner;
         _targetsList = new List<GameObject>();
     }
+    public virtual void SetTarget()
+    {
+        if (_currentTarget != null)
+        {
+            return;
+        }
+        if (TargetsList != null && TargetsList.Count > 0)
+        {
+            _currentTarget = TargetsList[0];
+        }
+    }
 
     public void SpawnBullet()
     {
-        Vector3 position = _bulletSpawner.position;
-        GameObject localBullet = GameObject.Instantiate(_towerBulletPrefab, position, Quaternion.identity, _bulletSpawner);
+        for (int i = 0; i < _towerSO.BulletAmount; i++)
+        {
+            Vector3 position = _bulletSpawner.position;
+            GameObject localBullet = GameObject.Instantiate(_towerBulletPrefab, position, Quaternion.identity, _bulletSpawner);
 
-        localBullet.GetComponent<TowerBulletBehavior>().BulletsCurrentTarget = _currentTarget;
-        localBullet.GetComponent<TowerBulletBehavior>().StartBulletPosition = _bulletSpawner;
-        localBullet.GetComponent<TowerBulletBehavior>().TowerSO = _towerSO;
+            localBullet.GetComponent<TowerBulletBehavior>().BulletsCurrentTarget = _currentTarget;
+            localBullet.GetComponent<TowerBulletBehavior>().StartBulletPosition = _bulletSpawner;
+            localBullet.GetComponent<TowerBulletBehavior>().TowerSO = _towerSO;
+        }
     }
+
 
     public void TowerRotate()
     {
@@ -68,21 +85,9 @@ public class TowerBehavior
         }
     }
 
-    public virtual void SetTarget()
-    {
-        if(_currentTarget != null)
-        {
-            return;
-        }
-        if (TargetsList != null && TargetsList.Count > 0)
-        {
-            _currentTarget = TargetsList[0];
-        }
-    }
-
     public virtual void AttakTarget()
     {
-        SpawnBullet();
+        SpawnBullet(); 
     }
 }
 

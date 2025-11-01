@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class TowerBulletBehavior : MonoBehaviour
@@ -57,9 +58,13 @@ public class TowerBulletBehavior : MonoBehaviour
         _timerDOTDuration = new Timer(_duration);
         _timerDOTSpace = new Timer(_timeDOT);
 
-        if (_towerEnum != TowerEnum.Cannon)
+        if (_towerEnum != TowerEnum.Cannon && _towerEnum != TowerEnum.Shotgun)
         {
-            MoveOnTargetDirection();
+            SetDirectionToTargetOnce();
+        }
+        else if (_towerEnum == TowerEnum.Shotgun)
+        {
+            GetSpreadDirection();
         }
     }
 
@@ -67,7 +72,7 @@ public class TowerBulletBehavior : MonoBehaviour
     {
         if (_towerEnum == TowerEnum.Cannon)
         {
-            MoveToTarget();
+            SetDirectionToTarget();
         }
 
         CheckDistance();
@@ -136,38 +141,60 @@ public class TowerBulletBehavior : MonoBehaviour
             float colorValue = enemy.CurrentPaintValue;
             float currentHealth = enemy.CurrentHealth;
 
-            switch (colorValue)
-            {
-                case 0: currentHealth -= 0; break;
-                case 1: currentHealth = currentHealth - (_damage * _firstPaintingStage); break;
-                case 2: currentHealth = currentHealth - (_damage * _secondPaintingStage); break;
-                case 3: currentHealth = currentHealth - (_damage * _thirdPaintingStage); break;
-                case 4: currentHealth = currentHealth - (_damage * _fourthPaintingStage); break;
-            }
-
+            CountDamage(colorValue, currentHealth);
             enemy.CurrentHealth = currentHealth;
         }
     }
 
-    private void MoveToTarget()
+    private void CountDamage(float colorValue, float currentHealth)
     {
-        Vector3 move = (_bulletsCurrentTarget.transform.position - gameObject.transform.position).normalized;
-        _movement.Set(_speed * move.x, _speed * move.y, 0);
-    }
+        float distanceFine = 0;
 
-    private void MoveOnTargetDirection()
-    {
-        Vector3 move = (_bulletsCurrentTarget.transform.position - gameObject.transform.position).normalized;
-        _movement.Set(_speed * move.x, _speed * move.y, 0);
-    }
-
-    private void CheckDistance()
-    {
-        float distance = Vector3.Distance(_startBulletPosition.position, gameObject.transform.position);
-        if (distance >= _maxDistance)
+        if (_towerSO.TowerEnum == TowerEnum.Shotgun)
         {
-            Destroy(gameObject);
+            float distance = Vector3.Distance(_startBulletPosition.position, gameObject.transform.position);
+            float distanceAfterNearestPoint = distance - 0.95f;
+
+            if (distanceAfterNearestPoint < 0)
+            {
+                distance = 0;
+            }
+
+            distanceFine = distance * (100 / (_maxDistance));
         }
+
+        float damageWithFin = _damage * (1 - (distanceFine / 100));
+
+        switch (colorValue)
+        {
+            case 0: currentHealth -= 0; break;
+            case 1: currentHealth = currentHealth - (damageWithFin * _firstPaintingStage); break;
+            case 2: currentHealth = currentHealth - (damageWithFin * _secondPaintingStage); break;
+            case 3: currentHealth = currentHealth - (damageWithFin * _thirdPaintingStage); break;
+            case 4: currentHealth = currentHealth - (damageWithFin * _fourthPaintingStage); break;
+        }
+    }
+
+    private void SetDirectionToTarget()
+    {
+        Vector3 move = (_bulletsCurrentTarget.transform.position - gameObject.transform.position).normalized;
+        _movement.Set(_speed * move.x, _speed * move.y, 0);
+    }
+
+    private void SetDirectionToTargetOnce()
+    {
+        SetDirectionToTarget();
+    }
+
+    private void GetSpreadDirection()
+    {
+        Vector3 baseMoveVector = (_bulletsCurrentTarget.transform.position - gameObject.transform.position).normalized;
+
+        Quaternion spreadRotation = Quaternion.Euler
+            (0, 0, Random.Range(-_towerSO.AttakeAngle  / 2, _towerSO.AttakeAngle / 2));
+
+        Vector3 move = spreadRotation * baseMoveVector;
+        _movement.Set(_speed * move.x, _speed * move.y, 0);
     }
 
     private void SwitchToAOE()
@@ -201,6 +228,15 @@ public class TowerBulletBehavior : MonoBehaviour
         else
         {
             _timerDOTDuration.StopCountdown();
+            Destroy(gameObject);
+        }
+    }
+
+    private void CheckDistance()
+    {
+        float distance = Vector3.Distance(_startBulletPosition.position, gameObject.transform.position);
+        if (distance >= _maxDistance)
+        {
             Destroy(gameObject);
         }
     }
