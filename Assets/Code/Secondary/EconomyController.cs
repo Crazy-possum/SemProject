@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class EconomyController : MonoBehaviour
 {
+    [Tooltip("Текст текущей валюты")]
     [SerializeField] private TMP_Text _currencyText;
 
     public int GeneralCurrency;
@@ -14,24 +12,22 @@ public class EconomyController : MonoBehaviour
 
     private void Start()
     {
-        CurrentIncome = 1;
-        GeneralCurrency = 10;
         _currencyText.text = GeneralCurrency.ToString();
     }
 
     private void OnEnable()
     {
-        EnemyParametrs.EnemyDied += CurrencySum;
+        EnemyParametrs.OnEnemyDied += CurrencySum;
     }
 
     private void OnDisable()
     {
-        EnemyParametrs.EnemyDied -= CurrencySum;
+        EnemyParametrs.OnEnemyDied -= CurrencySum;
     }
 
     private void CurrencySum()
     {
-        GeneralCurrency = GeneralCurrency + CurrentIncome;
+        GeneralCurrency += CurrentIncome;
         _currencyText.text = GeneralCurrency.ToString();
     }
 

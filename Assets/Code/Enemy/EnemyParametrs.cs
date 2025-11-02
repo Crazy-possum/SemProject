@@ -1,30 +1,35 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyParametrs : MonoBehaviour  
 {
+    [Tooltip("Слайдер ХП")]
     [SerializeField] private Slider _healthSlider;
+    [Tooltip("Слайдер покраски")] //Нужно будет заменить логику, когда появятся спрайты для покраса
     [SerializeField] private Slider _paintSlider;
+    [Tooltip("Максимальное ХП противника")]
     [SerializeField] private float _maxHealth = 1000;
-    [SerializeField] private float _maxPaint = 4;
+    [Tooltip("Максимальная степень покраски противника")]
+    [SerializeField] private float _maxPaintValue = 4;
 
-    public static event Action EnemyDied;
+    private static Action _onEnemyDied;
+    private float _currentHealth;
+    private float _currentPaintValue;
 
-    public float CurrentHealth;
-    public float CurrentPaint;
+    public static Action OnEnemyDied { get => _onEnemyDied; set => _onEnemyDied = value; }
+    public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
+    public float CurrentPaintValue { get => _currentPaintValue; set => _currentPaintValue = value; }
 
     void Start()
     {
-        CurrentHealth = _maxHealth;
-        CurrentPaint = 0;
+        _currentHealth = _maxHealth;
+        _currentPaintValue = 0;
         _healthSlider.maxValue = _maxHealth;
-        _paintSlider.maxValue = _maxPaint;
+        _paintSlider.maxValue = _maxPaintValue;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         UpdateHealth();
         UpdatePainting();
@@ -32,20 +37,20 @@ public class EnemyParametrs : MonoBehaviour
 
     private void UpdateHealth()
     {
-        _healthSlider.value = CurrentHealth;
+        _healthSlider.value = _currentHealth;
 
-        if (CurrentHealth <= 0)
+        if (_currentHealth <= 0)
         {
-            EnemyDied?.Invoke();
+            _onEnemyDied?.Invoke();
             Destroy(gameObject);
         }
     }
 
     private void UpdatePainting()
     {
-        if (CurrentPaint < 4)
+        if (_currentPaintValue <= _maxPaintValue)
         {
-            _paintSlider.value = CurrentPaint;
+            _paintSlider.value = _currentPaintValue;
         }
     }
 }

@@ -4,13 +4,13 @@ public class Timer
 {
     private int _timerBaseTime = 0;
     private float _timerCurrentTime;
-    private bool _startTimer = false;
+    private bool _isStartTimer = false;
 
-    private bool _reachingTimerMaxValue = false;
+    private bool _isReachingTimerMaxValue = false;
     private float _maxTimerValue;
 
-    public bool ReachingTimerMaxValue { get => _reachingTimerMaxValue; set => _reachingTimerMaxValue = value; }
-    public bool StartTimer { get => _startTimer; set => _startTimer = value; }
+    public bool ReachingTimerMaxValue { get => _isReachingTimerMaxValue; set => _isReachingTimerMaxValue = value; }
+    public bool StartTimer { get => _isStartTimer; set => _isStartTimer = value; }
     public float TimerCurrentTime { get => _timerCurrentTime; set => _timerCurrentTime = value; }
 
     public Timer(float maxTimerValue) 
@@ -20,28 +20,28 @@ public class Timer
 
     public void StartCountdown()
     {
-        _startTimer = true;
+        _isStartTimer = true;
     }
     public void PauseCountdown()
     {
-        _startTimer = false;
+        _isStartTimer = false;
     }
     public void StopCountdown()
     {
-        _startTimer = false;
+        _isStartTimer = false;
         _timerCurrentTime = _timerBaseTime;
-        _reachingTimerMaxValue = false;
+        _isReachingTimerMaxValue = false;
     }
 
     public void Wait()
     {
-        if (_startTimer == true)
+        if (_isStartTimer == true)
         {
             _timerCurrentTime += Time.deltaTime;
 
             if (_timerCurrentTime > _maxTimerValue)
             {
-                _reachingTimerMaxValue = true;
+                _isReachingTimerMaxValue = true;
             }
         }
     }
