@@ -143,6 +143,7 @@ public class ClickController : MonoBehaviour
             currentButton.TowerUpgradePanel = _towerUpgradePanel;
             currentButton.Tower = currentObject;
             currentButton.CustomizationUpgradeButton(upgradeSO);
+            //Debug.Log(upgradeSO);
         }
     }
 }

@@ -40,9 +40,20 @@ public class TowerBulletBehavior : MonoBehaviour
     private int _maxDistance;
     private float _damage;
 
+    private bool _firstUpgrade;
+    private bool _secondUpgrade;
+    private bool _thirdUpgrade;
+    private int _updateIntValue;
+
     public GameObject BulletsCurrentTarget { get => _bulletsCurrentTarget; set => _bulletsCurrentTarget = value; }
     public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
+
+
+    public bool FirstUpgrade { get => _firstUpgrade; set => _firstUpgrade = value; }
+    public bool SecondUpgrade { get => _secondUpgrade; set => _secondUpgrade = value; }
+    public bool ThirdUpgrade { get => _thirdUpgrade; set => _thirdUpgrade = value; }
+    public int UpdateIntValue { get => _updateIntValue; set => _updateIntValue = value; }
 
     private void Start()
     {
@@ -54,6 +65,11 @@ public class TowerBulletBehavior : MonoBehaviour
         _duration = _towerSO.BulletDuration;
         _timeDOT = _towerSO.BulletDOTTime;
         _damage = _towerSO.TowerDamage;
+
+        if (_towerSO.TowerEnum == TowerEnum.Cannon && _secondUpgrade)
+        {
+            UpdateDamage();
+        }
 
         _timerDOTDuration = new Timer(_duration);
         _timerDOTSpace = new Timer(_timeDOT);
@@ -86,7 +102,6 @@ public class TowerBulletBehavior : MonoBehaviour
                 _timerDOTDuration.StartCountdown();
                 SwitchToAOE();
                 _bulletTriggerZone = gameObject.GetComponentInChildren<TowerAOEBulletTriggerZone>();
-                Debug.Log(_bulletTriggerZone);
             }
             else
             {
@@ -97,8 +112,6 @@ public class TowerBulletBehavior : MonoBehaviour
         {
             DamageOverTime();
         }
-
-        Debug.Log(_damage);
     }
 
     private void OnTriggerEnter (Collider other)
@@ -109,6 +122,7 @@ public class TowerBulletBehavior : MonoBehaviour
             if (_towerEnum != TowerEnum.Catapult)
             {
                 DealDamage(enemy);
+                Debug.Log(_damage);
             }
 
             if (_towerEnum != TowerEnum.Sniper && _towerEnum != TowerEnum.Catapult)
@@ -116,16 +130,6 @@ public class TowerBulletBehavior : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-    }
-
-    private void OnEnable()
-    {
-        //TowerUpgrader.OnActivateCannonSecondUpgrade += UpdateDamage;
-    }
-
-    private void OnDisable()
-    {
-        //TowerUpgrader.OnActivateCannonSecondUpgrade -= UpdateDamage;
     }
 
     private void DealDamage(EnemyParametrs enemy)
@@ -255,9 +259,8 @@ public class TowerBulletBehavior : MonoBehaviour
 
     //-----------------------Liseners--------------------------------------------------------------------------
 
-    private void UpdateDamage(int addDamage)
+    private void UpdateDamage()
     {
-        _damage += addDamage;
-        Debug.Log($"прошло { _damage}");
+        _damage += _updateIntValue;
     }
 }

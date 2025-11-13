@@ -9,13 +9,33 @@ public class TowerUpgrader : MonoBehaviour
     private TowerView _view;
     private ScriptableListScript _towerUpgradeListSO;
 
-    private static Action<float> _on;
-    private static Action<int> _onActivateCannonSecondUpgrade;
+    private static Action<float, GameObject> _onActivateCannonFirstUpgrade;
+    private static Action<int, GameObject> _onActivateCannonSecondUpgrade;
+    private static Action<int, GameObject> _onActivateCannonThirdUpgrade;
+    private static Action<int, GameObject> _onActivateShotgunFirstUpgrade;
+    private static Action<int, GameObject> _onActivateShotgunSecondUpgrade;
+    private static Action<int, GameObject> _onActivateShotgunThirdUpgrade;
+    private static Action<float, GameObject> _onActivateCatapultFirstUpgrade;
+    private static Action<int, GameObject> _onActivateCatapultSecondUpgrade;
+    private static Action<int, GameObject> _onActivateCatapultThirdUpgrade;
+    private static Action<float, GameObject> _onActivateSniperFirstUpgrade;
+    private static Action<int, GameObject> _onActivateSniperSecondUpgrade;
+    private static Action<int, GameObject> _onActivateSniperThirdUpgrade;
 
     private int _parametrUpgrade;
 
-    public static Action<float> On { get => _on; set => _on = value; }
-    public static Action<int> OnActivateCannonSecondUpgrade { get => _onActivateCannonSecondUpgrade; set => _onActivateCannonSecondUpgrade = value; }
+    public static Action<float, GameObject> OnActivateCannonFirstUpgrade { get => _onActivateCannonFirstUpgrade; set => _onActivateCannonFirstUpgrade = value; }
+    public static Action<int, GameObject> OnActivateCannonSecondUpgrade { get => _onActivateCannonSecondUpgrade; set => _onActivateCannonSecondUpgrade = value; }
+    public static Action<int, GameObject> OnActivateCannonThirdUpgrade { get => _onActivateCannonThirdUpgrade; set => _onActivateCannonThirdUpgrade = value; }
+    public static Action<int, GameObject> OnActivateShotgunFirstUpgrade { get => _onActivateShotgunFirstUpgrade; set => _onActivateShotgunFirstUpgrade = value; }
+    public static Action<int, GameObject> OnActivateShotgunSecondUpgrade { get => _onActivateShotgunSecondUpgrade; set => _onActivateShotgunSecondUpgrade = value; }
+    public static Action<int, GameObject> OnActivateShotgunThirdUpgrade { get => _onActivateShotgunThirdUpgrade; set => _onActivateShotgunThirdUpgrade = value; }
+    public static Action<float, GameObject> OnActivateCatapultFirstUpgrade { get => _onActivateCatapultFirstUpgrade; set => _onActivateCatapultFirstUpgrade = value; }
+    public static Action<int, GameObject> OnActivateCatapultSecondUpgrade { get => _onActivateCatapultSecondUpgrade; set => _onActivateCatapultSecondUpgrade = value; }
+    public static Action<int, GameObject> OnActivateCatapultThirdUpgrade { get => _onActivateCatapultThirdUpgrade; set => _onActivateCatapultThirdUpgrade = value; }
+    public static Action<float, GameObject> OnActivateSniperFirstUpgrade { get => _onActivateSniperFirstUpgrade; set => _onActivateSniperFirstUpgrade = value; }
+    public static Action<int, GameObject> OnActivateSniperSecondUpgrade { get => _onActivateSniperSecondUpgrade; set => _onActivateSniperSecondUpgrade = value; }
+    public static Action<int, GameObject> OnActivateSniperThirdUpgrade { get => _onActivateSniperThirdUpgrade; set => _onActivateSniperThirdUpgrade = value; }
 
     private void Awake()
     {
@@ -110,12 +130,7 @@ public class TowerUpgrader : MonoBehaviour
     {
         int addDamage = _parametrUpgrade;
 
-        OnActivateCannonSecondUpgrade.Invoke(addDamage);
-        Debug.Log(1);
-        
-        
-        //”величение урона 
-        //ѕросто добавить перменную в метод подсчета урона
+        _onActivateCannonSecondUpgrade?.Invoke(addDamage, _towerObject);
     }
 
     private void ActivateCannonThirdUpgrade()
@@ -126,6 +141,10 @@ public class TowerUpgrader : MonoBehaviour
 
     private void ActivateShotgunFirstUpgrade()
     {
+        int addBulletAmount = _parametrUpgrade;
+
+        _onActivateShotgunFirstUpgrade?.Invoke(addBulletAmount, _towerObject);
+
         //”величение количества дробинок
         //ѕросто добавить переменную в метод пересчета снар€дов
     }

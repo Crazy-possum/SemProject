@@ -55,7 +55,6 @@ public class DecisionButton : MonoBehaviour
         _towerNameText.text = upgradeSO.Name;
         _towerCostText.text = $"{upgradeSO.TowerCost}";
         _towerDescriptionText.text = upgradeSO.Description;
-
         _upgradeSO = upgradeSO;
     }
 

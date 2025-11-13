@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor.Experimental.GraphView;
@@ -14,14 +15,20 @@ public class TowerAttak : MonoBehaviour
     private TowerBehavior _towerBehavior;
     private List<GameObject> _targetsList;
     private TowerScriptable _towerSO;
+    private PurchasedUpgrade _purchasedUpgrade;
+    private Timer _attakTimer;
+
     private GameObject _towerBulletPrefab;
     private GameObject _currentTarget;
     private Rigidbody _towerRb;
-    private Timer _attakTimer;
 
     private TowerEnum _towerEnum;
 
     private float _attakReload;
+
+    private bool _firstUpgrade;
+    private bool _secondUpgrade;
+    private bool _thirdUpgrade;
 
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
