@@ -30,7 +30,7 @@ public class TowerBuilder : MonoBehaviour
     {
         _buildPointTransform = _buildPointObject.transform;
 
-        _towerSO = _towerObjectListSO.SOList.Find(item => item.TowerEnum == towerEnum);
+        _towerSO = _towerObjectListSO.TowerSOList.Find(item => item.TowerEnum == towerEnum);
 
         Vector3 position = _buildPointTransform.position;
         GameObject towerGO = GameObject.Instantiate(_towerSO.TowerPrefab, position, Quaternion.identity, _towerGroup.transform);

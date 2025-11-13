@@ -31,6 +31,17 @@ public class TowerBehavior
         _bulletSpawner = bulletSpawner;
         _targetsList = new List<GameObject>();
     }
+
+    private void OnEnable()
+    {
+        TowerUpgrader.OnActivateCannonSecondUpgrade += UpdateDamage;
+    }
+
+    private void OnDisable()
+    {
+        TowerUpgrader.OnActivateCannonSecondUpgrade -= UpdateDamage;
+    }
+
     public virtual void SetTarget()
     {
         if (_currentTarget != null)
@@ -89,5 +100,11 @@ public class TowerBehavior
     {
         SpawnBullet(); 
     }
+
+    private void UpdateDamage(int obj)
+    {
+        
+    }
+
 }
 

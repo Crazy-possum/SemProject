@@ -97,6 +97,8 @@ public class TowerBulletBehavior : MonoBehaviour
         {
             DamageOverTime();
         }
+
+        Debug.Log(_damage);
     }
 
     private void OnTriggerEnter (Collider other)
@@ -114,6 +116,16 @@ public class TowerBulletBehavior : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        //TowerUpgrader.OnActivateCannonSecondUpgrade += UpdateDamage;
+    }
+
+    private void OnDisable()
+    {
+        //TowerUpgrader.OnActivateCannonSecondUpgrade -= UpdateDamage;
     }
 
     private void DealDamage(EnemyParametrs enemy)
@@ -239,5 +251,13 @@ public class TowerBulletBehavior : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    //-----------------------Liseners--------------------------------------------------------------------------
+
+    private void UpdateDamage(int addDamage)
+    {
+        _damage += addDamage;
+        Debug.Log($"прошло { _damage}");
     }
 }

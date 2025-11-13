@@ -10,6 +10,8 @@ public class DecisionButton : MonoBehaviour
     [SerializeField] private TowerUpgrader _towerUpgrader;
     [Tooltip("Панель с выбором башни на постройку")]
     [SerializeField] private GameObject _towerBuildPanel;
+    [SerializeField] private GameObject _towerUpgradePanel;
+    [SerializeField] private GameObject _tower;
     [SerializeField] private Image _towerImage;
     [SerializeField] private TMP_Text _towerNameText;
     [SerializeField] private TMP_Text _towerCostText;
@@ -18,10 +20,13 @@ public class DecisionButton : MonoBehaviour
     [SerializeField] private TowerEnum _localTowerEnum;
 
     private Button _button;
+    private TowerUpgradeSO _upgradeSO;
 
     public TowerBuilder TowerBuilder { get => _towerBuilder; set => _towerBuilder = value; }
     public TowerUpgrader TowerUpgrader { get => _towerUpgrader; set => _towerUpgrader = value; }
     public GameObject TowerBuildPanel { get => _towerBuildPanel; set => _towerBuildPanel = value; }
+    public GameObject TowerUpgradePanel { get => _towerUpgradePanel; set => _towerUpgradePanel = value; }
+    public GameObject Tower { get => _tower; set => _tower = value; }
     public TowerEnum LocalTowerEnum { get => _localTowerEnum; set => _localTowerEnum = value; }
 
     private void Awake()
@@ -36,8 +41,7 @@ public class DecisionButton : MonoBehaviour
         _button.onClick.RemoveAllListeners();
     }
 
-
-    public void CustomizationButton(TowerScriptable towerSO)
+    public void CustomizationBuildButton(TowerScriptable towerSO)
     {
         _towerImage.sprite = towerSO.TowerSprite;
         _towerNameText.text = towerSO.Name;
@@ -45,9 +49,18 @@ public class DecisionButton : MonoBehaviour
         _towerDescriptionText.text = towerSO.Description;
     }
 
+    public void CustomizationUpgradeButton(TowerUpgradeSO upgradeSO)
+    {
+        _towerImage.sprite = upgradeSO.TowerSprite;
+        _towerNameText.text = upgradeSO.Name;
+        _towerCostText.text = $"{upgradeSO.TowerCost}";
+        _towerDescriptionText.text = upgradeSO.Description;
+
+        _upgradeSO = upgradeSO;
+    }
+
     private void BuildTower()
     {
-
         if (_localTowerEnum == TowerEnum.Cannon || _localTowerEnum == TowerEnum.Shotgun ||
             _localTowerEnum == TowerEnum.Catapult || _localTowerEnum == TowerEnum.Sniper)
         {
@@ -58,13 +71,13 @@ public class DecisionButton : MonoBehaviour
 
     private void UpgradeTower()
     {
-        if (_localTowerEnum == TowerEnum.Cannon_firstUpgrade || _localTowerEnum == TowerEnum.Cannon_secordUpgrade || _localTowerEnum == TowerEnum.Cannon_thirdUpgrade ||
+        if (_localTowerEnum == TowerEnum.Cannon_firstUpgrade || _localTowerEnum == TowerEnum.Cannon_secondUpgrade || _localTowerEnum == TowerEnum.Cannon_thirdUpgrade ||
             _localTowerEnum == TowerEnum.Shotgun_firstUpgrade || _localTowerEnum == TowerEnum.Shotgun_secondUpgrade || _localTowerEnum == TowerEnum.Shotgun_thirdUpgrade ||
-            _localTowerEnum == TowerEnum.Catapult_firstUpgrade || _localTowerEnum == TowerEnum.Catapult_secordUpgrade || _localTowerEnum == TowerEnum.Catapult_thirdUpgrade ||
-            _localTowerEnum == TowerEnum.Sniper_firstUpgrade || _localTowerEnum == TowerEnum.Sniper_secordUpgrade || _localTowerEnum == TowerEnum.Sniper_thirdUpgrade)
+            _localTowerEnum == TowerEnum.Catapult_firstUpgrade || _localTowerEnum == TowerEnum.Catapult_secondUpgrade || _localTowerEnum == TowerEnum.Catapult_thirdUpgrade ||
+            _localTowerEnum == TowerEnum.Sniper_firstUpgrade || _localTowerEnum == TowerEnum.Sniper_secondUpgrade || _localTowerEnum == TowerEnum.Sniper_thirdUpgrade)
         {
-            _towerUpgrader.ChooseTowerUpgrade(_localTowerEnum);
-            _towerBuildPanel.SetActive(false);
+            _towerUpgrader.SetTowerUpgrade(_tower, _upgradeSO);
+            _towerUpgradePanel.SetActive(false);
         }
     }
 }
