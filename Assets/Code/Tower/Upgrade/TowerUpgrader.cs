@@ -13,8 +13,8 @@ public class TowerUpgrader : MonoBehaviour
     private static Action<int, GameObject> _onActivateCannonSecondUpgrade;
     private static Action<int, GameObject> _onActivateCannonThirdUpgrade;
     private static Action<int, GameObject> _onActivateShotgunFirstUpgrade;
-    private static Action<int, GameObject> _onActivateShotgunSecondUpgrade;
-    private static Action<int, GameObject> _onActivateShotgunThirdUpgrade;
+    private static Action<float, GameObject> _onActivateShotgunSecondUpgrade;
+    private static Action<float, GameObject> _onActivateShotgunThirdUpgrade;
     private static Action<float, GameObject> _onActivateCatapultFirstUpgrade;
     private static Action<int, GameObject> _onActivateCatapultSecondUpgrade;
     private static Action<int, GameObject> _onActivateCatapultThirdUpgrade;
@@ -22,14 +22,15 @@ public class TowerUpgrader : MonoBehaviour
     private static Action<int, GameObject> _onActivateSniperSecondUpgrade;
     private static Action<int, GameObject> _onActivateSniperThirdUpgrade;
 
-    private int _parametrUpgrade;
+    private int _intParametrUpgrade;
+    private float _floatParametrUpgrade;
 
     public static Action<float, GameObject> OnActivateCannonFirstUpgrade { get => _onActivateCannonFirstUpgrade; set => _onActivateCannonFirstUpgrade = value; }
     public static Action<int, GameObject> OnActivateCannonSecondUpgrade { get => _onActivateCannonSecondUpgrade; set => _onActivateCannonSecondUpgrade = value; }
     public static Action<int, GameObject> OnActivateCannonThirdUpgrade { get => _onActivateCannonThirdUpgrade; set => _onActivateCannonThirdUpgrade = value; }
     public static Action<int, GameObject> OnActivateShotgunFirstUpgrade { get => _onActivateShotgunFirstUpgrade; set => _onActivateShotgunFirstUpgrade = value; }
-    public static Action<int, GameObject> OnActivateShotgunSecondUpgrade { get => _onActivateShotgunSecondUpgrade; set => _onActivateShotgunSecondUpgrade = value; }
-    public static Action<int, GameObject> OnActivateShotgunThirdUpgrade { get => _onActivateShotgunThirdUpgrade; set => _onActivateShotgunThirdUpgrade = value; }
+    public static Action<float, GameObject> OnActivateShotgunSecondUpgrade { get => _onActivateShotgunSecondUpgrade; set => _onActivateShotgunSecondUpgrade = value; }
+    public static Action<float, GameObject> OnActivateShotgunThirdUpgrade { get => _onActivateShotgunThirdUpgrade; set => _onActivateShotgunThirdUpgrade = value; }
     public static Action<float, GameObject> OnActivateCatapultFirstUpgrade { get => _onActivateCatapultFirstUpgrade; set => _onActivateCatapultFirstUpgrade = value; }
     public static Action<int, GameObject> OnActivateCatapultSecondUpgrade { get => _onActivateCatapultSecondUpgrade; set => _onActivateCatapultSecondUpgrade = value; }
     public static Action<int, GameObject> OnActivateCatapultThirdUpgrade { get => _onActivateCatapultThirdUpgrade; set => _onActivateCatapultThirdUpgrade = value; }
@@ -46,7 +47,8 @@ public class TowerUpgrader : MonoBehaviour
     {
         _upgradeSO = upgradeSO;
         _towerObject = tower;
-        _parametrUpgrade = upgradeSO.UpgradeIntValue;
+        _intParametrUpgrade = upgradeSO.UpgradeIntValue;
+        _floatParametrUpgrade = upgradeSO.UpgradeFloatValue;
         _view = tower.GetComponent<TowerView>();
 
         SetUpgradeSprite();
@@ -123,12 +125,11 @@ public class TowerUpgrader : MonoBehaviour
     {
         //Дабл - шот (стреляет с микропромежутком)
         //Нужен таймер, по истечении которого будет дублироваться скрипт выстрела. Сместить для него буллетСпавнер
-        //_onEnemyDied?.Invoke();
     }
 
     private void ActivateCannonSecondUpgrade()
     {
-        int addDamage = _parametrUpgrade;
+        int addDamage = _intParametrUpgrade;
 
         _onActivateCannonSecondUpgrade?.Invoke(addDamage, _towerObject);
     }
@@ -141,28 +142,31 @@ public class TowerUpgrader : MonoBehaviour
 
     private void ActivateShotgunFirstUpgrade()
     {
-        int addBulletAmount = _parametrUpgrade;
+        int addBulletAmount = _intParametrUpgrade;
 
         _onActivateShotgunFirstUpgrade?.Invoke(addBulletAmount, _towerObject);
-
-        //Увеличение количества дробинок
-        //Просто добавить переменную в метод пересчета снарядов
     }
 
     private void ActivateShotgunSecondUpgrade()
     {
-        //Увеличение радиуса
-        //Просто изменить размер триггера
+        float addTowerRange = _floatParametrUpgrade;
+
+        _onActivateShotgunSecondUpgrade?.Invoke(addTowerRange, _towerObject);
     }
 
     private void ActivateShotgunThirdUpgrade()
     {
-        //Ускорение перезарядки
-        //Просто добавить переменную к таймеру перезарядки
+        float cutReload = _floatParametrUpgrade;
+
+        _onActivateShotgunThirdUpgrade?.Invoke(cutReload, _towerObject);
     }
 
     private void ActivateCatapultFirstUpgrade()
     {
+        float addAoeRange = _floatParametrUpgrade;
+
+        _onActivateCatapultFirstUpgrade?.Invoke(addAoeRange, _towerObject);
+
         //Увеличение площади
         //Просто изменить размер триггера
     }

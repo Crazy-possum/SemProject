@@ -12,6 +12,8 @@ public class TowerAttak : MonoBehaviour
     [SerializeField] private Transform _bulletSpawner;
     [Tooltip("Таймер перезарядки в сек")]
 
+    public float AttakReload;
+
     private TowerBehavior _towerBehavior;
     private List<GameObject> _targetsList;
     private TowerScriptable _towerSO;
@@ -23,8 +25,6 @@ public class TowerAttak : MonoBehaviour
     private Rigidbody _towerRb;
 
     private TowerEnum _towerEnum;
-
-    private float _attakReload;
 
     private bool _firstUpgrade;
     private bool _secondUpgrade;
@@ -38,12 +38,10 @@ public class TowerAttak : MonoBehaviour
     private void Start()
     {
         _towerRb = GetComponent<Rigidbody>();
-
         _towerEnum = _towerSO.TowerEnum;
-        _attakReload = _towerSO.TowerReloadTime;
         _towerBulletPrefab = _towerSO.BulletPrefab;
 
-        _attakTimer = new Timer(_attakReload);
+        SetReloatTimer();
 
         if (_towerEnum == TowerEnum.Cannon)
         {
@@ -82,6 +80,12 @@ public class TowerAttak : MonoBehaviour
     public void SetTargetList(List<GameObject> targetsList)
     {
         _towerBehavior.TargetsList = targetsList;
+    }
+
+    public void SetReloatTimer()
+    {
+        AttakReload = _towerSO.TowerReloadTime;
+        _attakTimer = new Timer(AttakReload);
     }
 }
 

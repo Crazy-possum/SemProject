@@ -10,12 +10,6 @@ public class TowerScriptable : ScriptableObject
     public string Description;
     [Tooltip("Тип башни")]
     public TowerEnum TowerEnum;
-    [Tooltip("SO первого улучшения")]
-    public TowerUpgradeSO FirstUpgrade;
-    [Tooltip("SO второго улучшения")]
-    public TowerUpgradeSO SecondUpgrade;
-    [Tooltip("SO третьего улучшения")]
-    public TowerUpgradeSO ThirdUpgrade;
     [Tooltip("Префаб башни")]
     public GameObject TowerPrefab;
     [Tooltip("Префаб патрона")]
@@ -30,14 +24,14 @@ public class TowerScriptable : ScriptableObject
     public float BulletDOTTime;
     [Tooltip("Угол конуса атаки")]
     public float AttakeAngle;
+    [Tooltip("Радиус атаки")]
+    public float TowerRange;
     [Tooltip("Дистанция существования патрона")]
     public int MaxBulletDistance;
     [Tooltip("Количество патронов")]
     public int BulletAmount;
     [Tooltip("Урон башни")]
     public int TowerDamage;
-    [Tooltip("Радиус атаки")]
-    public int TowerRange;
     [Tooltip("Стоимость постройки")]
     public int TowerCost;
 }

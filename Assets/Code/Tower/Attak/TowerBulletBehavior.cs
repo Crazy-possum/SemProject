@@ -37,12 +37,14 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private float _duration;
     private float _timeDOT;
-    private int _maxDistance;
     private float _damage;
+    private float _aoeRadius;
+    private int _maxDistance;
 
     private bool _firstUpgrade;
     private bool _secondUpgrade;
     private bool _thirdUpgrade;
+    private float _updateFloatValue;
     private int _updateIntValue;
 
     public GameObject BulletsCurrentTarget { get => _bulletsCurrentTarget; set => _bulletsCurrentTarget = value; }
@@ -54,6 +56,7 @@ public class TowerBulletBehavior : MonoBehaviour
     public bool SecondUpgrade { get => _secondUpgrade; set => _secondUpgrade = value; }
     public bool ThirdUpgrade { get => _thirdUpgrade; set => _thirdUpgrade = value; }
     public int UpdateIntValue { get => _updateIntValue; set => _updateIntValue = value; }
+    public float UpdateFloatValue { get => _updateFloatValue; set => _updateFloatValue = value; }
 
     private void Start()
     {
@@ -65,6 +68,16 @@ public class TowerBulletBehavior : MonoBehaviour
         _duration = _towerSO.BulletDuration;
         _timeDOT = _towerSO.BulletDOTTime;
         _damage = _towerSO.TowerDamage;
+
+        if (_towerSO.TowerEnum == TowerEnum.Catapult)
+        {
+            _aoeRadius = gameObject.GetComponentInChildren<TowerTriggerZone>().gameObject.GetComponent<SphereCollider>().radius;
+
+            if (_firstUpgrade)
+            {
+                IncreaseAoeRange();
+            }
+        }
 
         if (_towerSO.TowerEnum == TowerEnum.Cannon && _secondUpgrade)
         {
@@ -262,5 +275,10 @@ public class TowerBulletBehavior : MonoBehaviour
     private void UpdateDamage()
     {
         _damage += _updateIntValue;
+    }
+
+    private void IncreaseAoeRange()
+    {
+        _aoeRadius += _updateFloatValue;
     }
 }
