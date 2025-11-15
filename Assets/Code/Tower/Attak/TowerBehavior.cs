@@ -13,21 +13,27 @@ public class TowerBehavior
     protected GameObject _towerObject;
     protected Transform _bulletSpawner;
     protected Rigidbody _towerRb;
+    protected SphereCollider _towerTriggerCollizion;
 
     protected TowerTargetEnum _towerAtkPattern;
 
     protected float _attakReload;
-    private float _towerRange;
 
-    private bool _firstUpgrade = false;
-    private bool _secondUpgrade = false;
-    private bool _thirdUpgrade = false;
-    private int _updateIntValue = 0;
-    private float _updateFloatValue = 0;
+    protected bool _firstUpgrade = false;
+    protected bool _secondUpgrade = false;
+    protected bool _thirdUpgrade = false;
+    protected int _updateIntDamageValue = 0;
+    protected int _updateIntAmountValue = 0;
+    protected int _updateIntDistanceValue = 0;
+    protected float _updateFloatTimerValue = 0;
+    protected float _updateFloatRadiusValue = 0;
+    protected float _updateFloatDamageValue = 0;
+
+    private Timer _doubleShotTimer;
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
 
-    public TowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer, 
+    public TowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer,
         GameObject bulletPref, GameObject towerObject, Transform bulletSpawner)
     {
         _towerSO = towerSO;
@@ -36,16 +42,16 @@ public class TowerBehavior
         _towerBulletPrefab = bulletPref;
         _towerObject = towerObject;
         _bulletSpawner = bulletSpawner;
-        _towerRange = _towerObject.GetComponentInChildren<TowerTriggerZone>().gameObject.GetComponent<SphereCollider>().radius;
+        _towerTriggerCollizion = _towerObject.GetComponentInChildren<TowerTriggerZone>().gameObject.GetComponent<SphereCollider>();
         _targetsList = new List<GameObject>();
 
         if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
         {
-            _towerRange = _towerSO.TowerRange + _updateFloatValue; //------------Liseners------------
+            _towerTriggerCollizion.radius = _towerSO.TowerRange + _updateFloatRadiusValue; //------------Liseners------------
         }
         else
         {
-            _towerRange = _towerSO.TowerRange;
+            _towerTriggerCollizion.radius = _towerSO.TowerRange;
         }
 
         AddLiseners();
@@ -53,11 +59,18 @@ public class TowerBehavior
 
     public void AddLiseners()
     {
+        TowerUpgrader.OnActivateCannonFirstUpgrade += ActivateCannonFirstUpgrade; 
         TowerUpgrader.OnActivateCannonSecondUpgrade += ActivateCannonSecondUpdate;
+        TowerUpgrader.OnActivateCannonThirdUpgrade += ActivateCannonThierdUpgrade;
         TowerUpgrader.OnActivateShotgunFirstUpgrade += ActivateShotgunFirstUpdate;
         TowerUpgrader.OnActivateShotgunSecondUpgrade += ActivateShotgunSecondUpdate;
         TowerUpgrader.OnActivateShotgunThirdUpgrade += ActivateShotgunThirdUpdate;
         TowerUpgrader.OnActivateCatapultFirstUpgrade += ActivateCatapultFirstUpgrade;
+        TowerUpgrader.OnActivateCatapultSecondUpgrade += ActivateCatapultSecondUpgrade;
+        TowerUpgrader.OnActivateCatapultThirdUpgrade += ActivateCatapultThirdUpgrade;
+        TowerUpgrader.OnActivateSniperFirstUpgrade += ActivateSniperFirstUpgrade;
+        TowerUpgrader.OnActivateSniperSecondUpgrade += ActivateSniperSecondUpgrade;
+        TowerUpgrader.OnActivateSniperThirdUpgrade += ActivateSniperThirdUpgrade;
     }
 
     public virtual void SetTarget()
@@ -76,7 +89,7 @@ public class TowerBehavior
     {
         if (_firstUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
         {
-            int bulletAmount = _towerSO.BulletAmount + _updateIntValue; //------------Liseners------------
+            int bulletAmount = _towerSO.BulletAmount + _updateIntAmountValue; //------------Liseners------------
         }
         else
         {
@@ -97,9 +110,13 @@ public class TowerBehavior
             towerBulletBehavior.FirstUpgrade = _firstUpgrade;
             towerBulletBehavior.SecondUpgrade = _secondUpgrade;
             towerBulletBehavior.ThirdUpgrade = _thirdUpgrade;
-            towerBulletBehavior.UpdateFloatValue = _updateFloatValue;
-            towerBulletBehavior.UpdateIntValue = _updateIntValue;
-            //localBullet.GetComponent<TowerBulletBehavior>()
+            towerBulletBehavior.UpdateFloatTimerValue = _updateFloatTimerValue;
+            towerBulletBehavior.UpdateFloatRadiusValue = _updateFloatRadiusValue;
+            towerBulletBehavior.UpdateFloatDamageValue = _updateFloatDamageValue;
+            towerBulletBehavior.UpdateIntValue = _updateIntDamageValue;
+            towerBulletBehavior.UpdateIntDistanceValue = _updateIntDistanceValue;
+            towerBulletBehavior.UpdateIntAmountValue = _updateIntAmountValue;
+            towerBulletBehavior.TargetsList = _targetsList;
         }
     }
 
@@ -125,6 +142,11 @@ public class TowerBehavior
 
             if (_attakTimer.ReachingTimerMaxValue == true)
             {
+                if (_towerSO.TowerEnum == TowerEnum.Cannon && _firstUpgrade)
+                {
+                    ReloadDoubleShotTimer();
+                }
+
                 TowerRotate();
                 AttakTarget();
                 _attakTimer.StopCountdown();
@@ -134,17 +156,33 @@ public class TowerBehavior
 
     public virtual void AttakTarget()
     {
-        SpawnBullet(); 
+        SpawnBullet();
     }
-
-    //-----------------------Liseners--------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------------------------------------------
+    #region addLiseners
+    public void ActivateCannonFirstUpgrade(float newTimerTime, GameObject tower)
+    {
+        if (_towerObject == tower)
+        {
+            _firstUpgrade = true;
+            AddDoubleShot(newTimerTime);
+        }
+    }
 
     public void ActivateCannonSecondUpdate(int addDamage, GameObject tower)
     {
         if (_towerObject == tower)
         {
             _secondUpgrade = true;
-            _updateIntValue = addDamage;
+            _updateIntDamageValue = addDamage;
+        }
+    }
+
+    public void ActivateCannonThierdUpgrade(GameObject tower)
+    {
+        if (_towerObject == tower)
+        {
+            _thirdUpgrade = true;
         }
     }
 
@@ -153,36 +191,108 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _firstUpgrade = true;
-            _updateIntValue = addBulletAmount;
+            _updateIntAmountValue = addBulletAmount;
         }
     }
 
-    private void ActivateShotgunSecondUpdate(float addTowerRange, GameObject tower)
+    public void ActivateShotgunSecondUpdate(float addTowerRange, GameObject tower)
     {
         if (_towerObject == tower)
         {
             _secondUpgrade = true;
-            _updateFloatValue = addTowerRange;
+            _updateFloatRadiusValue = addTowerRange;
         }
     }
 
-    private void ActivateShotgunThirdUpdate(float cutReload, GameObject tower)
+    public void ActivateShotgunThirdUpdate(float cutReload, GameObject tower)
     {
         if (_towerObject == tower)
         {
             _thirdUpgrade = true;
-            _updateFloatValue = cutReload;
-
             tower.GetComponent<TowerAttak>().AttakReload -= cutReload;
         }
     }
 
-    private void ActivateCatapultFirstUpgrade(float addAoeRange, GameObject tower)
+    public void ActivateCatapultFirstUpgrade(float addAoeRange, GameObject tower)
     {
         if (_towerObject == tower)
         {
             _firstUpgrade = true;
-            _updateFloatValue = addAoeRange;
+            _updateFloatRadiusValue = addAoeRange;
+        }
+    }
+
+    public void ActivateCatapultSecondUpgrade(float damageBonus, GameObject tower)
+    {
+        if (_towerObject == tower)
+        {
+            _secondUpgrade = true;
+            _updateFloatDamageValue = damageBonus;
+        }
+    }
+
+    public void ActivateCatapultThirdUpgrade(float cutDotTriggeredTime, GameObject tower)
+    {
+        if (_towerObject == tower)
+        {
+            _thirdUpgrade = true;
+            _updateFloatTimerValue = cutDotTriggeredTime;
+        }
+    }
+
+    public void ActivateSniperFirstUpgrade(float cutReload, GameObject tower)
+    {
+        if (_towerObject == tower)
+        {
+            _firstUpgrade = true;
+            tower.GetComponent<TowerAttak>().AttakReload -= cutReload;
+        }
+    }
+
+    public void ActivateSniperSecondUpgrade(float dotDamage, float timerTime, int count, GameObject tower)
+    {
+        if (_towerObject == tower)
+        {
+            _secondUpgrade = true;
+            _updateFloatDamageValue = dotDamage;  
+            _updateFloatTimerValue = timerTime;
+            _updateIntAmountValue = count;
+        }
+    }
+
+    public void ActivateSniperThirdUpgrade(int addDistance, GameObject tower)
+    {
+        if (_towerObject == tower)
+        {
+            _thirdUpgrade = true;
+            _updateIntDistanceValue = addDistance;
+        }
+    }
+    #endregion
+    //---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    private void AddDoubleShot(float newTimerTime)
+    {
+        _doubleShotTimer = new Timer(newTimerTime);
+    }
+
+    private void ReloadDoubleShotTimer()
+    {
+        _doubleShotTimer.Wait();
+
+        if (_currentTarget != null)
+        {
+            if (!_doubleShotTimer.StartTimer)
+            {
+                _doubleShotTimer.StartCountdown();
+            }
+
+            if (_doubleShotTimer.ReachingTimerMaxValue == true)
+            {
+                TowerRotate();
+                AttakTarget();
+                _doubleShotTimer.StopCountdown();
+            }
         }
     }
 }

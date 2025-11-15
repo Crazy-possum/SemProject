@@ -15,6 +15,7 @@ public class TowerUpgradeSO : ScriptableObject
     public Sprite TowerSprite;
     public int UpgradeIntValue;
     public float UpgradeFloatValue;
+    public float AddUpgradeFloatValue;
     public int UpgradeIndex;
     [Tooltip("Стоимость улучшения")]
     public int TowerCost;

@@ -82,6 +82,8 @@ public class TowerAttak : MonoBehaviour
         _towerBehavior.TargetsList = targetsList;
     }
 
+    //-----------------------Liseners--------------------------------------------------------------------------
+
     public void SetReloatTimer()
     {
         AttakReload = _towerSO.TowerReloadTime;
