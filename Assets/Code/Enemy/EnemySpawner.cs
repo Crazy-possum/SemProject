@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Tooltip("Префаб противника")]
-    [SerializeField] private GameObject _enemyPrefab;
     [Tooltip("Пустой объект, куда спавнятся противники")]
     [SerializeField] private GameObject _enemiesGroup;
     [Tooltip("Список всех противников на сцене")]
@@ -12,65 +10,109 @@ public class EnemySpawner : MonoBehaviour
     [Tooltip("Лист с точками маршрута противников")]
     [SerializeField] private Transform[] _enemyWayPointsList;
 
-    [Tooltip("Длительность волны в сек")]
-    [SerializeField] private float _waveTimerValue;
-    [Tooltip("Время на спавн одного моба в сек")]
-    [SerializeField] private float _spawnTimerValue;
+    [SerializeField] private LevelSO _levelConfig;
 
-    private Timer _waveTimer;
+    private SpawnPresetSO _currentWave;
+    private Timer _globalTimer;
     private Timer _spawnTimer;
+    private bool _hasActiveWave;
+    private bool _isAllWaveSpawned;
     private int _currentEnemyListLength;
+    private int _currentWaveIndex;
+    private int _currentEnemyIndex;
+    private float _stopwatch = 2000;
+    private float _spawnTimerValue;
 
     public int CurrentEnemyListLength { get => _currentEnemyListLength; set => _currentEnemyListLength = value; }
 
     private void Start()
     {
-        _waveTimer = new Timer(_waveTimerValue);
-        _spawnTimer = new Timer(_spawnTimerValue);
+        _globalTimer = new Timer(_stopwatch);
+        _globalTimer.StartCountdown();
 
-        WaveBegins();
+        _currentWaveIndex = 0;
+        _currentWave = _levelConfig.WavePresetList[_currentWaveIndex];
     }
 
     private void FixedUpdate()
     {
-        _waveTimer.Wait();
-        _spawnTimer.Wait();
+        _globalTimer.Wait();
+        CheckTime();
 
-        _currentEnemyListLength = _enemyList.Count;
-
-        if (!_waveTimer.ReachingTimerMaxValue)
+        if (_hasActiveWave)
         {
-            if (_spawnTimer.ReachingTimerMaxValue)
-            {
-                SpawnEnemy();
-
-                _spawnTimer.StopCountdown();
-                _spawnTimer.StartCountdown();
-            }
-        }
-        else
-        {
-            _waveTimer.StopCountdown();
-            _spawnTimer.StopCountdown();
+            ReloadSpawnTimer();
         }
 
         SearchMissingObject();
     }
 
+    private void CheckTime()
+    {
+        if (_globalTimer.TimerCurrentTime >= _currentWave.waveStartTime && !_hasActiveWave && !_isAllWaveSpawned)
+        {
+            WaveBegins();
+            Debug.Log("waveStart");
+        }
+    }
+
+    private void ReloadSpawnTimer()
+    {
+        _spawnTimer.Wait();
+
+        if (_spawnTimer.ReachingTimerMaxValue)
+        {
+            _spawnTimer.StopCountdown();
+            SpawnEnemy();
+            _spawnTimer.StartCountdown();
+        }
+    }
+
     private void WaveBegins()
     {
-        _waveTimer.StartCountdown();
+        _spawnTimerValue = _currentWave.spawnTimerValue;
+        _spawnTimer = new Timer(_spawnTimerValue);
         _spawnTimer.StartCountdown();
+
+        _hasActiveWave = true;
     }
 
     private void SpawnEnemy()
     {
-        Vector3 position = _enemyWayPointsList[0].position;
-        GameObject sceneGObject = GameObject.Instantiate(_enemyPrefab, position, Quaternion.identity, _enemiesGroup.transform);
+        if (_currentEnemyIndex <= _currentWave.enemySequenceList.Count - 1)
+        {
+            GameObject enemyPrefab = _currentWave.enemySequenceList[_currentEnemyIndex];
 
-        _enemyList.Add(sceneGObject.gameObject);
+            Vector3 position = _enemyWayPointsList[0].position;
+            GameObject sceneGObject = GameObject.Instantiate(enemyPrefab, position, Quaternion.identity, _enemiesGroup.transform);
 
-        sceneGObject.GetComponent<EnemyMovement>().EnemyWayPintsList = _enemyWayPointsList;
+            _enemyList.Add(sceneGObject.gameObject);
+            sceneGObject.GetComponent<EnemyMovement>().EnemyWayPintsList = _enemyWayPointsList;
+
+            _currentEnemyIndex++;
+        }
+        else
+        {
+            WaveComplite();
+        }   
+    }
+
+    private void WaveComplite()
+    {
+        if (_currentWaveIndex < _levelConfig.WavePresetList.Count - 1)
+        {
+            _currentEnemyIndex = 0;
+            _currentWaveIndex++;
+            _currentWave = _levelConfig.WavePresetList[_currentWaveIndex];
+            Debug.Log($"wave {_currentWaveIndex}");
+        }
+        else
+        {
+            _isAllWaveSpawned = true;
+            Debug.Log("end");
+        }
+
+            _hasActiveWave = false;
     }
 
     private void SearchMissingObject()

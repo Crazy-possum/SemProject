@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: "\u0441\u043D\u0430\u0439\u043F\u0435\u04403"
   Description: "\u0412\u041A\u0423\u0421\u041D\u043E!"
   TowerEnum: 16
-  TowerSprite: {fileID: 21300000, guid: 225162ad00a4c27449d3d84a359cc50c, type: 3}
+  TowerSprite: {fileID: 21300000, guid: 1fd5aa4043b0e8a469db7da83c72ce9d, type: 3}
   UpgradeIntValue: 1
   UpgradeFloatValue: 1
   AddUpgradeFloatValue: 1

@@ -7,7 +7,7 @@ public class EnemyCount : MonoBehaviour
 
     public int Score = 0;
 
-    private const string _enemyScore = "Врагов прошло: 0 /" ;
+    private string _enemyScore;
     private bool _isDefeat = false;
     private int _maxScore = 5;
 
@@ -15,6 +15,7 @@ public class EnemyCount : MonoBehaviour
 
     private void Start()
     {
+        _enemyScore = $"Врагов прошло: {Score} /";
         _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
     }
 
@@ -33,12 +34,14 @@ public class EnemyCount : MonoBehaviour
         if (Score == _maxScore - 1)
         {
             Score++;
+            _enemyScore = $"Врагов прошло: {Score} /";
             _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
             _isDefeat = true;
         }
         else if (Score < _maxScore - 1)
         {
             Score++;
+            _enemyScore = $"Врагов прошло: {Score} /";
             _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
         }
     }

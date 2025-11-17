@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7296443546572812583
 Transform:
   m_ObjectHideFlags: 0
@@ -93,10 +93,93 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1008696731603523957, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008696731603523957, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1008696731603523957, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1121034762455535797, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e970cabe949147345a83b974a79c7aa8,
+        type: 3}
+    - target: {fileID: 1121034762455535797, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1890451923529401541, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3213071622714049267, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3288414716122716566, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3288414716122716566, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203343085294009037, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9edf8fff0a142be428bd167893a585e6,
+        type: 3}
+    - target: {fileID: 5203343085294009037, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203343085294009037, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203343085294009037, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203343085294009037, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057015223235557065, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4bac6418e15144f4e9a17a0f8f0e7697,
+        type: 3}
     - target: {fileID: 8986731706862224067, guid: f9085653670c27848af63051f5e61a02,
         type: 3}
       propertyPath: m_Name
       value: _cannonTower
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074215210696065172, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9154061628886403770, guid: f9085653670c27848af63051f5e61a02,
         type: 3}

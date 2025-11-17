@@ -37,6 +37,8 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private bool _isStatic;
     private float _tolerance = 0.5f;
+    private int _tryCounter;
+    private bool _isAlreadyRecoil;
 
     private float _duration;
     private float _timeDOT;
@@ -160,12 +162,11 @@ public class TowerBulletBehavior : MonoBehaviour
 
             if (_towerEnum != TowerEnum.Sniper && _towerEnum != TowerEnum.Catapult)
             {
-                bool isAlreadyRecoil = false;
 
-                if (_towerEnum == TowerEnum.Cannon && _thirdUpgrade && !isAlreadyRecoil)
+                if (_towerEnum == TowerEnum.Cannon && _thirdUpgrade && !_isAlreadyRecoil)
                 {
                     SetNewTarget();
-                    isAlreadyRecoil = true;
+                    _isAlreadyRecoil = true;
                 }
                 else
                 {
@@ -337,7 +338,26 @@ public class TowerBulletBehavior : MonoBehaviour
         System.Random rnd = new System.Random();
         int randIndex = rnd.Next(_targetsList.Count);
 
-        SetDirectionToTarget(_targetsList[randIndex]);
+        if (_tryCounter < 20)
+        {
+            if (_targetsList[randIndex] != _bulletsCurrentTarget)
+            {
+                _bulletsCurrentTarget = _targetsList[randIndex];
+                SetDirectionToTarget(_targetsList[randIndex]);
+                _tryCounter = 0;
+                Debug.Log(1);
+            }
+            else if (_targetsList.Count > 1)
+            {
+                _tryCounter++;
+                SetNewTarget();
+            }
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     private void DealDOTDamage()

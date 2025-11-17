@@ -11,8 +11,8 @@ public partial class CatapultTowerBehavior
         private float _currentMorePaint;
         private bool _isPaintChanged = true;
 
-        public SniperTowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer, GameObject bulletPref, GameObject towerObject, Transform bulletSpawner) :
-        base(towerSO, rb, reloadTimer, bulletPref, towerObject, bulletSpawner)
+        public SniperTowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer, GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO) :
+        base(towerSO, rb, reloadTimer, bulletPref, towerObject, bulletSpawner, bulletSpawnerGO)
         {
             _towerSO = towerSO;
             _towerRb = rb;
