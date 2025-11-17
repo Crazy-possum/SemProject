@@ -64,9 +64,9 @@ public class TowerUpgrader : MonoBehaviour
     {
         switch(_upgradeSO.UpgradeIndex)
         {
-            case 1: _view.FirstUpgradeSprite.SetActive(true); _view.FirstUpgradeSprite.GetComponent<SpriteRenderer>().sprite = _upgradeSO.TowerSprite; break;
-            case 2: break;
-            case 3: break;
+            case 1: _view.FirstUpgradeSprite.SetActive(true); break;
+            case 2: _view.SecondUpgradeSprite.SetActive(true); break;
+            case 3: _view.ThirdUpgradeSprite.SetActive(true); break;
         }
     }
 

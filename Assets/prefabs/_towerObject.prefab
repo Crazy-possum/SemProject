@@ -129,7 +129,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4650209492187286197}
@@ -214,7 +214,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4650209492187286197}
@@ -501,7 +501,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4650209492187286197}
@@ -611,6 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletSpawner: {fileID: 3327819595199404135}
+  AttakReload: 0
 --- !u!65 &6229082566591919696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -671,6 +672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac86488af52ddd1408a728b1c75450f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstUpgradeSprite: {fileID: 1890451923529401541}
-  _secondpgradeSprite: {fileID: 6705978315023840783}
-  _thirdUpgradeSprite: {fileID: 2748338663447774883}
+  FirstUpgradeSprite: {fileID: 1890451923529401541}
+  SecondUpgradeSprite: {fileID: 6705978315023840783}
+  ThirdUpgradeSprite: {fileID: 2748338663447774883}
