@@ -17,17 +17,13 @@ public class WinLoseController : MonoBehaviour
     private int _currentEnemyCount;
     private int _currentEnemyListLength;
 
-    private void Start()
-    { 
-        _currentEnemyListLength = _enemySpawner.CurrentEnemyListLength;
-    }
-
     private void FixedUpdate()
     {
         _isDeafeated = _enemyCount.Defeat;
         _currentEnemyMiss = _enemyCount.Score;
+        _currentEnemyListLength = _enemySpawner.EnemyList.Count;
 
-        if (_enemySpawner.CurrentEnemyListLength == 0 && _currentEnemyCount > 0)
+        if (_currentEnemyListLength == 0 && _currentEnemyCount > 0 && _enemySpawner.isActiveAndEnabled)
         {
             _isWin = true;
         }

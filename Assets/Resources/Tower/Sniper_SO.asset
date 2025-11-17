@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sniper_SO
   m_EditorClassIdentifier: 
   Name: "\u0421\u043D\u0430\u0439\u043F\u0435\u0440\u043A\u0430"
-  Description: "\u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u0446\u0432\u0435
+  Description: "\u041F\u0440\u043E\u0431\u0438\u0432\u0430\u0435\u0442 \u0432\u0441\u0435
     \u0446\u0435\u043B\u0438 \u043D\u0430 \u043F\u0443\u0442\u0438"
   TowerEnum: 13
   TowerPrefab: {fileID: 8247363688570845194, guid: 9b4238f50ab702a48be35e9645fd2c13,

@@ -24,6 +24,8 @@ public class EnemySpawner : MonoBehaviour
     private float _spawnTimerValue;
 
     public int CurrentEnemyListLength { get => _currentEnemyListLength; set => _currentEnemyListLength = value; }
+    public List<GameObject> EnemyList { get => _enemyList; set => _enemyList = value; }
+    public bool IsAllWaveSpawned { get => _isAllWaveSpawned; set => _isAllWaveSpawned = value; }
 
     private void Start()
     {
@@ -52,7 +54,6 @@ public class EnemySpawner : MonoBehaviour
         if (_globalTimer.TimerCurrentTime >= _currentWave.waveStartTime && !_hasActiveWave && !_isAllWaveSpawned)
         {
             WaveBegins();
-            Debug.Log("waveStart");
         }
     }
 
@@ -104,12 +105,10 @@ public class EnemySpawner : MonoBehaviour
             _currentEnemyIndex = 0;
             _currentWaveIndex++;
             _currentWave = _levelConfig.WavePresetList[_currentWaveIndex];
-            Debug.Log($"wave {_currentWaveIndex}");
         }
         else
         {
             _isAllWaveSpawned = true;
-            Debug.Log("end");
         }
 
             _hasActiveWave = false;

@@ -345,7 +345,6 @@ public class TowerBulletBehavior : MonoBehaviour
                 _bulletsCurrentTarget = _targetsList[randIndex];
                 SetDirectionToTarget(_targetsList[randIndex]);
                 _tryCounter = 0;
-                Debug.Log(1);
             }
             else if (_targetsList.Count > 1)
             {

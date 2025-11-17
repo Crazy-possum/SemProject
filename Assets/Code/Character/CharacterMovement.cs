@@ -14,9 +14,9 @@ public class CharacterMovement : MonoBehaviour
     private Transform _charPos;
     private Vector3 _move;
 
-    private float _upBorder = 10.8f;
+    private float _upBorder = 9.5f;
     private float _riBorder = 20f;
-    private float _loBorder = -10.8f;
+    private float _loBorder = -9.5f;
     private float _leBorder = -20f;
 
     private void Start()

@@ -89,10 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bullet: {fileID: 7570986084572919295, guid: 9978ea36a4560fe4abb128cddc2c2ece, type: 3}
-  _body: {fileID: 5660349366021873238}
   _bulletSpawner: {fileID: 5745869190095287002}
-  _rotationSpeed: 2
-  AttakReload: 1
   CurrentTime: 0
 --- !u!1 &1538568124020532886
 GameObject:
@@ -201,7 +198,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 1, g: 0.7467409, b: 0, a: 1}
+  m_Color: {r: 0.735849, g: 0, b: 0.6254723, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -286,7 +283,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
     type: 3}
-  m_Color: {r: 1, g: 0.74509805, b: 0, a: 1}
+  m_Color: {r: 0.735849, g: 0, b: 0.6254723, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
