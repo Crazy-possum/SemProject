@@ -21,12 +21,12 @@ MonoBehaviour:
   BulletPrefab: {fileID: 2400564409802790823, guid: da74d42fc7411d94daba009a705351da,
     type: 3}
   TowerSprite: {fileID: 21300000, guid: 455cfc60bc4072140a870194e2ff97c2, type: 3}
-  TowerReloadTime: 4
+  TowerReloadTime: 1
   BulletDuration: 0
   BulletDOTTime: 0
   AttakeAngle: 0
+  TowerRange: 9
   MaxBulletDistance: 100
-  BulletAmount: 0
+  BulletAmount: 1
   TowerDamage: 200
-  TowerRange: 0
   TowerCost: 3

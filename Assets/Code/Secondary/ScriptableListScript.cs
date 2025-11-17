@@ -5,5 +5,6 @@ using UnityEngine;
 
 public class ScriptableListScript : ScriptableObject
 {
-    public List<TowerScriptable> SOList;
+    public List<TowerScriptable> TowerSOList;
+    public List<TowerUpgradeSO> TowerUpgradeSOList;
 }

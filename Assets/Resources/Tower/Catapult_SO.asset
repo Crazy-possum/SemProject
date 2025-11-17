@@ -24,8 +24,8 @@ MonoBehaviour:
   BulletDuration: 10
   BulletDOTTime: 0.5
   AttakeAngle: 0
+  TowerRange: 9
   MaxBulletDistance: 100
-  BulletAmount: 0
+  BulletAmount: 1
   TowerDamage: 200
-  TowerRange: 0
   TowerCost: 4

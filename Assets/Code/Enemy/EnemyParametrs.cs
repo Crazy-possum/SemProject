@@ -16,10 +16,12 @@ public class EnemyParametrs : MonoBehaviour
     private static Action _onEnemyDied;
     private float _currentHealth;
     private float _currentPaintValue;
+    private bool _hasDamageWeekness;
 
     public static Action OnEnemyDied { get => _onEnemyDied; set => _onEnemyDied = value; }
     public float CurrentHealth { get => _currentHealth; set => _currentHealth = value; }
     public float CurrentPaintValue { get => _currentPaintValue; set => _currentPaintValue = value; }
+    public bool HasDamageWeekness { get => _hasDamageWeekness; set => _hasDamageWeekness = value; }
 
     void Start()
     {
