@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c2c7b46cc4dce4bb0c2a26b4bfc908, type: 3}
   m_Name: ShotgunSecond
   m_EditorClassIdentifier: 
-  TowerName: 
-  Name: "\u0434\u0440\u043E\u0431\u044C2"
-  Description: "\u0412\u041A\u0423\u0421\u041D\u043E!"
+  TowerName: "\u041A\u0430\u0442\u0430\u043F\u0443\u043B\u044C\u0442\u0430"
+  Name: "\u0423\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0438\u0435 \u0440\u0430\u0434\u0438\u0443\u0441\u0430"
+  Description: "\u0420\u0430\u0434\u0438\u0443\u0441 \u043E\u0431\u0437\u043E\u0440\u0430
+    \u0443\u0432\u0435\u043B\u0438\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044F"
   TowerEnum: 7
-  TowerSprite: {fileID: 21300000, guid: 225162ad00a4c27449d3d84a359cc50c, type: 3}
+  TowerSprite: {fileID: 21300000, guid: 5a4b3c35e1c0d8643b4cd5e5e4bc9303, type: 3}
   UpgradeIntValue: 1
   UpgradeFloatValue: 1
   AddUpgradeFloatValue: 1
   UpgradeIndex: 2
-  TowerCost: 2
+  UpgradeCost: 2

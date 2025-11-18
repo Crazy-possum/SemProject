@@ -1,17 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Reflection;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEditor.Experimental;
 using static CatapultTowerBehavior;
 
 public class TowerAttak : MonoBehaviour
 {
     [Tooltip("Точка, из которой вылетают пули")]
     [SerializeField] private Transform _bulletSpawner;
+    [SerializeField] private GameObject _bulletSpawnerGO;
     [Tooltip("Таймер перезарядки в сек")]
-
     public float AttakReload;
 
     private TowerBehavior _towerBehavior;
@@ -45,24 +42,24 @@ public class TowerAttak : MonoBehaviour
 
         if (_towerEnum == TowerEnum.Cannon)
         {
-            _towerBehavior = new TowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner);
+            _towerBehavior = new TowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner, _bulletSpawnerGO);
         }
         else if (_towerEnum == TowerEnum.Shotgun)
         {
-            _towerBehavior = new ShotgunTowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner);
+            _towerBehavior = new ShotgunTowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner, _bulletSpawnerGO);
         }
         else if (_towerEnum == TowerEnum.Catapult)
         {
-            _towerBehavior = new CatapultTowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner);
+            _towerBehavior = new CatapultTowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner, _bulletSpawnerGO);
         }
         else if (_towerEnum == TowerEnum.Sniper)
         {
-            _towerBehavior = new SniperTowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner);
+            _towerBehavior = new SniperTowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner, _bulletSpawnerGO);
         }
 
         if (_towerBehavior == null)
         {
-            _towerBehavior = new TowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner);
+            _towerBehavior = new TowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner, _bulletSpawnerGO);
         }
     }
 

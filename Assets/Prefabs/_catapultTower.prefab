@@ -93,10 +93,36 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1121034762455535797, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501206794201460418, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6001779815868415461, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057015223235557065, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7411191a8a70be14aa1e9a7f3e356f4d,
+        type: 3}
     - target: {fileID: 8986731706862224067, guid: f9085653670c27848af63051f5e61a02,
         type: 3}
       propertyPath: m_Name
       value: _catapultTower
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074215210696065172, guid: f9085653670c27848af63051f5e61a02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9154061628886403770, guid: f9085653670c27848af63051f5e61a02,
         type: 3}

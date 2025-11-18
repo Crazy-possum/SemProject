@@ -9,7 +9,7 @@ public class CharacterSpawner : MonoBehaviour
 
     private CharacterShoot _characterShoot;
     private GameObject _character;
-    private Vector3 _startPosotion = new Vector3(0, 10.8f, 0);
+    private Vector3 _startPosotion = new Vector3(0, 9.5f, 0);
     private float _currentTimerTime;
     private float _reloadTime;
 

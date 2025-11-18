@@ -3,8 +3,8 @@ using UnityEngine;
 
 public partial class CatapultTowerBehavior : TowerBehavior
 {
-    public CatapultTowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer, GameObject bulletPref, GameObject towerObject, Transform bulletSpawner) :
-        base(towerSO, rb, reloadTimer, bulletPref, towerObject, bulletSpawner)
+    public CatapultTowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer, GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO) :
+        base(towerSO, rb, reloadTimer, bulletPref, towerObject, bulletSpawner, bulletSpawnerGO)
     {
         _towerSO = towerSO;
         _towerRb = rb;

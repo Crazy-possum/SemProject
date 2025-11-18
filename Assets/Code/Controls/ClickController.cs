@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClickController : MonoBehaviour
 {
     [Tooltip("Скрипт")]
     [SerializeField] private TowerBuilder _towerBuilder;
+    [SerializeField] private EconomyController _economyController;
     [Tooltip("Панель с выбором башни на постройку")]
     [SerializeField] private GameObject _towerBuildPanel;
     [SerializeField] private GameObject _towerUpgradePanel;
@@ -51,7 +53,7 @@ public class ClickController : MonoBehaviour
 
             for (int i = 0; i < buttonAmount; i++)
             {
-                GameObject uiGObject = GameObject.Instantiate(_towerButton, _towerBuildPanel.transform);
+                GameObject uiGObject = GameObject.Instantiate(_towerButton, _towerBuildPanel.GetComponentInChildren<LayoutGroup>().gameObject.transform);
                 DecisionButton buttonScript = uiGObject.GetComponentInChildren<DecisionButton>();
 
                 switch (i)
@@ -65,6 +67,7 @@ public class ClickController : MonoBehaviour
                 TowerScriptable towerSO = _towerObjectListSO.TowerSOList.Find(item => item.TowerEnum == buttonScript.LocalTowerEnum);
                 buttonScript.TowerBuilder = _towerBuilder;
                 buttonScript.TowerUpgrader = _towerBuilder.GetComponentInParent<TowerUpgrader>();
+                buttonScript.EconomyController = _economyController;
                 buttonScript.TowerBuildPanel = _towerBuildPanel;
                 buttonScript.CustomizationBuildButton(towerSO);
             }
@@ -80,7 +83,7 @@ public class ClickController : MonoBehaviour
 
             for (int i = 0; i < buttonAmount; i++)
             {
-                GameObject uiGObject = GameObject.Instantiate(_towerButton, _towerUpgradePanel.transform);
+                GameObject uiGObject = GameObject.Instantiate(_towerButton, _towerUpgradePanel.GetComponentInChildren<LayoutGroup>().gameObject.transform);
                 DecisionButton buttonScript = uiGObject.GetComponentInChildren<DecisionButton>();
 
                 _upgradeButtonList.Add(buttonScript);
@@ -141,6 +144,7 @@ public class ClickController : MonoBehaviour
             currentButton.TowerBuilder = _towerBuilder;
             currentButton.TowerUpgrader = _towerBuilder.GetComponentInParent<TowerUpgrader>();
             currentButton.TowerUpgradePanel = _towerUpgradePanel;
+            currentButton.EconomyController = _economyController;
             currentButton.Tower = currentObject;
             currentButton.CustomizationUpgradeButton(upgradeSO);
         }

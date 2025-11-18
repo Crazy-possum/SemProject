@@ -11,6 +11,7 @@ public class TowerBehavior
     protected GameObject _towerBulletPrefab;
     protected GameObject _currentTarget;
     protected GameObject _towerObject;
+    protected Rigidbody _bulletSpawnerRb;
     protected Transform _bulletSpawner;
     protected Rigidbody _towerRb;
     protected SphereCollider _towerTriggerCollizion;
@@ -34,7 +35,7 @@ public class TowerBehavior
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
 
     public TowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer,
-        GameObject bulletPref, GameObject towerObject, Transform bulletSpawner)
+        GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO)
     {
         _towerSO = towerSO;
         _towerRb = rb;
@@ -42,6 +43,7 @@ public class TowerBehavior
         _towerBulletPrefab = bulletPref;
         _towerObject = towerObject;
         _bulletSpawner = bulletSpawner;
+        _bulletSpawnerRb = bulletSpawnerGO.GetComponent<Rigidbody>();
         _towerTriggerCollizion = _towerObject.GetComponentInChildren<TowerTriggerZone>().gameObject.GetComponent<SphereCollider>();
         _targetsList = new List<GameObject>();
 
@@ -126,7 +128,7 @@ public class TowerBehavior
         Vector3 targetDirection = _towerObject.transform.position - _currentTarget.transform.position;
 
         Quaternion angle = Quaternion.LookRotation(Vector3.forward, targetDirection);
-        _towerRb.rotation = angle;
+        _bulletSpawnerRb.rotation = angle;
     }
 
     public virtual void RealoadTimer()

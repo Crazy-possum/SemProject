@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c2c7b46cc4dce4bb0c2a26b4bfc908, type: 3}
   m_Name: SniperThird
   m_EditorClassIdentifier: 
-  TowerName: 
-  Name: "\u0441\u043D\u0430\u0439\u043F\u0435\u04403"
-  Description: "\u0412\u041A\u0423\u0421\u041D\u043E!"
+  TowerName: "\u0421\u043D\u0430\u0439\u043F\u0435\u0440\u043A\u0430"
+  Name: "\u0423\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0438\u0435 \u0434\u0430\u043B\u044C\u043D\u043E\u0441\u0442\u0438"
+  Description: "\u041F\u0443\u043B\u044F \u043B\u0435\u0442\u0438\u0442 \u0434\u0430\u043B\u044C\u0448\u0435"
   TowerEnum: 16
-  TowerSprite: {fileID: 21300000, guid: 225162ad00a4c27449d3d84a359cc50c, type: 3}
+  TowerSprite: {fileID: 21300000, guid: 1fd5aa4043b0e8a469db7da83c72ce9d, type: 3}
   UpgradeIntValue: 1
   UpgradeFloatValue: 1
   AddUpgradeFloatValue: 1
   UpgradeIndex: 3
-  TowerCost: 2
+  UpgradeCost: 2
