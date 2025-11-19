@@ -9,10 +9,12 @@ public class DecisionButton : MonoBehaviour
     [SerializeField] private TowerBuilder _towerBuilder;
     [Tooltip("Скрипт")]
     [SerializeField] private TowerUpgrader _towerUpgrader;
+    [SerializeField] private CharacterUpgrader _characterUpgrader;
     [SerializeField] private EconomyController _economyController;
     [Tooltip("Панель с выбором башни на постройку")]
     [SerializeField] private GameObject _towerBuildPanel;
     [SerializeField] private GameObject _towerUpgradePanel;
+    [SerializeField] private GameObject _charUpgraderPanel;
     [SerializeField] private GameObject _tower;
     [SerializeField] private Image _towerImage;
     [SerializeField] private TMP_Text _towerNameText;
@@ -23,23 +25,27 @@ public class DecisionButton : MonoBehaviour
     [SerializeField] private TowerEnum _localTowerEnum;
 
     private Button _button;
-    private TowerUpgradeSO _upgradeSO;
-    private TowerScriptable _towerSO;
+    private TowerUpgradeSO _upgradeSO = null;
+    private TowerScriptable _towerSO = null;
+    private CharUpgradeSO _charUpgradeSO = null;
     private bool _isEnoughMoney;
 
     public TowerBuilder TowerBuilder { get => _towerBuilder; set => _towerBuilder = value; }
     public TowerUpgrader TowerUpgrader { get => _towerUpgrader; set => _towerUpgrader = value; }
+    public CharacterUpgrader CharacterUpgrader1 { get => _characterUpgrader; set => _characterUpgrader = value; }
     public GameObject TowerBuildPanel { get => _towerBuildPanel; set => _towerBuildPanel = value; }
     public GameObject TowerUpgradePanel { get => _towerUpgradePanel; set => _towerUpgradePanel = value; }
     public GameObject Tower { get => _tower; set => _tower = value; }
     public TowerEnum LocalTowerEnum { get => _localTowerEnum; set => _localTowerEnum = value; }
     public EconomyController EconomyController { get => _economyController; set => _economyController = value; }
+    public GameObject CharUpgradePanel { get => _charUpgraderPanel; set => _charUpgraderPanel = value; }
 
     private void Awake()
     {
         _button = gameObject.GetComponent<Button>();
         _button.onClick.AddListener(BuildTower);
         _button.onClick.AddListener(UpgradeTower);
+        _button.onClick.AddListener(CharLevelUp);
     }
 
     private void FixedUpdate()
@@ -88,12 +94,20 @@ public class DecisionButton : MonoBehaviour
         _upgradeSO = upgradeSO;
     }
 
+    public void CustomizationCharacterButton(CharUpgradeSO charSO)
+    {
+        _towerImage.sprite = charSO.UpgradeSprite;
+        _towerNameText.text = charSO.Name;
+        _towerDescriptionText.text = charSO.Description;
+
+        _charUpgradeSO = charSO;
+    }
+
     private void BuildTower()
     {
         if (_isEnoughMoney)
         {
-            if (_localTowerEnum == TowerEnum.Cannon || _localTowerEnum == TowerEnum.Shotgun ||
-            _localTowerEnum == TowerEnum.Catapult || _localTowerEnum == TowerEnum.Sniper)
+            if (_towerSO != null)
             {
                 _towerBuilder.BuildTower(_localTowerEnum);
                 _towerBuildPanel.SetActive(false);
@@ -105,14 +119,20 @@ public class DecisionButton : MonoBehaviour
     {
         if (_isEnoughMoney)
         {
-            if (_localTowerEnum == TowerEnum.Cannon_firstUpgrade || _localTowerEnum == TowerEnum.Cannon_secondUpgrade || _localTowerEnum == TowerEnum.Cannon_thirdUpgrade ||
-            _localTowerEnum == TowerEnum.Shotgun_firstUpgrade || _localTowerEnum == TowerEnum.Shotgun_secondUpgrade || _localTowerEnum == TowerEnum.Shotgun_thirdUpgrade ||
-            _localTowerEnum == TowerEnum.Catapult_firstUpgrade || _localTowerEnum == TowerEnum.Catapult_secondUpgrade || _localTowerEnum == TowerEnum.Catapult_thirdUpgrade ||
-            _localTowerEnum == TowerEnum.Sniper_firstUpgrade || _localTowerEnum == TowerEnum.Sniper_secondUpgrade || _localTowerEnum == TowerEnum.Sniper_thirdUpgrade)
+            if (_upgradeSO != null)
             {
                 _towerUpgrader.SetTowerUpgrade(_tower, _upgradeSO);
                 _towerUpgradePanel.SetActive(false);
             }
+        }
+    }
+
+    private void CharLevelUp()
+    {
+        if (_charUpgradeSO != null)
+        {
+            _characterUpgrader.ApplyUpgrade(_charUpgradeSO);
+            _charUpgraderPanel.SetActive(false);
         }
     }
 }

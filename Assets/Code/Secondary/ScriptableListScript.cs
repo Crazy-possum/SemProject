@@ -7,4 +7,5 @@ public class ScriptableListScript : ScriptableObject
 {
     public List<TowerScriptable> TowerSOList;
     public List<TowerUpgradeSO> TowerUpgradeSOList;
+    public List<CharUpgradeRareSO> CharUpgradeRareSOList;
 }

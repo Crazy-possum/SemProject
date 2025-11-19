@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,11 @@ public class ExperienceController : MonoBehaviour
     [Tooltip("Значение прироста опыта от убийства")]
     [SerializeField] private float _currentExpIncome;
 
+    private static Action _onLevelUp;
+
     private float _currentExp;
+
+    public static Action OnLevelUp { get => _onLevelUp; set => _onLevelUp = value; }
 
     private void Start()
     {
@@ -48,5 +53,7 @@ public class ExperienceController : MonoBehaviour
         _currentExp = 0;
         _levelUpExpValue = _levelUpExpValue * _ratioExpUp;
         _experienceSlider.maxValue = _levelUpExpValue;
+
+        _onLevelUp?.Invoke();
     }
 }
