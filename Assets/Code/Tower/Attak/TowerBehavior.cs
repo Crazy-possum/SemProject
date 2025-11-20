@@ -30,6 +30,10 @@ public class TowerBehavior
     protected float _updateFloatRadiusValue = 0;
     protected float _updateFloatDamageValue = 0;
 
+    protected float _charFloatDamageUpgrade = 1;
+    protected float _charFloatValueUpgrade = 1;
+    protected float _charRadiusUpgrade = 1;
+
     private Timer _doubleShotTimer;
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
@@ -49,11 +53,11 @@ public class TowerBehavior
 
         if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
         {
-            _towerTriggerCollizion.radius = _towerSO.TowerRange + _updateFloatRadiusValue; //------------Liseners------------
+            _towerTriggerCollizion.radius = (_towerSO.TowerRange + _updateFloatRadiusValue) * _charRadiusUpgrade; //------------Liseners------------
         }
         else
         {
-            _towerTriggerCollizion.radius = _towerSO.TowerRange;
+            _towerTriggerCollizion.radius = _towerSO.TowerRange * _charRadiusUpgrade;
         }
 
         AddLiseners();
@@ -73,6 +77,9 @@ public class TowerBehavior
         TowerUpgrader.OnActivateSniperFirstUpgrade += ActivateSniperFirstUpgrade;
         TowerUpgrader.OnActivateSniperSecondUpgrade += ActivateSniperSecondUpgrade;
         TowerUpgrader.OnActivateSniperThirdUpgrade += ActivateSniperThirdUpgrade;
+
+        CharacterUpgrader.OnIncreaseTowerDamage += ActivateCharUpgradeTowerDamage;
+        CharacterUpgrader.OnIncreaseTowerRadius += ActivateCharUpgradeTowerRadius;
     }
 
     public virtual void SetTarget()
@@ -118,6 +125,7 @@ public class TowerBehavior
             towerBulletBehavior.UpdateIntValue = _updateIntDamageValue;
             towerBulletBehavior.UpdateIntDistanceValue = _updateIntDistanceValue;
             towerBulletBehavior.UpdateIntAmountValue = _updateIntAmountValue;
+            towerBulletBehavior.CharacterFloatUpgrade = _charFloatDamageUpgrade;
             towerBulletBehavior.TargetsList = _targetsList;
         }
     }
@@ -270,6 +278,19 @@ public class TowerBehavior
             _updateIntDistanceValue = addDistance;
         }
     }
+
+    #region CharacterUpgrade
+    private void ActivateCharUpgradeTowerDamage(float towerDamage)
+    {
+        _charFloatDamageUpgrade = towerDamage;
+    }
+
+    private void ActivateCharUpgradeTowerRadius(float towerRange)
+    {
+        _charRadiusUpgrade = towerRange;
+    }
+    #endregion
+
     #endregion
     //---------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -15,14 +15,14 @@ public class CharacterUpgrader : MonoBehaviour
     private List<CharUpgradeSO> _charLegendaryUpgradeSOList;
     private List<CharUpgradeSO> _charUniqueUpgradeSOList;
 
-    private static Action _onExperienceIncome;
-    private static Action _onIncreaseTowerDamage;
-    private static Action _onIncreaseTowerRadius;
-    private static Action _onMoneyIncome;
-    private static Action _onSlowDownMobs;
-    private static Action _onSlowMobsMove;
-    private static Action _onSpeedUpCharReload;
-    private static Action _onSpeedUpTowerReload;
+    private static Action<float, float> _onExperienceIncome;
+    private static Action<float> _onIncreaseTowerDamage;
+    private static Action<float> _onIncreaseTowerRadius;
+    private static Action<float, int> _onMoneyIncome;
+    private static Action<float, int> _onSlowDownMobs;
+    private static Action<int> _onSlowMobsMove;
+    private static Action<float> _onSpeedUpCharReload;
+    private static Action<float> _onSpeedUpTowerReload;
     private static Action _onDoubleKill;
     private static Action _onDoublePaint;
     private static Action _onSlingshot;
@@ -32,16 +32,17 @@ public class CharacterUpgrader : MonoBehaviour
     private CharUpgradeSO _charUpgradeSO;
     private int _intParametrUpgrade;
     private float _floatParametrUpgrade;
+    private float _addFloatParametrUpgrade;
     private bool _isCharButtonHere;
 
-    public static Action OnExperienceIncome { get => _onExperienceIncome; set => _onExperienceIncome = value; }
-    public static Action OnIncreaseTowerDamage { get => _onIncreaseTowerDamage; set => _onIncreaseTowerDamage = value; }
-    public static Action OnIncreaseTowerRadius { get => _onIncreaseTowerRadius; set => _onIncreaseTowerRadius = value; }
-    public static Action OnMoneyIncome { get => _onMoneyIncome; set => _onMoneyIncome = value; }
-    public static Action OnSlowDownMobs { get => _onSlowDownMobs; set => _onSlowDownMobs = value; }
-    public static Action OnSlowMobsMove { get => _onSlowMobsMove; set => _onSlowMobsMove = value; }
-    public static Action OnSpeedUpCharReload { get => _onSpeedUpCharReload; set => _onSpeedUpCharReload = value; }
-    public static Action OnSpeedUpTowerReload { get => _onSpeedUpTowerReload; set => _onSpeedUpTowerReload = value; }
+    public static Action<float, float> OnExperienceIncome { get => _onExperienceIncome; set => _onExperienceIncome = value; }
+    public static Action<float> OnIncreaseTowerDamage { get => _onIncreaseTowerDamage; set => _onIncreaseTowerDamage = value; }
+    public static Action<float> OnIncreaseTowerRadius { get => _onIncreaseTowerRadius; set => _onIncreaseTowerRadius = value; }
+    public static Action<float, int> OnMoneyIncome { get => _onMoneyIncome; set => _onMoneyIncome = value; }
+    public static Action<float, int> OnSlowDownMobs { get => _onSlowDownMobs; set => _onSlowDownMobs = value; }
+    public static Action<int> OnSlowMobsMove { get => _onSlowMobsMove; set => _onSlowMobsMove = value; }
+    public static Action<float> OnSpeedUpCharReload { get => _onSpeedUpCharReload; set => _onSpeedUpCharReload = value; }
+    public static Action<float> OnSpeedUpTowerReload { get => _onSpeedUpTowerReload; set => _onSpeedUpTowerReload = value; }
     public static Action OnDoubleKill { get => _onDoubleKill; set => _onDoubleKill = value; }
     public static Action OnDoublePaint { get => _onDoublePaint; set => _onDoublePaint = value; }
     public static Action OnSlingshot { get => _onSlingshot; set => _onSlingshot = value; }
@@ -161,6 +162,7 @@ public class CharacterUpgrader : MonoBehaviour
         _charUpgradeSO = charUpgradeSO;
         _intParametrUpgrade = _charUpgradeSO.UpgradeIntValue;
         _floatParametrUpgrade = _charUpgradeSO.UpgradeFloatValue;
+        _addFloatParametrUpgrade = _charUpgradeSO.AddUpgradeFloatValue;
 
         ChooseUpgradeImpact();
     }
@@ -169,35 +171,54 @@ public class CharacterUpgrader : MonoBehaviour
     {
         if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.ExperienceIncome)
         {
-            ActivateExperienceIncome();
+            float incomeTimerValue = _floatParametrUpgrade;
+            float experienceIncome = _addFloatParametrUpgrade;
+
+            ActivateExperienceIncome(incomeTimerValue, experienceIncome); //+++
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.IncreaseTowerDamage)
         {
-            ActivateIncreaseTowerDamage();
+            float towerDamage = _floatParametrUpgrade;
+
+            ActivateIncreaseTowerDamage(towerDamage); //+++
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.IncreaseTowerRadius)
         {
-            ActivateIncreaseTowerRadius();
+            float towerRange = _floatParametrUpgrade;
+
+            ActivateIncreaseTowerRadius(towerRange);
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.MoneyIncome)
         {
-            ActivateMoneyIncome();
+            float incomeTimerValue = _floatParametrUpgrade;
+            int moneyIncome = _intParametrUpgrade;
+
+            ActivateMoneyIncome(incomeTimerValue, moneyIncome);
         }
         else if(_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SlowDownMobs)
         {
-            ActivateSlowDownMobs();
+            float debuffTimerValue = _floatParametrUpgrade;
+            int slowingDown = _intParametrUpgrade;
+
+            ActivateSlowDownMobs(debuffTimerValue, slowingDown);
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SlowMobsMove)
         {
-            ActivateSlowMobsMove();
+            int slowingDown = _intParametrUpgrade;
+
+            ActivateSlowMobsMove(slowingDown);
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SpeedUpCharReload)
         {
-            ActivateSpeedUpCharReload();
+            float cutCharReload = _floatParametrUpgrade;
+
+            ActivateSpeedUpCharReload(cutCharReload);
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SpeedUpTowerReload)
         {
-            ActivateSpeedUpTowerReload();
+            float cutTowerReload = _floatParametrUpgrade;
+
+            ActivateSpeedUpTowerReload(cutTowerReload);
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.DoubleKill)
         {
@@ -217,44 +238,44 @@ public class CharacterUpgrader : MonoBehaviour
         }
     }
 
-    private void ActivateExperienceIncome()
+    private void ActivateExperienceIncome(float incomeTimerValue, float experienceIncome)
     {
-        _onExperienceIncome?.Invoke();
+        _onExperienceIncome?.Invoke(incomeTimerValue, experienceIncome);
     }
 
-    private void ActivateIncreaseTowerDamage()
+    private void ActivateIncreaseTowerDamage(float towerDamage)
     {
-        _onIncreaseTowerDamage?.Invoke();
+        _onIncreaseTowerDamage?.Invoke(towerDamage);
     }
 
-    private void ActivateIncreaseTowerRadius()
+    private void ActivateIncreaseTowerRadius(float towerRange)
     {
-        _onIncreaseTowerRadius?.Invoke();
+        _onIncreaseTowerRadius?.Invoke(towerRange);
     }
 
-    private void ActivateMoneyIncome()
+    private void ActivateMoneyIncome(float incomeTimerValue, int moneyIncome)
     {
-        _onMoneyIncome?.Invoke();
+        _onMoneyIncome?.Invoke(incomeTimerValue, moneyIncome);
     }
 
-    private void ActivateSlowDownMobs()
+    private void ActivateSlowDownMobs(float debuffTimerValue, int slowingDown)
     {
-        _onSlowDownMobs?.Invoke();
+        _onSlowDownMobs?.Invoke(debuffTimerValue, slowingDown);
     }
 
-    private void ActivateSlowMobsMove()
+    private void ActivateSlowMobsMove(int slowingDown)
     {
-        _onSlowMobsMove?.Invoke();
+        _onSlowMobsMove?.Invoke(slowingDown);
     }
 
-    private void ActivateSpeedUpCharReload()
+    private void ActivateSpeedUpCharReload(float cutCharReload)
     {
-        _onSpeedUpCharReload?.Invoke();
+        _onSpeedUpCharReload?.Invoke(cutCharReload);
     }
 
-    private void ActivateSpeedUpTowerReload()
+    private void ActivateSpeedUpTowerReload(float cutTowerReload)
     {
-        _onSpeedUpTowerReload?.Invoke();
+        _onSpeedUpTowerReload?.Invoke(cutTowerReload);
     }
 
     private void ActivateDoubleKill()

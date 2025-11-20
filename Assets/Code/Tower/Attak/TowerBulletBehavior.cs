@@ -55,10 +55,13 @@ public class TowerBulletBehavior : MonoBehaviour
     private int _updateIntDistanceValue;
     private int _updateIntAmountValue;
 
+    private float _characterFloatDamageUpgrade;
+    private float _characterFloatValueUpgrade;
+
+    public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
     public GameObject BulletsCurrentTarget { get => _bulletsCurrentTarget; set => _bulletsCurrentTarget = value; }
     public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
-
 
     public bool FirstUpgrade { get => _firstUpgrade; set => _firstUpgrade = value; }
     public bool SecondUpgrade { get => _secondUpgrade; set => _secondUpgrade = value; }
@@ -68,8 +71,9 @@ public class TowerBulletBehavior : MonoBehaviour
     public float UpdateFloatDamageValue { get => _updateFloatDamageValue; set => _updateFloatDamageValue = value; }
     public float UpdateFloatRadiusValue { get => _updateFloatRadiusValue; set => _updateFloatRadiusValue = value; }
     public int UpdateIntDistanceValue { get => _updateIntDistanceValue; set => _updateIntDistanceValue = value; }
-    public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
     public int UpdateIntAmountValue { get => _updateIntAmountValue; set => _updateIntAmountValue = value; }
+    public float CharacterFloatUpgrade { get => _characterFloatDamageUpgrade; set => _characterFloatDamageUpgrade = value; }
+    public float CharacterFloatValueUpgrade { get => _characterFloatValueUpgrade; set => _characterFloatValueUpgrade = value; }
 
     private void Start()
     {
@@ -80,7 +84,12 @@ public class TowerBulletBehavior : MonoBehaviour
         _maxDistance = _towerSO.MaxBulletDistance;
         _timeDOT = _towerSO.BulletDOTTime;
         _duration = _towerSO.BulletDuration;
-        _damage = _towerSO.TowerDamage;
+        _damage = _towerSO.TowerDamage * _characterFloatDamageUpgrade;
+
+        if (_currentEnemyHealth.HasDamageWeekness)
+        {
+            _damage = _damage * _updateFloatDamageValue;
+        }
 
         if (_towerSO.TowerEnum == TowerEnum.Catapult)
         {
@@ -117,11 +126,6 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_currentEnemyHealth.HasDamageWeekness)
-        {
-            _damage = _damage * _updateFloatDamageValue;
-        }
-
         if (_towerEnum == TowerEnum.Cannon)
         {
             SetDirectionToTarget(_bulletsCurrentTarget);

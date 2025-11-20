@@ -13,5 +13,6 @@ public class CharUpgradeSO : ScriptableObject
     public Sprite UpgradeSprite;
     public int UpgradeIntValue;
     public float UpgradeFloatValue;
+    public float AddUpgradeFloatValue;
     public int UpgradeIndex;
 }
