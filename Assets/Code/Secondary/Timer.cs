@@ -18,14 +18,21 @@ public class Timer
         _maxTimerValue = maxTimerValue;
     }
 
+    public void ResetTimerMaxTime(float maxTimerValue)
+    {
+        _maxTimerValue = maxTimerValue;
+    }
+
     public void StartCountdown()
     {
         _isStartTimer = true;
     }
+
     public void PauseCountdown()
     {
         _isStartTimer = false;
     }
+
     public void StopCountdown()
     {
         _isStartTimer = false;

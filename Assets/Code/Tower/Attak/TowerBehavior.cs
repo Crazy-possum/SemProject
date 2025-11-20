@@ -80,6 +80,7 @@ public class TowerBehavior
 
         CharacterUpgrader.OnIncreaseTowerDamage += ActivateCharUpgradeTowerDamage;
         CharacterUpgrader.OnIncreaseTowerRadius += ActivateCharUpgradeTowerRadius;
+        CharacterUpgrader.OnSpeedUpTowerReload += ActivateCharUpgradeTowerReload;
     }
 
     public virtual void SetTarget()
@@ -288,6 +289,11 @@ public class TowerBehavior
     private void ActivateCharUpgradeTowerRadius(float towerRange)
     {
         _charRadiusUpgrade = towerRange;
+    }
+
+    private void ActivateCharUpgradeTowerReload(float cutCharReload)
+    {
+        _attakTimer.ResetTimerMaxTime(cutCharReload);
     }
     #endregion
 

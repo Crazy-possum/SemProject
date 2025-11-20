@@ -10,6 +10,9 @@ public class EconomyController : MonoBehaviour
     public int CurrentCost;
     public int CurrentIncome;
 
+    private Timer _passiveIncomeTimer;
+    private bool _isPassIncomeOn;
+
     private void Start()
     {
         _currencyText.text = GeneralCurrency.ToString();
@@ -18,11 +21,13 @@ public class EconomyController : MonoBehaviour
     private void OnEnable()
     {
         EnemyParametrs.OnEnemyDied += CurrencySum;
+        CharacterUpgrader.OnMoneyIncome += PassiveMoneyIncome;
     }
 
     private void OnDisable()
     {
         EnemyParametrs.OnEnemyDied -= CurrencySum;
+        CharacterUpgrader.OnMoneyIncome -= PassiveMoneyIncome;
     }
 
     private void CurrencySum()
@@ -35,5 +40,33 @@ public class EconomyController : MonoBehaviour
     {
         GeneralCurrency -= CurrentCost;
         _currencyText.text = GeneralCurrency.ToString();
+    }
+
+    private void PassiveMoneyIncome(float incomeTimerValue, int moneyIncome)
+    {
+        if (!_isPassIncomeOn)
+        {
+            _passiveIncomeTimer = new Timer(incomeTimerValue);
+            _isPassIncomeOn = true;
+        }
+
+        IncomeTimerReload(incomeTimerValue, moneyIncome);
+    }
+
+    private void IncomeTimerReload(float incomeTimerValue, int moneyIncome)
+    {
+        _passiveIncomeTimer.Wait();
+
+        if (!_passiveIncomeTimer.StartTimer)
+        {
+            _passiveIncomeTimer.StartCountdown();
+        }
+
+        if (_passiveIncomeTimer.ReachingTimerMaxValue == true)
+        {
+            _passiveIncomeTimer.StopCountdown();
+            GeneralCurrency += moneyIncome;
+            PassiveMoneyIncome(incomeTimerValue, moneyIncome);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CharacterShoot : MonoBehaviour
@@ -40,6 +41,16 @@ public class CharacterShoot : MonoBehaviour
         CurrentTime = _attakReloadTimer.TimerCurrentTime;
     }
 
+    private void OnEnable()
+    {
+        CharacterUpgrader.OnSpeedUpCharReload += CutReloadTime;
+    }
+
+    private void OnDisable()
+    {
+        CharacterUpgrader.OnSpeedUpCharReload -= CutReloadTime;
+    }
+
     private void Reload()
     {
          _attakReloadTimer.Wait();
@@ -76,5 +87,10 @@ public class CharacterShoot : MonoBehaviour
 
         Quaternion angle = Quaternion.LookRotation(Vector3.forward, targetDirection);
         _characterRb.rotation = angle;
+    }
+
+    private void CutReloadTime(float cutCharReload)
+    {
+        _attakReloadTimer.ResetTimerMaxTime(cutCharReload);
     }
 }

@@ -24,6 +24,7 @@ public class ExperienceController : MonoBehaviour
 
     private void Start()
     {
+        _experienceSlider.value = 0;
         _experienceSlider.maxValue = _levelUpExpValue;
     }
 

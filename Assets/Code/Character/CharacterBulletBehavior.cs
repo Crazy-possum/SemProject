@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CharacterBulletBehavior : MonoBehaviour
@@ -9,12 +10,19 @@ public class CharacterBulletBehavior : MonoBehaviour
     [Tooltip("ћаксимальна€ дистанци€ полета снар€да")]
     [SerializeField] private int _maxDistance;
 
+    private static Action<GameObject, float, int> _onHitEnemy;
+
     private Transform _startBulletPosition;
     private Rigidbody _bulletRb;
     private Camera _camera;
     private Vector3 _movement;
 
+    private bool _isSlowingMobsActive;
+    private float _slowingTimerValue;
+    private int _slowingDownValue;
+
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
+    public static Action<GameObject, float, int> OnHitEnemy { get => _onHitEnemy; set => _onHitEnemy = value; }
 
     private void Start()
     {
@@ -29,6 +37,16 @@ public class CharacterBulletBehavior : MonoBehaviour
         CheckDistance();
     }
 
+    private void OnEnable()
+    {
+        CharacterUpgrader.OnSlowDownMobs += IsSlowingMobsActive;
+    }
+
+    private void OnDisable()
+    {
+        CharacterUpgrader.OnSlowDownMobs -= IsSlowingMobsActive;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out EnemyParametrs enemy))
@@ -39,6 +57,11 @@ public class CharacterBulletBehavior : MonoBehaviour
             {
                 enemyParametrs.CurrentPaintValue += _painting;
                 Destroy(gameObject);
+            }
+
+            if (_isSlowingMobsActive)
+            {
+                _onHitEnemy?.Invoke(enemy.gameObject, _slowingTimerValue, _slowingDownValue);
             }
         }
     }
@@ -56,5 +79,12 @@ public class CharacterBulletBehavior : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void IsSlowingMobsActive(float debuffTimerValue, int slowingDown)
+    {
+        _isSlowingMobsActive = true;
+        _slowingTimerValue = debuffTimerValue;
+        _slowingDownValue = slowingDown;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CharacterUpgrader : MonoBehaviour
 {
+    [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private GameObject _charUpgradePanel;
 
     private List<DecisionButton> _charButtonList = new List<DecisionButton>();
@@ -92,7 +93,7 @@ public class CharacterUpgrader : MonoBehaviour
 
             for (int i = 0; i < buttonAmount; i++)
             {
-                GameObject uiGObject = GameObject.Instantiate(gameObject, _charUpgradePanel.GetComponentInChildren<LayoutGroup>().gameObject.transform);
+                GameObject uiGObject = GameObject.Instantiate(_buttonPrefab, _charUpgradePanel.GetComponentInChildren<LayoutGroup>().gameObject.transform);
                 DecisionButton buttonScript = uiGObject.GetComponentInChildren<DecisionButton>();
 
                 _charButtonList.Add(buttonScript);
@@ -171,54 +172,35 @@ public class CharacterUpgrader : MonoBehaviour
     {
         if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.ExperienceIncome)
         {
-            float incomeTimerValue = _floatParametrUpgrade;
-            float experienceIncome = _addFloatParametrUpgrade;
-
-            ActivateExperienceIncome(incomeTimerValue, experienceIncome); //+++
+            ActivateExperienceIncome();
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.IncreaseTowerDamage)
         {
-            float towerDamage = _floatParametrUpgrade;
-
-            ActivateIncreaseTowerDamage(towerDamage); //+++
+            ActivateIncreaseTowerDamage();
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.IncreaseTowerRadius)
         {
-            float towerRange = _floatParametrUpgrade;
-
-            ActivateIncreaseTowerRadius(towerRange);
+            ActivateIncreaseTowerRadius();
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.MoneyIncome)
         {
-            float incomeTimerValue = _floatParametrUpgrade;
-            int moneyIncome = _intParametrUpgrade;
-
-            ActivateMoneyIncome(incomeTimerValue, moneyIncome);
+            ActivateMoneyIncome();
         }
         else if(_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SlowDownMobs)
         {
-            float debuffTimerValue = _floatParametrUpgrade;
-            int slowingDown = _intParametrUpgrade;
-
-            ActivateSlowDownMobs(debuffTimerValue, slowingDown);
+            ActivateSlowDownMobs();
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SlowMobsMove)
         {
-            int slowingDown = _intParametrUpgrade;
-
-            ActivateSlowMobsMove(slowingDown);
+            ActivateSlowMobsMove();
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SpeedUpCharReload)
         {
-            float cutCharReload = _floatParametrUpgrade;
-
-            ActivateSpeedUpCharReload(cutCharReload);
+            ActivateSpeedUpCharReload();
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SpeedUpTowerReload)
         {
-            float cutTowerReload = _floatParametrUpgrade;
-
-            ActivateSpeedUpTowerReload(cutTowerReload);
+            ActivateSpeedUpTowerReload();
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.DoubleKill)
         {
@@ -238,43 +220,62 @@ public class CharacterUpgrader : MonoBehaviour
         }
     }
 
-    private void ActivateExperienceIncome(float incomeTimerValue, float experienceIncome)
+    private void ActivateExperienceIncome()
     {
-        _onExperienceIncome?.Invoke(incomeTimerValue, experienceIncome);
+        float incomeTimerValue = _floatParametrUpgrade;
+        float experienceIncome = _addFloatParametrUpgrade;
+
+        _onExperienceIncome?.Invoke(incomeTimerValue, experienceIncome); //+++
     }
 
-    private void ActivateIncreaseTowerDamage(float towerDamage)
+    private void ActivateIncreaseTowerDamage()
     {
-        _onIncreaseTowerDamage?.Invoke(towerDamage);
+        float towerDamage = _floatParametrUpgrade;
+
+        _onIncreaseTowerDamage?.Invoke(towerDamage); //+++
     }
 
-    private void ActivateIncreaseTowerRadius(float towerRange)
+    private void ActivateIncreaseTowerRadius()
     {
-        _onIncreaseTowerRadius?.Invoke(towerRange);
+        float towerRange = _floatParametrUpgrade;
+
+        _onIncreaseTowerRadius?.Invoke(towerRange); //+++
     }
 
-    private void ActivateMoneyIncome(float incomeTimerValue, int moneyIncome)
+    private void ActivateMoneyIncome()
     {
-        _onMoneyIncome?.Invoke(incomeTimerValue, moneyIncome);
+        float incomeTimerValue = _floatParametrUpgrade;
+        int moneyIncome = _intParametrUpgrade;
+
+        _onMoneyIncome?.Invoke(incomeTimerValue, moneyIncome); //+++
     }
 
-    private void ActivateSlowDownMobs(float debuffTimerValue, int slowingDown)
+    private void ActivateSlowDownMobs()
     {
-        _onSlowDownMobs?.Invoke(debuffTimerValue, slowingDown);
+        float debuffTimerValue = _floatParametrUpgrade;
+        int slowingDown = _intParametrUpgrade;
+
+        _onSlowDownMobs?.Invoke(debuffTimerValue, slowingDown); //+++
     }
 
-    private void ActivateSlowMobsMove(int slowingDown)
+    private void ActivateSlowMobsMove()
     {
-        _onSlowMobsMove?.Invoke(slowingDown);
+        int slowingDown = _intParametrUpgrade;
+
+        _onSlowMobsMove?.Invoke(slowingDown); //+++
     }
 
-    private void ActivateSpeedUpCharReload(float cutCharReload)
+    private void ActivateSpeedUpCharReload()
     {
+        float cutCharReload = _floatParametrUpgrade;
+
         _onSpeedUpCharReload?.Invoke(cutCharReload);
     }
 
-    private void ActivateSpeedUpTowerReload(float cutTowerReload)
+    private void ActivateSpeedUpTowerReload()
     {
+        float cutTowerReload = _floatParametrUpgrade;
+
         _onSpeedUpTowerReload?.Invoke(cutTowerReload);
     }
 
