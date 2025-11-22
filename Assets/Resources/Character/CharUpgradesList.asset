@@ -15,7 +15,7 @@ MonoBehaviour:
   TowerSOList: []
   TowerUpgradeSOList: []
   CharUpgradeRareSOList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 8ae8c7388a6c8c743aad4bc3aa282463, type: 2}
+  - {fileID: 11400000, guid: dd96d5041f37e0748826fe910c651fed, type: 2}
+  - {fileID: 11400000, guid: d9fd204cd188b8f4aa961a9b25d2e95b, type: 2}
+  - {fileID: 11400000, guid: d352114addd4c5046bf196ca387030b2, type: 2}

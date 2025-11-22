@@ -24,9 +24,9 @@ public class CharacterUpgrader : MonoBehaviour
     private static Action<int> _onSlowMobsMove;
     private static Action<float> _onSpeedUpCharReload;
     private static Action<float> _onSpeedUpTowerReload;
-    private static Action _onDoubleKill;
-    private static Action _onDoublePaint;
-    private static Action _onSlingshot;
+    private static Action<float> _onDoubleKill;
+    private static Action<int> _onDoublePaint;
+    private static Action _onDoubleShot;
     private static Action _onTeleport;
 
     private CharacterUpgrader _charUpgrader;
@@ -44,9 +44,9 @@ public class CharacterUpgrader : MonoBehaviour
     public static Action<int> OnSlowMobsMove { get => _onSlowMobsMove; set => _onSlowMobsMove = value; }
     public static Action<float> OnSpeedUpCharReload { get => _onSpeedUpCharReload; set => _onSpeedUpCharReload = value; }
     public static Action<float> OnSpeedUpTowerReload { get => _onSpeedUpTowerReload; set => _onSpeedUpTowerReload = value; }
-    public static Action OnDoubleKill { get => _onDoubleKill; set => _onDoubleKill = value; }
-    public static Action OnDoublePaint { get => _onDoublePaint; set => _onDoublePaint = value; }
-    public static Action OnSlingshot { get => _onSlingshot; set => _onSlingshot = value; }
+    public static Action<float> OnDoubleKill { get => _onDoubleKill; set => _onDoubleKill = value; }
+    public static Action<int> OnDoublePaint { get => _onDoublePaint; set => _onDoublePaint = value; }
+    public static Action OnDoubleShot { get => _onDoubleShot; set => _onDoubleShot = value; }
     public static Action OnTeleport { get => _onTeleport; set => _onTeleport = value; }
 
     private void Awake()
@@ -210,9 +210,9 @@ public class CharacterUpgrader : MonoBehaviour
         {
             ActivateDoublePaint();
         }
-        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.Slingshot)
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.DoubleShot)
         {
-            ActivateSlingshot();
+            ActivateDoubleShot();
         }
         else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.Teleport)
         {
@@ -281,21 +281,25 @@ public class CharacterUpgrader : MonoBehaviour
 
     private void ActivateDoubleKill()
     {
-        _onDoubleKill?.Invoke();
+        float doubleKillTimerValue = _floatParametrUpgrade;
+
+        _onDoubleKill?.Invoke(doubleKillTimerValue); //+++
     }
 
     private void ActivateDoublePaint()
     {
-        _onDoublePaint?.Invoke();
+        int paintUpValue = _intParametrUpgrade;
+
+        _onDoublePaint?.Invoke(paintUpValue); //+++
     }
 
-    private void ActivateSlingshot()
+    private void ActivateDoubleShot()
     {
-        _onSlingshot?.Invoke();
+        _onDoubleShot?.Invoke(); //+++
     }
 
     private void ActivateTeleport()
     {
-        _onTeleport?.Invoke();
+        _onTeleport?.Invoke(); //++
     }
 }

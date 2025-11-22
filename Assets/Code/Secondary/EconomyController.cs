@@ -11,7 +11,11 @@ public class EconomyController : MonoBehaviour
     public int CurrentIncome;
 
     private Timer _passiveIncomeTimer;
+    private Timer _doubleKillTimer;
     private bool _isPassIncomeOn;
+    private bool _isDoubleKillOn;
+    private bool _isWasMurder;
+    private float _doubleKillTimerValue;
 
     private void Start()
     {
@@ -22,12 +26,20 @@ public class EconomyController : MonoBehaviour
     {
         EnemyParametrs.OnEnemyDied += CurrencySum;
         CharacterUpgrader.OnMoneyIncome += PassiveMoneyIncome;
+        CharacterUpgrader.OnDoubleKill += ActivateDoubleKill;
+
+        if (_isDoubleKillOn)
+        {
+            EnemyParametrs.OnEnemyDied += DetectDoubleKill;
+        }
     }
 
     private void OnDisable()
     {
         EnemyParametrs.OnEnemyDied -= CurrencySum;
+        EnemyParametrs.OnEnemyDied -= DetectDoubleKill;
         CharacterUpgrader.OnMoneyIncome -= PassiveMoneyIncome;
+        CharacterUpgrader.OnDoubleKill -= ActivateDoubleKill;
     }
 
     private void CurrencySum()
@@ -67,6 +79,50 @@ public class EconomyController : MonoBehaviour
             _passiveIncomeTimer.StopCountdown();
             GeneralCurrency += moneyIncome;
             PassiveMoneyIncome(incomeTimerValue, moneyIncome);
+        }
+    }
+
+    private void ActivateDoubleKill(float doubleKillTimerValue)
+    {
+        _isDoubleKillOn = true;
+        _doubleKillTimerValue = doubleKillTimerValue;
+    }
+
+    private void DetectDoubleKill()
+    {
+        if (_isWasMurder)
+        {
+            _isWasMurder = false;
+            CurrencySum();
+        }
+        else
+        {
+            _isWasMurder = true;
+
+            if (_doubleKillTimer == null)
+            {
+                _doubleKillTimer = new Timer(_doubleKillTimerValue);
+            }
+        }
+    }
+
+    private void ReloadDoubleKillTimer()
+    {
+        _doubleKillTimer.Wait();
+
+        if (!_doubleKillTimer.StartTimer)
+        {
+            _doubleKillTimer.StartCountdown();
+        }
+
+        if (_doubleKillTimer.ReachingTimerMaxValue == true)
+        {
+            _doubleKillTimer.StopCountdown();
+            _isWasMurder = false;
+        }
+        else
+        {
+            ReloadDoubleKillTimer();
         }
     }
 }

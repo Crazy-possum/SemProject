@@ -10,7 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 800162c4a9ea156409a072a85257cab5, type: 3}
-  m_Name: SOList
+  m_Name: _SOLIstUnique
   m_EditorClassIdentifier: 
-  CharUpgradeRare: 0
-  CharUpgradeSOList: []
+  CharUpgradeRare: 4
+  CharUpgradeSOList:
+  - {fileID: 11400000, guid: a1c2a58cad2d26d4f8ea8b930f7fb6c8, type: 2}
+  - {fileID: 11400000, guid: 12f52372f14c0f545ba19cbfb2ae46ea, type: 2}
+  - {fileID: 11400000, guid: 18dc24e8a2f228a44bcd8363109fde4f, type: 2}
+  - {fileID: 11400000, guid: a2d60dabc8974ab4b98b2eb805f90175, type: 2}

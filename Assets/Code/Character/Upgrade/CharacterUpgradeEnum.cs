@@ -11,6 +11,6 @@ public enum CharacterUpgradeEnum
     SpeedUpTowerReload = 8,
     DoubleKill = 9,
     DoublePaint = 10,
-    Slingshot = 11,
+    DoubleShot = 11,
     Teleport = 12
 }

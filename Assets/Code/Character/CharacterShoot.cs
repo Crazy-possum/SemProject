@@ -7,6 +7,8 @@ public class CharacterShoot : MonoBehaviour
     [SerializeField] private GameObject _bullet;
     [Tooltip("Точка вылета снарядов")]
     [SerializeField] private Transform _bulletSpawner;
+    [SerializeField] private Transform _doublebulletSpawnerLeft;
+    [SerializeField] private Transform _doublebulletSpawnerRight;
 
     public float CurrentTime;
 
@@ -15,6 +17,7 @@ public class CharacterShoot : MonoBehaviour
     private Camera _camera;
     private float _attakReload = 2;
     private bool _isCanShoot = false;
+    private bool _isDoubleShotOn;
 
     public float AttakReload { get => _attakReload; set => _attakReload = value; }
 
@@ -44,11 +47,13 @@ public class CharacterShoot : MonoBehaviour
     private void OnEnable()
     {
         CharacterUpgrader.OnSpeedUpCharReload += CutReloadTime;
+        CharacterUpgrader.OnDoubleShot += ActivateDoubleShot;
     }
 
     private void OnDisable()
     {
         CharacterUpgrader.OnSpeedUpCharReload -= CutReloadTime;
+        CharacterUpgrader.OnDoubleShot -= ActivateDoubleShot;
     }
 
     private void Reload()
@@ -71,9 +76,22 @@ public class CharacterShoot : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Mouse0)))
         {
-            Vector3 position = _bulletSpawner.position;
-            GameObject localBullet = GameObject.Instantiate(_bullet, position, Quaternion.identity, _bulletSpawner);
-            localBullet.GetComponent<CharacterBulletBehavior>().StartBulletPosition = _bulletSpawner;
+            if (!_isDoubleShotOn)
+            {
+                Vector3 position = _bulletSpawner.position;
+                GameObject localBullet = GameObject.Instantiate(_bullet, position, Quaternion.identity, _bulletSpawner);
+                localBullet.GetComponent<CharacterBulletBehavior>().StartBulletPosition = _bulletSpawner;
+            }
+            else
+            {
+                Vector3 leftPosition = _doublebulletSpawnerLeft.position;
+                GameObject localLeftBullet = GameObject.Instantiate(_bullet, leftPosition, Quaternion.identity, _bulletSpawner);
+                localLeftBullet.GetComponent<CharacterBulletBehavior>().StartBulletPosition = _doublebulletSpawnerLeft;
+
+                Vector3 rightPosition = _doublebulletSpawnerRight.position;
+                GameObject localRightBullet = GameObject.Instantiate(_bullet, rightPosition, Quaternion.identity, _bulletSpawner);
+                localRightBullet.GetComponent<CharacterBulletBehavior>().StartBulletPosition = _doublebulletSpawnerRight;
+            }
 
             _attakReloadTimer.StopCountdown();
             _isCanShoot = false;
@@ -92,5 +110,10 @@ public class CharacterShoot : MonoBehaviour
     private void CutReloadTime(float cutCharReload)
     {
         _attakReloadTimer.ResetTimerMaxTime(cutCharReload);
+    }
+
+    private void ActivateDoubleShot()
+    {
+        _isDoubleShotOn = true;
     }
 }

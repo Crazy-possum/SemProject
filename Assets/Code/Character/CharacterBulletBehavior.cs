@@ -20,6 +20,8 @@ public class CharacterBulletBehavior : MonoBehaviour
     private bool _isSlowingMobsActive;
     private float _slowingTimerValue;
     private int _slowingDownValue;
+    private bool _isDoublePaintOn;
+    private int _doublePaintValue;
 
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
     public static Action<GameObject, float, int> OnHitEnemy { get => _onHitEnemy; set => _onHitEnemy = value; }
@@ -40,11 +42,13 @@ public class CharacterBulletBehavior : MonoBehaviour
     private void OnEnable()
     {
         CharacterUpgrader.OnSlowDownMobs += IsSlowingMobsActive;
+        CharacterUpgrader.OnDoublePaint += IsDoublePaintOn;
     }
 
     private void OnDisable()
     {
         CharacterUpgrader.OnSlowDownMobs -= IsSlowingMobsActive;
+        CharacterUpgrader.OnDoublePaint -= IsDoublePaintOn;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +59,19 @@ public class CharacterBulletBehavior : MonoBehaviour
 
             if (enemyParametrs.CurrentPaintValue < 4)
             {
-                enemyParametrs.CurrentPaintValue += _painting;
+                if (_isDoublePaintOn)
+                {
+                    enemyParametrs.CurrentPaintValue += _painting * _doublePaintValue;
+                    if(enemyParametrs.CurrentPaintValue > 4)
+                    {
+                        enemyParametrs.CurrentPaintValue = 4;
+                    }
+                }
+                else
+                {
+                    enemyParametrs.CurrentPaintValue += _painting;
+                }
+
                 Destroy(gameObject);
             }
 
@@ -86,5 +102,11 @@ public class CharacterBulletBehavior : MonoBehaviour
         _isSlowingMobsActive = true;
         _slowingTimerValue = debuffTimerValue;
         _slowingDownValue = slowingDown;
+    }
+
+    private void IsDoublePaintOn(int paintUpValue)
+    {
+        _isDoublePaintOn = true;
+        _doublePaintValue = paintUpValue;
     }
 }

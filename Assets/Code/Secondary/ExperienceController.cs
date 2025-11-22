@@ -16,7 +16,11 @@ public class ExperienceController : MonoBehaviour
     private static Action _onLevelUp;
 
     private Timer _passiveIncomeTimer;
+    private Timer _doubleKillTimer;
     private bool _isPassIncomeOn;
+    private bool _isDoubleKillOn;
+    private bool _isWasMurder;
+    private float _doubleKillTimerValue;
 
     private float _currentExp;
 
@@ -40,12 +44,20 @@ public class ExperienceController : MonoBehaviour
     {
         EnemyParametrs.OnEnemyDied += ExperienceIncome;
         CharacterUpgrader.OnExperienceIncome += PassiveExperienceIncome;
+        CharacterUpgrader.OnDoubleKill += ActivateDoubleKill;
+
+        if (_isDoubleKillOn)
+        {
+            EnemyParametrs.OnEnemyDied += DetectDoubleKill;
+        }
     }
 
     private void OnDisable()
     {
         EnemyParametrs.OnEnemyDied -= ExperienceIncome;
+        EnemyParametrs.OnEnemyDied -= DetectDoubleKill;
         CharacterUpgrader.OnExperienceIncome -= PassiveExperienceIncome;
+        CharacterUpgrader.OnDoubleKill -= ActivateDoubleKill;
     }
 
     private void ExperienceIncome()
@@ -54,6 +66,8 @@ public class ExperienceController : MonoBehaviour
         _experienceSlider.value = _currentExp;
     }
 
+    //---------------------------------------------------------------------------------------------------------------------------------------------------------
+    #region addLiseners
     private void PassiveExperienceIncome(float incomeTimerValue, float experienceIncome)
     {
         if (!_isPassIncomeOn)
@@ -80,6 +94,10 @@ public class ExperienceController : MonoBehaviour
             _currentExp += experienceIncome;
             PassiveExperienceIncome(incomeTimerValue, experienceIncome);
         }
+        else 
+        {
+            IncomeTimerReload(incomeTimerValue, experienceIncome);
+        }
     }
 
     private void CharLevelUp()
@@ -90,4 +108,49 @@ public class ExperienceController : MonoBehaviour
 
         _onLevelUp?.Invoke();
     }
+
+    private void ActivateDoubleKill(float doubleKillTimerValue)
+    {
+        _isDoubleKillOn = true;
+        _doubleKillTimerValue = doubleKillTimerValue;
+    }
+
+    private void DetectDoubleKill()
+    {
+        if (_isWasMurder)
+        {
+            _isWasMurder = false;
+            ExperienceIncome();
+        }
+        else
+        {
+            _isWasMurder = true;
+
+            if (_doubleKillTimer == null)
+            {
+                _doubleKillTimer = new Timer(_doubleKillTimerValue);
+            }
+        }
+    }
+
+    private void ReloadDoubleKillTimer()
+    {
+        _doubleKillTimer.Wait();
+
+        if (!_doubleKillTimer.StartTimer)
+        {
+            _doubleKillTimer.StartCountdown();
+        }
+
+        if (_doubleKillTimer.ReachingTimerMaxValue == true)
+        {
+            _doubleKillTimer.StopCountdown();
+            _isWasMurder = false;
+        }
+        else
+        {
+            ReloadDoubleKillTimer();
+        }
+    }
+    #endregion
 }
