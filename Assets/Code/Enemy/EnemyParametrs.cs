@@ -35,6 +35,7 @@ public class EnemyParametrs : MonoBehaviour
     {
         UpdateHealth();
         UpdatePainting();
+        Debug.Log(_currentHealth);
     }
 
     private void UpdateHealth()

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfc086295ddbc045a36415209ff3cb7, type: 3}
   m_Name: MoneyIncome
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
+  Name: "\u041F\u0430\u0441\u0441\u0438\u0432\u043D\u044B\u0435 \u0434\u0435\u043D\u044C\u0433\u0438"
+  Description: "\u043D\u0440\u0430\u043F"
+  UpgradeEnum: 4
   CharUpgradeRare: 1
-  TowerSprite: {fileID: 0}
-  UpgradeIntValue: 0
-  UpgradeFloatValue: 0
+  UpgradeSprite: {fileID: 21300000, guid: 0666ed9ad69f90044840f1bfb00039d1, type: 3}
+  UpgradeIntValue: 1
+  UpgradeFloatValue: 3
+  AddUpgradeFloatValue: 0
   UpgradeIndex: 0

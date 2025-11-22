@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [Tooltip("Скорость врагов")]
-    [SerializeField] private int _speed;
+    [SerializeField] private float _speed;
     [Tooltip("Погрешность пересечения с точками маршрута")]
     [SerializeField] private float _tolerance;
 
@@ -15,14 +15,14 @@ public class EnemyMovement : MonoBehaviour
 
     private Vector3 _wayPointVector;
     private int _currentIndex;
-    private int _baseSpeed;
+    private float _baseSpeed;
     private float _checkDistance;
     private bool _isAlreadySlowing;
 
     public Transform[] EnemyWayPintsList { get => _enemyWayPintsList; set => _enemyWayPintsList = value; }
     public static Action OnEnemyEnter { get => _onEnemyEnter; set => _onEnemyEnter = value; }
     public Timer SlowingDownTimer { get => _slowingDownTimer; set => _slowingDownTimer = value; }
-    public int Speed { get => _speed; set => _speed = value; }
+    public float Speed { get => _speed; set => _speed = value; }
     public bool IsAlreadySlowing { get => _isAlreadySlowing; set => _isAlreadySlowing = value; }
 
     void Start()
@@ -79,12 +79,12 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void UpdateMoveSpeed(int slowingDown)
+    private void UpdateMoveSpeed(float slowingDown)
     {
         _speed = _speed - (_baseSpeed - (_baseSpeed * slowingDown));
     }
 
-    private void SlowingDownOnHit(GameObject enemy, float slowingTimerValue, int slowingDownValue)
+    private void SlowingDownOnHit(GameObject enemy, float slowingTimerValue, float slowingDownValue)
     {
         Timer slowTimer = enemy.GetComponent<EnemyMovement>().SlowingDownTimer;
         slowTimer = new Timer(slowingTimerValue);
@@ -98,7 +98,7 @@ public class EnemyMovement : MonoBehaviour
         SlowingCountdown(enemy, slowTimer, slowingDownValue);
     }
 
-    private void SlowingCountdown(GameObject enemy, Timer slowTimer, int slowingDownValue)
+    private void SlowingCountdown(GameObject enemy, Timer slowTimer, float slowingDownValue)
     {
         slowTimer.Wait();
 

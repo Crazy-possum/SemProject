@@ -59,13 +59,16 @@ public class DecisionButton : MonoBehaviour
             _isEnoughMoney = _economyController.GeneralCurrency >= _upgradeSO.UpgradeCost;
         }
 
-        if (!_isEnoughMoney)
+        if (_charUpgradeSO == null)
         {
-            gameObject.GetComponent<Button>().interactable = false;
-        }
-        else
-        {
-            gameObject.GetComponent<Button>().interactable = true;
+            if (!_isEnoughMoney)
+            {
+                gameObject.GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                gameObject.GetComponent<Button>().interactable = true;
+            }
         }
     }
 
@@ -133,6 +136,7 @@ public class DecisionButton : MonoBehaviour
         {
             _characterUpgrader.ApplyUpgrade(_charUpgradeSO);
             _charUpgraderPanel.SetActive(false);
+            Time.timeScale = 1f;
         }
     }
 }

@@ -12,6 +12,7 @@ public class TowerTriggerZone : MonoBehaviour
     private void FixedUpdate()
     {
         SearchMissingObject();
+        //Debug.Log(gameObject.GetComponent<SphereCollider>().radius);
     }
 
     private void OnTriggerEnter(Collider other)

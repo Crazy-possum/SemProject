@@ -10,7 +10,7 @@ public class CharacterBulletBehavior : MonoBehaviour
     [Tooltip("ћаксимальна€ дистанци€ полета снар€да")]
     [SerializeField] private int _maxDistance;
 
-    private static Action<GameObject, float, int> _onHitEnemy;
+    private static Action<GameObject, float, float> _onHitEnemy;
 
     private Transform _startBulletPosition;
     private Rigidbody _bulletRb;
@@ -19,12 +19,12 @@ public class CharacterBulletBehavior : MonoBehaviour
 
     private bool _isSlowingMobsActive;
     private float _slowingTimerValue;
-    private int _slowingDownValue;
+    private float _slowingDownValue;
     private bool _isDoublePaintOn;
     private int _doublePaintValue;
 
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
-    public static Action<GameObject, float, int> OnHitEnemy { get => _onHitEnemy; set => _onHitEnemy = value; }
+    public static Action<GameObject, float, float> OnHitEnemy { get => _onHitEnemy; set => _onHitEnemy = value; }
 
     private void Start()
     {
@@ -97,7 +97,7 @@ public class CharacterBulletBehavior : MonoBehaviour
         }
     }
 
-    private void IsSlowingMobsActive(float debuffTimerValue, int slowingDown)
+    private void IsSlowingMobsActive(float debuffTimerValue, float slowingDown)
     {
         _isSlowingMobsActive = true;
         _slowingTimerValue = debuffTimerValue;

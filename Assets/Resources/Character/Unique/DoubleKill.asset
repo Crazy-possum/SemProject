@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfc086295ddbc045a36415209ff3cb7, type: 3}
   m_Name: DoubleKill
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
+  Name: "\u0414\u0430\u0431\u043B \u043A\u0438\u043B\u043B"
+  Description: "\u043D5\u0443\u043A\u043F"
+  UpgradeEnum: 9
   CharUpgradeRare: 4
-  TowerSprite: {fileID: 0}
+  UpgradeSprite: {fileID: 21300000, guid: 634c09e83b913d74e9ea8d976823ae0e, type: 3}
   UpgradeIntValue: 0
-  UpgradeFloatValue: 0
+  UpgradeFloatValue: 1.5
+  AddUpgradeFloatValue: 0
   UpgradeIndex: 0

@@ -8,6 +8,7 @@ public class CharacterUpgrader : MonoBehaviour
 {
     [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private GameObject _charUpgradePanel;
+    [SerializeField] private GameObject _charUpgradeButtonPanel;
 
     private List<DecisionButton> _charButtonList = new List<DecisionButton>();
     private List<CharUpgradeRareSO> _charUpgradeRareSOList;
@@ -20,8 +21,8 @@ public class CharacterUpgrader : MonoBehaviour
     private static Action<float> _onIncreaseTowerDamage;
     private static Action<float> _onIncreaseTowerRadius;
     private static Action<float, int> _onMoneyIncome;
-    private static Action<float, int> _onSlowDownMobs;
-    private static Action<int> _onSlowMobsMove;
+    private static Action<float, float> _onSlowDownMobs;
+    private static Action<float> _onSlowMobsMove;
     private static Action<float> _onSpeedUpCharReload;
     private static Action<float> _onSpeedUpTowerReload;
     private static Action<float> _onDoubleKill;
@@ -40,8 +41,8 @@ public class CharacterUpgrader : MonoBehaviour
     public static Action<float> OnIncreaseTowerDamage { get => _onIncreaseTowerDamage; set => _onIncreaseTowerDamage = value; }
     public static Action<float> OnIncreaseTowerRadius { get => _onIncreaseTowerRadius; set => _onIncreaseTowerRadius = value; }
     public static Action<float, int> OnMoneyIncome { get => _onMoneyIncome; set => _onMoneyIncome = value; }
-    public static Action<float, int> OnSlowDownMobs { get => _onSlowDownMobs; set => _onSlowDownMobs = value; }
-    public static Action<int> OnSlowMobsMove { get => _onSlowMobsMove; set => _onSlowMobsMove = value; }
+    public static Action<float, float> OnSlowDownMobs { get => _onSlowDownMobs; set => _onSlowDownMobs = value; }
+    public static Action<float> OnSlowMobsMove { get => _onSlowMobsMove; set => _onSlowMobsMove = value; }
     public static Action<float> OnSpeedUpCharReload { get => _onSpeedUpCharReload; set => _onSpeedUpCharReload = value; }
     public static Action<float> OnSpeedUpTowerReload { get => _onSpeedUpTowerReload; set => _onSpeedUpTowerReload = value; }
     public static Action<float> OnDoubleKill { get => _onDoubleKill; set => _onDoubleKill = value; }
@@ -87,13 +88,16 @@ public class CharacterUpgrader : MonoBehaviour
 
     private void InitializeCharacterButton()
     {
+        _charUpgradePanel.SetActive(true);
+        Time.timeScale = 0.3f;
+
         if (!_isCharButtonHere)
         {
             int buttonAmount = 3;
 
             for (int i = 0; i < buttonAmount; i++)
             {
-                GameObject uiGObject = GameObject.Instantiate(_buttonPrefab, _charUpgradePanel.GetComponentInChildren<LayoutGroup>().gameObject.transform);
+                GameObject uiGObject = GameObject.Instantiate(_buttonPrefab, _charUpgradeButtonPanel.GetComponentInChildren<LayoutGroup>().gameObject.transform);
                 DecisionButton buttonScript = uiGObject.GetComponentInChildren<DecisionButton>();
 
                 _charButtonList.Add(buttonScript);
@@ -253,14 +257,14 @@ public class CharacterUpgrader : MonoBehaviour
     private void ActivateSlowDownMobs()
     {
         float debuffTimerValue = _floatParametrUpgrade;
-        int slowingDown = _intParametrUpgrade;
+        float slowingDown = _addFloatParametrUpgrade;
 
         _onSlowDownMobs?.Invoke(debuffTimerValue, slowingDown); //+++
     }
 
     private void ActivateSlowMobsMove()
     {
-        int slowingDown = _intParametrUpgrade;
+        float slowingDown = _intParametrUpgrade;
 
         _onSlowMobsMove?.Invoke(slowingDown); //+++
     }

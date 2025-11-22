@@ -9,7 +9,7 @@ public class TowerAttak : MonoBehaviour
     [SerializeField] private Transform _bulletSpawner;
     [SerializeField] private GameObject _bulletSpawnerGO;
     [Tooltip("Таймер перезарядки в сек")]
-    public float AttakReload;
+    private float _attakReload;
 
     private TowerBehavior _towerBehavior;
     private List<GameObject> _targetsList;
@@ -31,6 +31,7 @@ public class TowerAttak : MonoBehaviour
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
     public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
     public GameObject CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
+    public float AttakReload { get => _attakReload; set => _attakReload = value; }
 
     private void Start()
     {
@@ -74,6 +75,16 @@ public class TowerAttak : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        TowerUpgrader.OnActivateShotgunThirdUpgrade += ResetReloadTimerTime;
+    }
+
+    private void OnDisable()
+    {
+        TowerUpgrader.OnActivateShotgunThirdUpgrade -= ResetReloadTimerTime;
+    }
+
     public void SetTargetList(List<GameObject> targetsList)
     {
         _towerBehavior.TargetsList = targetsList;
@@ -85,6 +96,15 @@ public class TowerAttak : MonoBehaviour
     {
         AttakReload = _towerSO.TowerReloadTime;
         _attakTimer = new Timer(AttakReload);
+    }
+
+    public void ResetReloadTimerTime(float cutReload, GameObject tower)
+    {
+        if(_towerEnum == TowerEnum.Shotgun)
+        {
+            _attakTimer.ResetTimerMaxTime(_attakReload * cutReload);
+            _attakReload *= cutReload;
+        }
     }
 }
 

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfc086295ddbc045a36415209ff3cb7, type: 3}
   m_Name: ExperienceIncome
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
+  Name: "\u041F\u0430\u0441\u0441\u0438\u0432\u043D\u044B\u0439 \u043E\u043F\u044B\u0442"
+  Description: "\u0433\u043E\u043D\u043E\u043D\u0435\u0440"
+  UpgradeEnum: 1
   CharUpgradeRare: 3
-  TowerSprite: {fileID: 0}
+  UpgradeSprite: {fileID: 21300000, guid: b253ea3da5aef9f46939e0e36ba698e9, type: 3}
   UpgradeIntValue: 0
-  UpgradeFloatValue: 0
+  UpgradeFloatValue: 3
+  AddUpgradeFloatValue: 1
   UpgradeIndex: 0

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfc086295ddbc045a36415209ff3cb7, type: 3}
   m_Name: Teleport
   m_EditorClassIdentifier: 
-  Name: 
-  Description: 
+  Name: "\u0422\u0435\u043B\u0435\u043F\u043E\u0440\u0442"
+  Description: "\u0435\u0440\u0432"
+  UpgradeEnum: 12
   CharUpgradeRare: 4
-  TowerSprite: {fileID: 0}
+  UpgradeSprite: {fileID: 21300000, guid: 634c09e83b913d74e9ea8d976823ae0e, type: 3}
   UpgradeIntValue: 0
   UpgradeFloatValue: 0
+  AddUpgradeFloatValue: 0
   UpgradeIndex: 0

@@ -16,6 +16,7 @@ public class CharacterShoot : MonoBehaviour
     private Rigidbody _characterRb;
     private Camera _camera;
     private float _attakReload = 2;
+    private float _currentReloadTime;
     private bool _isCanShoot = false;
     private bool _isDoubleShotOn;
 
@@ -24,6 +25,7 @@ public class CharacterShoot : MonoBehaviour
     private void Start()
     {
         _attakReloadTimer = new Timer(_attakReload);
+        _currentReloadTime = _attakReload;
         _characterRb = GetComponent<Rigidbody>();
         _camera = Camera.main;
     }
@@ -109,7 +111,8 @@ public class CharacterShoot : MonoBehaviour
 
     private void CutReloadTime(float cutCharReload)
     {
-        _attakReloadTimer.ResetTimerMaxTime(cutCharReload);
+        _currentReloadTime = _currentReloadTime - (_attakReload * cutCharReload);
+        _attakReloadTimer.ResetTimerMaxTime(_currentReloadTime);
     }
 
     private void ActivateDoubleShot()

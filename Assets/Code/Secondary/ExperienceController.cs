@@ -25,6 +25,7 @@ public class ExperienceController : MonoBehaviour
     private float _currentExp;
 
     public static Action OnLevelUp { get => _onLevelUp; set => _onLevelUp = value; }
+    public float CurrentExp { get => _currentExp; set => _currentExp = value; }
 
     private void Start()
     {
@@ -66,6 +67,17 @@ public class ExperienceController : MonoBehaviour
         _experienceSlider.value = _currentExp;
     }
 
+    private void CharLevelUp()
+    {
+        _experienceSlider.value = _currentExp;
+
+        _currentExp = 0;
+        _levelUpExpValue = _levelUpExpValue * _ratioExpUp;
+        _experienceSlider.maxValue = _levelUpExpValue;
+
+        _onLevelUp?.Invoke();
+    }
+
     //---------------------------------------------------------------------------------------------------------------------------------------------------------
     #region addLiseners
     private void PassiveExperienceIncome(float incomeTimerValue, float experienceIncome)
@@ -98,15 +110,6 @@ public class ExperienceController : MonoBehaviour
         {
             IncomeTimerReload(incomeTimerValue, experienceIncome);
         }
-    }
-
-    private void CharLevelUp()
-    {
-        _currentExp = 0;
-        _levelUpExpValue = _levelUpExpValue * _ratioExpUp;
-        _experienceSlider.maxValue = _levelUpExpValue;
-
-        _onLevelUp?.Invoke();
     }
 
     private void ActivateDoubleKill(float doubleKillTimerValue)
