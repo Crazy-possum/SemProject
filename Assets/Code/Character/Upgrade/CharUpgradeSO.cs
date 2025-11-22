@@ -3,13 +3,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CharUp", menuName = "CharUpgradeSO")]
 public class CharUpgradeSO : ScriptableObject
 {
-    [Tooltip("Название улучшения")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public string Name;
-    [Tooltip("Описание")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     public string Description;
     public CharacterUpgradeEnum UpgradeEnum;
+    //TODO : Р›СѓС‡С€Рµ РЅР°Р·РІР°С‚СЊ РЅРµ Rare, Р° Rarity
     public CharUpgradeRareEnum CharUpgradeRare;
-    [Tooltip("Иконка на кнопке")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ")]
     public Sprite UpgradeSprite;
     public int UpgradeIntValue;
     public float UpgradeFloatValue;

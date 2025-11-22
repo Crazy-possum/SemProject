@@ -89,11 +89,11 @@ public class CharacterUpgrader : MonoBehaviour
     private void InitializeCharacterButton()
     {
         _charUpgradePanel.SetActive(true);
-        Time.timeScale = 0.3f;
+        Time.timeScale = 0.3f; // TODO : Перенеси в поле
 
         if (!_isCharButtonHere)
         {
-            int buttonAmount = 3;
+            int buttonAmount = 3; // TODO : Перенеси в константу
 
             for (int i = 0; i < buttonAmount; i++)
             {
@@ -143,7 +143,8 @@ public class CharacterUpgrader : MonoBehaviour
         button.CharUpgradePanel = _charUpgradePanel;
         button.CharacterUpgrader1 = _charUpgrader;
         button.CustomizationCharacterButton(charUpgradeSO);
-
+        
+        //TODO : Оно удаляет их при создании кнопок, а не при взятии
         if (upgradeList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Regular)
         {
             _charRegularUpgradeSOList.Remove(charUpgradeSO);
@@ -170,6 +171,7 @@ public class CharacterUpgrader : MonoBehaviour
         _addFloatParametrUpgrade = _charUpgradeSO.AddUpgradeFloatValue;
 
         ChooseUpgradeImpact();
+        //TODO : Удалять тут
     }
 
     private void ChooseUpgradeImpact()

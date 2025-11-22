@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class ClickController : MonoBehaviour
 {
-    [Tooltip("Скрипт")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private TowerBuilder _towerBuilder;
     [SerializeField] private EconomyController _economyController;
-    [Tooltip("Панель с выбором башни на постройку")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private GameObject _towerBuildPanel;
     [SerializeField] private GameObject _towerUpgradePanel;
     [SerializeField] private GameObject _towerButton;
@@ -17,7 +17,7 @@ public class ClickController : MonoBehaviour
     private List<DecisionButton> _upgradeButtonList = new List<DecisionButton>();
     private ScriptableListScript _towerObjectListSO;
     private ScriptableListScript _towerUpgradeListSO;
-    private bool _isTownBuildButtenHere;
+    private bool _isTownBuildButtenHere; //TODO : TOWN BUTTEN
     private bool _isTownUpgradeButtenHere;
 
     private void Start()
@@ -79,6 +79,7 @@ public class ClickController : MonoBehaviour
     {
         if (!_isTownUpgradeButtenHere)
         {
+            //TODO : РњРѕР¶РЅРѕ РѕС‚РґРµР»РёС‚СЊ РІ РјРµС‚РѕРґ CreateButtons
             int buttonAmount = 3;
 
             for (int i = 0; i < buttonAmount; i++)

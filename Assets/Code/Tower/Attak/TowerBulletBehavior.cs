@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class TowerBulletBehavior : MonoBehaviour
 {
-    [Tooltip("Скорость полета снаряда")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private float _speed = 100f;
 
-    [Tooltip("Процент пробития моба при 1 единичке окрашивания")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ 1 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private float _firstPaintingStage = 0.25f;
-    [Tooltip("Процент пробития моба при 2 единичках окрашивания")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ 2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private float _secondPaintingStage = 0.5f;
-    [Tooltip("Процент пробития моба при 3 единичках окрашивания")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ 3 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private float _thirdPaintingStage = 0.75f;
-    [Tooltip("Процент пробития моба при 4 единичках окрашивания")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ 4 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private float _fourthPaintingStage = 1f;
 
     [SerializeField] private GameObject _aoeBullet;
@@ -406,6 +406,7 @@ public class TowerBulletBehavior : MonoBehaviour
                 _timerUpgradeDOT.StopCountdown();
                 repeatAmount += 1;
 
+                //TODO : UPGATE FloatDamageValue
                 DealDamage(_currentEnemyHealth, _upgateFloatDamageValue);
                 ReloadDOTTimer(repeatAmount);
             }

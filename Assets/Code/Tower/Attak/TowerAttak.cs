@@ -1,20 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Experimental;
 using static CatapultTowerBehavior;
 
 public class TowerAttak : MonoBehaviour
 {
-    [Tooltip("Точка, из которой вылетают пули")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ")]
     [SerializeField] private Transform _bulletSpawner;
     [SerializeField] private GameObject _bulletSpawnerGO;
-    [Tooltip("Таймер перезарядки в сек")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ")]
     private float _attakReload;
 
     private TowerBehavior _towerBehavior;
     private List<GameObject> _targetsList;
     private TowerScriptable _towerSO;
-    private PurchasedUpgrade _purchasedUpgrade;
+    private PurchasedUpgrade _purchasedUpgrade; //TODO : Р­С‚Рѕ РЅРµ РЅСѓР¶РЅРѕ
     private Timer _attakTimer;
 
     private GameObject _towerBulletPrefab;
@@ -23,6 +22,7 @@ public class TowerAttak : MonoBehaviour
 
     private TowerEnum _towerEnum;
 
+    //TODO : РЈРґР°Р»Рё СЌС‚Рё Р±СѓР»РєРё, РѕРЅРё РЅРµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ. Р•СЃР»Рё РЅСѓР¶РЅРѕ РјРѕР¶РµС€СЊ РІР·СЏС‚СЊ РёР· _towerBehavior
     private bool _firstUpgrade;
     private bool _secondUpgrade;
     private bool _thirdUpgrade;
