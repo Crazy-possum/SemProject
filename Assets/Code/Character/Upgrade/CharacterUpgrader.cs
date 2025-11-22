@@ -269,14 +269,14 @@ public class CharacterUpgrader : MonoBehaviour
     {
         float cutCharReload = _floatParametrUpgrade;
 
-        _onSpeedUpCharReload?.Invoke(cutCharReload);
+        _onSpeedUpCharReload?.Invoke(cutCharReload); //+++
     }
 
     private void ActivateSpeedUpTowerReload()
     {
         float cutTowerReload = _floatParametrUpgrade;
 
-        _onSpeedUpTowerReload?.Invoke(cutTowerReload);
+        _onSpeedUpTowerReload?.Invoke(cutTowerReload); //+++
     }
 
     private void ActivateDoubleKill()

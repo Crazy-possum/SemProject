@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelSelectScene.unity
     guid: e7d7719069b1db74d80b77dbe4cba884
   - enabled: 1
-    path: Assets/Scenes/FirstLevel.unity
+    path: Assets/Prefabs/FirstLevel.unity
     guid: 9a7d60653dffcc341aea587519e4d12c
   - enabled: 0
     path: Assets/Scenes/2DPrototypeScene.unity
