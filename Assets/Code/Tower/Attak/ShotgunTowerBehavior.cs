@@ -6,7 +6,7 @@ public partial class CatapultTowerBehavior
 {
     public class ShotgunTowerBehavior : TowerBehavior
     {
-        public ShotgunTowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer, GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO) :
+        public ShotgunTowerBehavior(TowerSO towerSO, Rigidbody rb, Timer reloadTimer, GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO) :
         base(towerSO, rb, reloadTimer, bulletPref, towerObject, bulletSpawner, bulletSpawnerGO)
         {
             _towerSO = towerSO;

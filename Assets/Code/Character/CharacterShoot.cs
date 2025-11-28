@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterShoot : MonoBehaviour
 {
@@ -14,13 +15,17 @@ public class CharacterShoot : MonoBehaviour
 
     private Timer _attakReloadTimer;
     private Rigidbody _characterRb;
+    private Slider _reloadSlider;
     private Camera _camera;
     private float _attakReload = 2;
     private float _currentReloadTime;
     private bool _isCanShoot = false;
     private bool _isDoubleShotOn;
+    private float _currentTimerTime;
+    private float _reloadTime;
 
     public float AttakReload { get => _attakReload; set => _attakReload = value; }
+    public Slider ReloadSlider { get => _reloadSlider; set => _reloadSlider = value; }
 
     private void Start()
     {
@@ -28,6 +33,8 @@ public class CharacterShoot : MonoBehaviour
         _currentReloadTime = _attakReload;
         _characterRb = GetComponent<Rigidbody>();
         _camera = Camera.main;
+
+        TimerSliderUpdate();
     }
 
     private void Update()
@@ -41,6 +48,8 @@ public class CharacterShoot : MonoBehaviour
     private void FixedUpdate()
     {
         Reload();
+        SetTimerSlider();
+        TimerSliderUpdate();
         Rotate();
 
         CurrentTime = _attakReloadTimer.TimerCurrentTime;
@@ -58,6 +67,12 @@ public class CharacterShoot : MonoBehaviour
         CharacterUpgrader.OnDoubleShot -= ActivateDoubleShot;
     }
 
+    private void SetTimerSlider()
+    {
+        _reloadTime = AttakReload;
+        _reloadSlider.maxValue = _reloadTime;
+    }
+
     private void Reload()
     {
          _attakReloadTimer.Wait();
@@ -72,6 +87,12 @@ public class CharacterShoot : MonoBehaviour
             _isCanShoot = true;
             _attakReloadTimer.PauseCountdown();
         }
+    }
+
+    private void TimerSliderUpdate()
+    {
+        _currentTimerTime = CurrentTime;
+        _reloadSlider.value = _currentTimerTime;
     }
 
     private void Fire()
@@ -111,8 +132,9 @@ public class CharacterShoot : MonoBehaviour
 
     private void CutReloadTime(float cutCharReload)
     {
-        _currentReloadTime = _currentReloadTime - (_attakReload * cutCharReload);
-        _attakReloadTimer.ResetTimerMaxTime(_currentReloadTime);
+        _attakReload = _attakReload - (_attakReload * cutCharReload);
+        _attakReloadTimer.ResetTimerMaxTime(_attakReload);
+        SetTimerSlider();
     }
 
     private void ActivateDoubleShot()

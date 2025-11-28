@@ -14,7 +14,6 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void AddExp()
     {
-        Debug.Log(ExperienceController.CurrentExp);
         ExperienceController.CurrentExp += 10;
     }
 }

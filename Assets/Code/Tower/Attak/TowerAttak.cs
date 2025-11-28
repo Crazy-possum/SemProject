@@ -13,7 +13,7 @@ public class TowerAttak : MonoBehaviour
 
     private TowerBehavior _towerBehavior;
     private List<GameObject> _targetsList;
-    private TowerScriptable _towerSO;
+    private TowerSO _towerSO;
     private PurchasedUpgrade _purchasedUpgrade;
     private Timer _attakTimer;
 
@@ -29,7 +29,7 @@ public class TowerAttak : MonoBehaviour
 
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
-    public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
+    public TowerSO TowerSO { get => _towerSO; set => _towerSO = value; }
     public GameObject CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
     public float AttakReload { get => _attakReload; set => _attakReload = value; }
 
@@ -77,12 +77,14 @@ public class TowerAttak : MonoBehaviour
 
     private void OnEnable()
     {
-        TowerUpgrader.OnActivateShotgunThirdUpgrade += ResetReloadTimerTime;
+        TowerUpgrader.OnActivateShotgunThirdUpgrade += ResetShotgunReloadTimerTime;
+        TowerUpgrader.OnActivateSniperFirstUpgrade += ResetSniperReloadTimerTime;
     }
 
     private void OnDisable()
     {
-        TowerUpgrader.OnActivateShotgunThirdUpgrade -= ResetReloadTimerTime;
+        TowerUpgrader.OnActivateShotgunThirdUpgrade -= ResetShotgunReloadTimerTime;
+        TowerUpgrader.OnActivateSniperFirstUpgrade -= ResetSniperReloadTimerTime;
     }
 
     public void SetTargetList(List<GameObject> targetsList)
@@ -98,9 +100,18 @@ public class TowerAttak : MonoBehaviour
         _attakTimer = new Timer(AttakReload);
     }
 
-    public void ResetReloadTimerTime(float cutReload, GameObject tower)
+    public void ResetShotgunReloadTimerTime(float cutReload, GameObject tower)
     {
         if(_towerEnum == TowerEnum.Shotgun)
+        {
+            _attakTimer.ResetTimerMaxTime(_attakReload * cutReload);
+            _attakReload *= cutReload;
+        }
+    }
+
+    public void ResetSniperReloadTimerTime(float cutReload, GameObject tower)
+    {
+        if (_towerEnum == TowerEnum.Sniper)
         {
             _attakTimer.ResetTimerMaxTime(_attakReload * cutReload);
             _attakReload *= cutReload;

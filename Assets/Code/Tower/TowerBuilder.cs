@@ -14,7 +14,7 @@ public class TowerBuilder : MonoBehaviour
     [SerializeField] private int _buildCost;
 
     private ScriptableListScript _towerObjectListSO;
-    private TowerScriptable _towerSO;
+    private TowerSO _towerSO;
     private GameObject _buildPointObject;
     private Transform _buildPointTransform;
 

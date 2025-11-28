@@ -229,7 +229,7 @@ public class CharacterUpgrader : MonoBehaviour
         float incomeTimerValue = _floatParametrUpgrade;
         float experienceIncome = _addFloatParametrUpgrade;
 
-        _onExperienceIncome?.Invoke(incomeTimerValue, experienceIncome); //+++
+        _onExperienceIncome?.Invoke(incomeTimerValue, experienceIncome);
     }
 
     private void ActivateIncreaseTowerDamage()
@@ -273,7 +273,7 @@ public class CharacterUpgrader : MonoBehaviour
     {
         float cutCharReload = _floatParametrUpgrade;
 
-        _onSpeedUpCharReload?.Invoke(cutCharReload); //+++
+        _onSpeedUpCharReload?.Invoke(cutCharReload);
     }
 
     private void ActivateSpeedUpTowerReload()
@@ -304,6 +304,6 @@ public class CharacterUpgrader : MonoBehaviour
 
     private void ActivateTeleport()
     {
-        _onTeleport?.Invoke(); //++
+        _onTeleport?.Invoke(); 
     }
 }

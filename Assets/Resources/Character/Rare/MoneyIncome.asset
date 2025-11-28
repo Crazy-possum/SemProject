@@ -17,7 +17,7 @@ MonoBehaviour:
   UpgradeEnum: 4
   CharUpgradeRare: 2
   UpgradeSprite: {fileID: 21300000, guid: 0fb9d16e075af2b4abbc5c43457962a6, type: 3}
-  UpgradeIntValue: 0
+  UpgradeIntValue: 1
   UpgradeFloatValue: 3
-  AddUpgradeFloatValue: 1
+  AddUpgradeFloatValue: 0
   UpgradeIndex: 0

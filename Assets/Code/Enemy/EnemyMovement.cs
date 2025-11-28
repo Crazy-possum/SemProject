@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [Tooltip("Скорость врагов")]
-    [SerializeField] private float _speed;
+    [SerializeField] private EnemyParametrs _enemyParametrs;
     [Tooltip("Погрешность пересечения с точками маршрута")]
     [SerializeField] private float _tolerance;
 
@@ -15,6 +14,7 @@ public class EnemyMovement : MonoBehaviour
 
     private Vector3 _wayPointVector;
     private int _currentIndex;
+    private float _speed;
     private float _baseSpeed;
     private float _checkDistance;
     private bool _isAlreadySlowing;
@@ -27,6 +27,8 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
+        _speed = _enemyParametrs.EnemySO.Speed;
+
         _rb = GetComponent<Rigidbody>();
         _currentIndex = 0;
         _checkDistance = _speed * _tolerance;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerBehavior
 {
-    protected TowerScriptable _towerSO;
+    protected TowerSO _towerSO;
     protected List<GameObject> _targetsList;
     protected Timer _attakTimer;
 
@@ -40,7 +40,7 @@ public class TowerBehavior
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
 
-    public TowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer,
+    public TowerBehavior(TowerSO towerSO, Rigidbody rb, Timer reloadTimer,
         GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO)
     {
         _towerSO = towerSO;
@@ -133,7 +133,6 @@ public class TowerBehavior
             towerBulletBehavior.TargetsList = _targetsList;
         }
     }
-
 
     public void TowerRotate()
     {
@@ -258,7 +257,6 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _firstUpgrade = true;
-            tower.GetComponent<TowerAttak>().AttakReload -= cutReload;
         }
     }
 
@@ -291,6 +289,15 @@ public class TowerBehavior
     private void ActivateCharUpgradeTowerRadius(float towerRange)
     {
         _charRadiusUpgrade = towerRange;
+
+        if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
+        {
+            _towerTriggerCollizion.radius = (_towerSO.TowerRange + _updateFloatRadiusValue) * _charRadiusUpgrade; //------------Liseners------------
+        }
+        else
+        {
+            _towerTriggerCollizion.radius = _towerSO.TowerRange * _charRadiusUpgrade;
+        }
     }
 
     private void ActivateCharUpgradeTowerReload(float cutCharReload)

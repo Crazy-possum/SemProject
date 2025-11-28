@@ -26,7 +26,7 @@ public class DecisionButton : MonoBehaviour
 
     private Button _button;
     private TowerUpgradeSO _upgradeSO = null;
-    private TowerScriptable _towerSO = null;
+    private TowerSO _towerSO = null;
     private CharUpgradeSO _charUpgradeSO = null;
     private bool _isEnoughMoney;
 
@@ -77,7 +77,7 @@ public class DecisionButton : MonoBehaviour
         _button.onClick.RemoveAllListeners();
     }
 
-    public void CustomizationBuildButton(TowerScriptable towerSO)
+    public void CustomizationBuildButton(TowerSO towerSO)
     {
         _towerImage.sprite = towerSO.TowerSprite;
         _towerNameText.text = towerSO.Name;

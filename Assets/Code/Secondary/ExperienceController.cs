@@ -20,6 +20,8 @@ public class ExperienceController : MonoBehaviour
     private bool _isPassIncomeOn;
     private bool _isDoubleKillOn;
     private bool _isWasMurder;
+    private float _passExpTimerValue;
+    private float _passExpIncome;
     private float _doubleKillTimerValue;
 
     private float _currentExp;
@@ -39,6 +41,13 @@ public class ExperienceController : MonoBehaviour
         {
             CharLevelUp();
         }
+
+        if (_isPassIncomeOn)
+        {
+            IncomeTimerReload(_passExpTimerValue, _passExpIncome);
+        }
+
+        Debug.Log(_currentExp);
     }
 
     private void OnEnable()
@@ -64,14 +73,19 @@ public class ExperienceController : MonoBehaviour
     private void ExperienceIncome()
     {
         _currentExp += _currentExpIncome;
+        UpdateExpSlider();
+    }
+
+    private void UpdateExpSlider()
+    {
         _experienceSlider.value = _currentExp;
     }
 
     private void CharLevelUp()
     {
-        _experienceSlider.value = _currentExp;
-
         _currentExp = 0;
+        UpdateExpSlider();
+
         _levelUpExpValue = _levelUpExpValue * _ratioExpUp;
         _experienceSlider.maxValue = _levelUpExpValue;
 
@@ -88,7 +102,10 @@ public class ExperienceController : MonoBehaviour
             _isPassIncomeOn = true;
         }
 
-        IncomeTimerReload(incomeTimerValue, experienceIncome);
+        _passExpTimerValue = incomeTimerValue;
+        _passExpIncome = experienceIncome;
+
+        _passiveIncomeTimer.ResetTimerMaxTime(_passExpTimerValue);
     }
 
     private void IncomeTimerReload(float incomeTimerValue, float experienceIncome)
@@ -104,11 +121,7 @@ public class ExperienceController : MonoBehaviour
         {
             _passiveIncomeTimer.StopCountdown();
             _currentExp += experienceIncome;
-            PassiveExperienceIncome(incomeTimerValue, experienceIncome);
-        }
-        else 
-        {
-            IncomeTimerReload(incomeTimerValue, experienceIncome);
+            UpdateExpSlider();
         }
     }
 

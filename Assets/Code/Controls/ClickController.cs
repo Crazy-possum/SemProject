@@ -64,7 +64,7 @@ public class ClickController : MonoBehaviour
                     case 3: buttonScript.LocalTowerEnum = TowerEnum.Sniper; break;
                 }
 
-                TowerScriptable towerSO = _towerObjectListSO.TowerSOList.Find(item => item.TowerEnum == buttonScript.LocalTowerEnum);
+                TowerSO towerSO = _towerObjectListSO.TowerSOList.Find(item => item.TowerEnum == buttonScript.LocalTowerEnum);
                 buttonScript.TowerBuilder = _towerBuilder;
                 buttonScript.TowerUpgrader = _towerBuilder.GetComponentInParent<TowerUpgrader>();
                 buttonScript.EconomyController = _economyController;

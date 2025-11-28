@@ -22,7 +22,7 @@ public class TowerBulletBehavior : MonoBehaviour
     [SerializeField] private GameObject _aoeBulletSprite;
 
     private TowerAOEBulletTriggerZone _bulletTriggerZone;
-    private TowerScriptable _towerSO;
+    private TowerSO _towerSO;
     private EnemyParametrs _currentEnemyHealth;
     private GameObject _bulletsCurrentTarget;
     private Transform _startBulletPosition;
@@ -63,7 +63,7 @@ public class TowerBulletBehavior : MonoBehaviour
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
     public GameObject BulletsCurrentTarget { get => _bulletsCurrentTarget; set => _bulletsCurrentTarget = value; }
-    public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
+    public TowerSO TowerSO { get => _towerSO; set => _towerSO = value; }
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
 
     public bool FirstUpgrade { get => _firstUpgrade; set => _firstUpgrade = value; }
@@ -157,6 +157,7 @@ public class TowerBulletBehavior : MonoBehaviour
         {
             DamageOverTime();
         }
+        Debug.Log(_damage);
     }
 
     private void OnTriggerEnter (Collider other)
