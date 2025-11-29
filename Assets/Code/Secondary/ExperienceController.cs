@@ -46,8 +46,6 @@ public class ExperienceController : MonoBehaviour
         {
             IncomeTimerReload(_passExpTimerValue, _passExpIncome);
         }
-
-        Debug.Log(_currentExp);
     }
 
     private void OnEnable()

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class EnemyMovement : MonoBehaviour
     private float _baseSpeed;
     private float _checkDistance;
     private bool _isAlreadySlowing;
+
+    private GameObject _enemyTarget;
+    private bool _isSlowOnce;
+    private float _slowingDownValue;
 
     public Transform[] EnemyWayPintsList { get => _enemyWayPintsList; set => _enemyWayPintsList = value; }
     public static Action OnEnemyEnter { get => _onEnemyEnter; set => _onEnemyEnter = value; }
@@ -49,6 +54,11 @@ public class EnemyMovement : MonoBehaviour
             _wayPointVector = (_enemyWayPintsList[_currentIndex].position - _enemyWayPintsList[_currentIndex - 1].position).normalized;
         }
         _rb.velocity = _wayPointVector * (_speed * Time.deltaTime);
+
+        if (_slowingDownTimer != null & !_isSlowOnce)
+        {
+            SlowingCountdown(_enemyTarget, _slowingDownTimer, _slowingDownValue);
+        }
     }
 
     private void OnEnable()
@@ -88,16 +98,32 @@ public class EnemyMovement : MonoBehaviour
 
     private void SlowingDownOnHit(GameObject enemy, float slowingTimerValue, float slowingDownValue)
     {
-        Timer slowTimer = enemy.GetComponent<EnemyMovement>().SlowingDownTimer;
-        slowTimer = new Timer(slowingTimerValue);
-
-        bool isSlow = enemy.GetComponent<EnemyMovement>().IsAlreadySlowing;
-        if (!isSlow)
+        if (gameObject != enemy)
         {
-            _speed = _speed - (_baseSpeed - (_baseSpeed * slowingDownValue));
+            return;
         }
 
-        SlowingCountdown(enemy, slowTimer, slowingDownValue);
+        if (_slowingDownTimer== null)
+        {
+            _slowingDownTimer = new Timer(slowingTimerValue);
+        }
+
+        if (!_isAlreadySlowing)
+        {
+            _speed = _speed - (_baseSpeed - (_baseSpeed * slowingDownValue));
+            _isAlreadySlowing = true;
+
+            if (_speed < 0)
+            {
+                _speed = 0;
+            }
+        }
+
+        _enemyTarget = enemy;
+        _slowingDownValue = slowingDownValue;
+
+        _isSlowOnce = false;
+        SlowingCountdown(_enemyTarget, _slowingDownTimer, _slowingDownValue);
     }
 
     private void SlowingCountdown(GameObject enemy, Timer slowTimer, float slowingDownValue)
@@ -112,7 +138,8 @@ public class EnemyMovement : MonoBehaviour
         if (slowTimer.ReachingTimerMaxValue == true)
         {
             slowTimer.StopCountdown();
-            _speed = _speed + (_baseSpeed - (_baseSpeed * slowingDownValue));
+            _isSlowOnce = true;
+            _speed = _baseSpeed;
         }
     }
 }

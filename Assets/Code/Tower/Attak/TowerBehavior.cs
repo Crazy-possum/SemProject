@@ -31,6 +31,10 @@ public class TowerBehavior
     protected float _updateFloatRadiusValue = 0;
     protected float _updateFloatDamageValue = 0;
 
+    protected bool _isCharDamageUpgrade;
+    protected bool _isCharRadiusUpgrade;
+    protected bool _isCharReloadUpgrade;
+
     protected float _charFloatDamageUpgrade = 1;
     protected float _charFloatValueUpgrade = 1;
     protected float _charRadiusUpgrade = 1;
@@ -43,6 +47,8 @@ public class TowerBehavior
     public TowerBehavior(TowerSO towerSO, Rigidbody rb, Timer reloadTimer,
         GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO)
     {
+        CharUpgradeViewer.OnSubscriptionTower += CheckPurchasedCharUpgrade;
+
         _towerSO = towerSO;
         _towerRb = rb;
         _attakTimer = reloadTimer;
@@ -55,11 +61,12 @@ public class TowerBehavior
         _targetsList = new List<GameObject>();
         _currentReloadTime = _attakReload;
 
+
         if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
         {
             _towerTriggerCollizion.radius = (_towerSO.TowerRange + _updateFloatRadiusValue) * _charRadiusUpgrade; //------------Liseners------------
         }
-        else
+        else 
         {
             _towerTriggerCollizion.radius = _towerSO.TowerRange * _charRadiusUpgrade;
         }
@@ -129,7 +136,7 @@ public class TowerBehavior
             towerBulletBehavior.UpgateIntValue = _updateIntDamageValue;
             towerBulletBehavior.UpgateIntDistanceValue = _updateIntDistanceValue;
             towerBulletBehavior.UpgateIntAmountValue = _updateIntAmountValue;
-            towerBulletBehavior.CharacterFloatUpgrade = _charFloatDamageUpgrade;
+            towerBulletBehavior.CharacterFloatDamageUpgrade = _charFloatDamageUpgrade;
             towerBulletBehavior.TargetsList = _targetsList;
         }
     }
@@ -171,6 +178,29 @@ public class TowerBehavior
     {
         SpawnBullet();
     }
+
+    public void CheckPurchasedCharUpgrade(bool _isTowerDamage, float towerDamage, bool _isTowerRadius, float towerRadius,  bool _isTowerReload, float towerReload)
+    {
+        _isCharDamageUpgrade = _isTowerDamage;
+        _isCharRadiusUpgrade = _isTowerRadius;
+        _isCharReloadUpgrade = _isTowerReload;
+
+        if (_isTowerDamage)
+        {
+            ActivateCharUpgradeTowerDamage(towerDamage);
+        }
+
+        if (_isTowerRadius)
+        {
+            ActivateCharUpgradeTowerRadius(towerRadius);
+        }
+        
+        if (_isTowerReload)
+        {
+            ActivateCharUpgradeTowerReload(towerReload);
+        }
+    }
+
     //---------------------------------------------------------------------------------------------------------------------------------------------------------
     #region addLiseners
     public void ActivateCannonFirstUpgrade(float newTimerTime, GameObject tower)

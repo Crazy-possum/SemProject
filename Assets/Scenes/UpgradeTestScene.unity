@@ -157,6 +157,18 @@ MonoBehaviour:
     type: 3}
   _charUpgradePanel: {fileID: 1200322337}
   _charUpgradeButtonPanel: {fileID: 1970704952}
+--- !u!114 &66797346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66797323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc8e1fee2a9b9da4c82751e718e0dae1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1200322337 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7902870481605755080, guid: e4392b4abc61fc34cb087cf17757d8e6,
@@ -623,6 +635,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 66797335}
+    - targetCorrespondingSourceObject: {fileID: 7195105273602294913, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 66797346}
   m_SourcePrefab: {fileID: 100100000, guid: e4392b4abc61fc34cb087cf17757d8e6, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

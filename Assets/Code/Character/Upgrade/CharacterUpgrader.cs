@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CharacterUpgrader : MonoBehaviour
 {
@@ -114,21 +115,21 @@ public class CharacterUpgrader : MonoBehaviour
     private void SpinUpgradesRare(DecisionButton button)
     {
         System.Random rnd = new System.Random();
-        int randIndex = rnd.Next(_charUpgradeRareSOList.Count);
+        int randomInt = Random.Range(1, 101);
 
-        if (_charUpgradeRareSOList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Regular)
+        if (randomInt >= 1 & randomInt <= 40)
         {
             SpineUpgrade(_charRegularUpgradeSOList, button);
         }
-        else if (_charUpgradeRareSOList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Rare)
+        else if (randomInt >= 41 & randomInt <= 70)
         {
             SpineUpgrade(_charRareUpgradeSOList, button);
         }
-        else if (_charUpgradeRareSOList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Legendary)
+        else if (randomInt >= 71 & randomInt <= 90)
         {
             SpineUpgrade(_charLegendaryUpgradeSOList, button);
         }
-        else if (_charUpgradeRareSOList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Unique)
+        else if (randomInt >= 91 & randomInt <= 100)
         {
             SpineUpgrade(_charUniqueUpgradeSOList, button);
         }
@@ -236,14 +237,14 @@ public class CharacterUpgrader : MonoBehaviour
     {
         float towerDamage = _floatParametrUpgrade;
 
-        _onIncreaseTowerDamage?.Invoke(towerDamage); //+++
+        _onIncreaseTowerDamage?.Invoke(towerDamage);
     }
 
     private void ActivateIncreaseTowerRadius()
     {
         float towerRange = _floatParametrUpgrade;
 
-        _onIncreaseTowerRadius?.Invoke(towerRange); //+++
+        _onIncreaseTowerRadius?.Invoke(towerRange);
     }
 
     private void ActivateMoneyIncome()
@@ -251,7 +252,7 @@ public class CharacterUpgrader : MonoBehaviour
         float incomeTimerValue = _floatParametrUpgrade;
         int moneyIncome = _intParametrUpgrade;
 
-        _onMoneyIncome?.Invoke(incomeTimerValue, moneyIncome); //+++
+        _onMoneyIncome?.Invoke(incomeTimerValue, moneyIncome);
     }
 
     private void ActivateSlowDownMobs()

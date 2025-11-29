@@ -16,10 +16,20 @@ public class EconomyController : MonoBehaviour
     private bool _isDoubleKillOn;
     private bool _isWasMurder;
     private float _doubleKillTimerValue;
+    private float _passMoneyTimerValue;
+    private int _passMoneyIncome;
 
     private void Start()
     {
         _currencyText.text = GeneralCurrency.ToString();
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isPassIncomeOn)
+        {
+            IncomeTimerReload(_passMoneyTimerValue, _passMoneyIncome);
+        }
     }
 
     private void OnEnable()
@@ -62,7 +72,10 @@ public class EconomyController : MonoBehaviour
             _isPassIncomeOn = true;
         }
 
-        IncomeTimerReload(incomeTimerValue, moneyIncome);
+        _passMoneyTimerValue = incomeTimerValue;
+        _passMoneyIncome = moneyIncome;
+
+        _passiveIncomeTimer.ResetTimerMaxTime(_passMoneyTimerValue);
     }
 
     private void IncomeTimerReload(float incomeTimerValue, int moneyIncome)
@@ -78,7 +91,7 @@ public class EconomyController : MonoBehaviour
         {
             _passiveIncomeTimer.StopCountdown();
             GeneralCurrency += moneyIncome;
-            PassiveMoneyIncome(incomeTimerValue, moneyIncome);
+            _currencyText.text = GeneralCurrency.ToString();
         }
     }
 

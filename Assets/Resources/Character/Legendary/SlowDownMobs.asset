@@ -19,6 +19,6 @@ MonoBehaviour:
   CharUpgradeRare: 3
   UpgradeSprite: {fileID: 21300000, guid: b253ea3da5aef9f46939e0e36ba698e9, type: 3}
   UpgradeIntValue: 0
-  UpgradeFloatValue: 2
+  UpgradeFloatValue: 5
   AddUpgradeFloatValue: 0.6
   UpgradeIndex: 0

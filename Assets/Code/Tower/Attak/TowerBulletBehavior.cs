@@ -75,7 +75,7 @@ public class TowerBulletBehavior : MonoBehaviour
     public float UpgateFloatRadiusValue { get => _upgateFloatRadiusValue; set => _upgateFloatRadiusValue = value; }
     public int UpgateIntDistanceValue { get => _upgateIntDistanceValue; set => _upgateIntDistanceValue = value; }
     public int UpgateIntAmountValue { get => _upgateIntAmountValue; set => _upgateIntAmountValue = value; }
-    public float CharacterFloatUpgrade { get => _characterFloatDamageUpgrade; set => _characterFloatDamageUpgrade = value; }
+    public float CharacterFloatDamageUpgrade { get => _characterFloatDamageUpgrade; set => _characterFloatDamageUpgrade = value; }
     public float CharacterFloatValueUpgrade { get => _characterFloatValueUpgrade; set => _characterFloatValueUpgrade = value; }
     public float UpgradeFloatDamageWeeknessBonus { get => _upgradeFloatDamageWeeknessBonus; set => _upgradeFloatDamageWeeknessBonus = value; }
 
@@ -88,6 +88,7 @@ public class TowerBulletBehavior : MonoBehaviour
         _maxDistance = _towerSO.MaxBulletDistance;
         _timeDOT = _towerSO.BulletDOTTime;
         _duration = _towerSO.BulletDuration;
+        Debug.Log(_characterFloatDamageUpgrade);
         _damage = _towerSO.TowerDamage * _characterFloatDamageUpgrade;
 
         if (_currentEnemyHealth.HasDamageWeekness)

@@ -32,6 +32,7 @@ public class TowerAttak : MonoBehaviour
     public TowerSO TowerSO { get => _towerSO; set => _towerSO = value; }
     public GameObject CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
     public float AttakReload { get => _attakReload; set => _attakReload = value; }
+    public TowerBehavior TowerBehavior { get => _towerBehavior; set => _towerBehavior = value; }
 
     private void Start()
     {

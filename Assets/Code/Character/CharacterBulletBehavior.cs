@@ -10,6 +10,7 @@ public class CharacterBulletBehavior : MonoBehaviour
     [Tooltip("ћаксимальна€ дистанци€ полета снар€да")]
     [SerializeField] private int _maxDistance;
 
+    private static Action _onCollizionEnter;
     private static Action<GameObject, float, float> _onHitEnemy;
 
     private Transform _startBulletPosition;
@@ -17,7 +18,7 @@ public class CharacterBulletBehavior : MonoBehaviour
     private Camera _camera;
     private Vector3 _movement;
 
-    private bool _isSlowingMobsActive;
+    private bool _isSlowDownOn;
     private float _slowingTimerValue;
     private float _slowingDownValue;
     private bool _isDoublePaintOn;
@@ -25,6 +26,7 @@ public class CharacterBulletBehavior : MonoBehaviour
 
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
     public static Action<GameObject, float, float> OnHitEnemy { get => _onHitEnemy; set => _onHitEnemy = value; }
+    public static Action OnCollizionEnter { get => _onCollizionEnter; set => _onCollizionEnter = value; }
 
     private void Start()
     {
@@ -41,13 +43,13 @@ public class CharacterBulletBehavior : MonoBehaviour
 
     private void OnEnable()
     {
-        CharacterUpgrader.OnSlowDownMobs += IsSlowingMobsActive;
+        CharUpgradeViewer.OnSubscriptionCharBullet += IsSlowingMobsActive;
+
         CharacterUpgrader.OnDoublePaint += IsDoublePaintOn;
     }
 
     private void OnDisable()
     {
-        CharacterUpgrader.OnSlowDownMobs -= IsSlowingMobsActive;
         CharacterUpgrader.OnDoublePaint -= IsDoublePaintOn;
     }
 
@@ -55,6 +57,8 @@ public class CharacterBulletBehavior : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out EnemyParametrs enemy))
         {
+            _onCollizionEnter?.Invoke();
+
             EnemyParametrs enemyParametrs = enemy.GetComponent<EnemyParametrs>();
 
             if (enemyParametrs.CurrentPaintValue < 4)
@@ -71,14 +75,14 @@ public class CharacterBulletBehavior : MonoBehaviour
                 {
                     enemyParametrs.CurrentPaintValue += _painting;
                 }
-
-                Destroy(gameObject);
             }
 
-            if (_isSlowingMobsActive)
+            if (_isSlowDownOn)
             {
                 _onHitEnemy?.Invoke(enemy.gameObject, _slowingTimerValue, _slowingDownValue);
             }
+
+            Destroy(gameObject);
         }
     }
 
@@ -97,9 +101,9 @@ public class CharacterBulletBehavior : MonoBehaviour
         }
     }
 
-    private void IsSlowingMobsActive(float debuffTimerValue, float slowingDown)
+    private void IsSlowingMobsActive( bool isSlowDownOn, float debuffTimerValue, float slowingDown)
     {
-        _isSlowingMobsActive = true;
+        _isSlowDownOn = isSlowDownOn;
         _slowingTimerValue = debuffTimerValue;
         _slowingDownValue = slowingDown;
     }
