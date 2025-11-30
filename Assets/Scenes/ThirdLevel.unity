@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028355, g: 0.22571374, b: 0.30692255, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1234,6 +1234,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1262381842}
+    - targetCorrespondingSourceObject: {fileID: 9027136592783198524, guid: 3b64dcaf969ba8343984dc9fc09502ba,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1262381845}
   m_SourcePrefab: {fileID: 100100000, guid: 3b64dcaf969ba8343984dc9fc09502ba, type: 3}
 --- !u!1 &446822077 stripped
 GameObject:
@@ -3022,6 +3026,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26725492a2e9844b8d4098cb86511ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1262381845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262381817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1622318ebf1688648ac80e2a4a525e55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonPrefab: {fileID: 2469215933724342022, guid: 37fc3f9d2e039cf4aac9cbc1e7db066a,
+    type: 3}
+  _charUpgradePanel: {fileID: 153258406}
+  _charUpgradeButtonPanel: {fileID: 2011151628}
 --- !u!1001 &1293279030
 PrefabInstance:
   m_ObjectHideFlags: 0
