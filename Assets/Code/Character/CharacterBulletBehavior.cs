@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CharacterBulletBehavior : MonoBehaviour
@@ -9,12 +10,23 @@ public class CharacterBulletBehavior : MonoBehaviour
     [Tooltip("ћаксимальна€ дистанци€ полета снар€да")]
     [SerializeField] private int _maxDistance;
 
+    private static Action _onCollizionEnter;
+    private static Action<GameObject, float, float> _onHitEnemy;
+
     private Transform _startBulletPosition;
     private Rigidbody _bulletRb;
     private Camera _camera;
     private Vector3 _movement;
 
+    private bool _isSlowDownOn;
+    private float _slowingTimerValue;
+    private float _slowingDownValue;
+    private bool _isDoublePaintOn;
+    private int _doublePaintValue;
+
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
+    public static Action<GameObject, float, float> OnHitEnemy { get => _onHitEnemy; set => _onHitEnemy = value; }
+    public static Action OnCollizionEnter { get => _onCollizionEnter; set => _onCollizionEnter = value; }
 
     private void Start()
     {
@@ -29,17 +41,46 @@ public class CharacterBulletBehavior : MonoBehaviour
         CheckDistance();
     }
 
+    private void OnEnable()
+    {
+        CharUpgradeViewer.OnSubscriptionCharBullet += CheckPurchasedCharUpgrade;
+    }
+
+    private void OnDisable()
+    {
+        CharUpgradeViewer.OnSubscriptionCharBullet -= CheckPurchasedCharUpgrade;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out EnemyParametrs enemy))
         {
+            _onCollizionEnter?.Invoke();
+
             EnemyParametrs enemyParametrs = enemy.GetComponent<EnemyParametrs>();
 
             if (enemyParametrs.CurrentPaintValue < 4)
             {
-                enemyParametrs.CurrentPaintValue += _painting;
-                Destroy(gameObject);
+                if (_isDoublePaintOn)
+                {
+                    enemyParametrs.CurrentPaintValue += _painting * _doublePaintValue;
+                    if(enemyParametrs.CurrentPaintValue > 4)
+                    {
+                        enemyParametrs.CurrentPaintValue = 4;
+                    }
+                }
+                else
+                {
+                    enemyParametrs.CurrentPaintValue += _painting;
+                }
             }
+
+            if (_isSlowDownOn)
+            {
+                _onHitEnemy?.Invoke(enemy.gameObject, _slowingTimerValue, _slowingDownValue);
+            }
+
+            Destroy(gameObject);
         }
     }
 
@@ -56,5 +97,15 @@ public class CharacterBulletBehavior : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void CheckPurchasedCharUpgrade(bool isSlowDownOn, float debuffTimerValue, float slowingDown, bool isDoublePaintOn, int doublePaintValue)
+    {
+        _isSlowDownOn = isSlowDownOn;
+        _slowingTimerValue = debuffTimerValue;
+        _slowingDownValue = slowingDown;
+
+        _isDoublePaintOn = isDoublePaintOn;
+        _doublePaintValue = doublePaintValue;
     }
 }

@@ -10,29 +10,13 @@ public class CharacterSpawner : MonoBehaviour
     private CharacterShoot _characterShoot;
     private GameObject _character;
     private Vector3 _startPosotion = new Vector3(0, 9.5f, 0);
-    private float _currentTimerTime;
-    private float _reloadTime;
 
     private void Start()
     {
         GameObject sceneGObject = GameObject.Instantiate(_characterPrefab, _startPosotion, Quaternion.identity);
         _character = sceneGObject;
         _characterShoot = _character.GetComponent<CharacterShoot>();
-
-        TimerSliderUpdate();
+        _characterShoot.ReloadSlider = _reloadSlider;
     }
 
-    private void FixedUpdate()
-    {
-        TimerSliderUpdate();
-    }
-
-    private void TimerSliderUpdate()
-    {
-        _currentTimerTime = _characterShoot.CurrentTime;
-        _reloadTime = _characterShoot.AttakReload;
-
-        _reloadSlider.maxValue = _reloadTime;
-        _reloadSlider.value = _currentTimerTime;
-    }
 }

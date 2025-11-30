@@ -19,9 +19,10 @@ public class TowerBulletBehavior : MonoBehaviour
 
     [SerializeField] private GameObject _aoeBullet;
     [SerializeField] private GameObject _singleBulletSprite;
+    [SerializeField] private GameObject _aoeBulletSprite;
 
     private TowerAOEBulletTriggerZone _bulletTriggerZone;
-    private TowerScriptable _towerSO;
+    private TowerSO _towerSO;
     private EnemyParametrs _currentEnemyHealth;
     private GameObject _bulletsCurrentTarget;
     private Transform _startBulletPosition;
@@ -34,6 +35,7 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private TowerEnum _towerEnum;
     private Vector3 _movement;
+    private Vector3 _aoeSpriteRatio = new Vector3(2,2,0);
 
     private bool _isStatic;
     private float _tolerance = 0.5f;
@@ -48,28 +50,34 @@ public class TowerBulletBehavior : MonoBehaviour
     private bool _firstUpgrade;
     private bool _secondUpgrade;
     private bool _thirdUpgrade;
-    private float _updateFloatTimerValue;
-    private float _updateFloatDamageValue;
-    private float _updateFloatRadiusValue;
-    private int _updateIntDamageValue;
-    private int _updateIntDistanceValue;
-    private int _updateIntAmountValue;
+    private float _upgateFloatTimerValue;
+    private float _upgateFloatDamageValue;
+    private float _upgateFloatRadiusValue;
+    private float _upgradeFloatDamageWeeknessBonus;
+    private int _upgateIntDamageValue;
+    private int _upgateIntDistanceValue;
+    private int _upgateIntAmountValue;
 
+    private float _characterFloatDamageUpgrade;
+    private float _characterFloatValueUpgrade;
+
+    public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
     public GameObject BulletsCurrentTarget { get => _bulletsCurrentTarget; set => _bulletsCurrentTarget = value; }
-    public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
+    public TowerSO TowerSO { get => _towerSO; set => _towerSO = value; }
     public Transform StartBulletPosition { get => _startBulletPosition; set => _startBulletPosition = value; }
-
 
     public bool FirstUpgrade { get => _firstUpgrade; set => _firstUpgrade = value; }
     public bool SecondUpgrade { get => _secondUpgrade; set => _secondUpgrade = value; }
     public bool ThirdUpgrade { get => _thirdUpgrade; set => _thirdUpgrade = value; }
-    public int UpdateIntValue { get => _updateIntDamageValue; set => _updateIntDamageValue = value; }
-    public float UpdateFloatTimerValue { get => _updateFloatTimerValue; set => _updateFloatTimerValue = value; }
-    public float UpdateFloatDamageValue { get => _updateFloatDamageValue; set => _updateFloatDamageValue = value; }
-    public float UpdateFloatRadiusValue { get => _updateFloatRadiusValue; set => _updateFloatRadiusValue = value; }
-    public int UpdateIntDistanceValue { get => _updateIntDistanceValue; set => _updateIntDistanceValue = value; }
-    public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
-    public int UpdateIntAmountValue { get => _updateIntAmountValue; set => _updateIntAmountValue = value; }
+    public int UpgateIntValue { get => _upgateIntDamageValue; set => _upgateIntDamageValue = value; }
+    public float UpgateFloatTimerValue { get => _upgateFloatTimerValue; set => _upgateFloatTimerValue = value; }
+    public float UpgateFloatDamageValue { get => _upgateFloatDamageValue; set => _upgateFloatDamageValue = value; }
+    public float UpgateFloatRadiusValue { get => _upgateFloatRadiusValue; set => _upgateFloatRadiusValue = value; }
+    public int UpgateIntDistanceValue { get => _upgateIntDistanceValue; set => _upgateIntDistanceValue = value; }
+    public int UpgateIntAmountValue { get => _upgateIntAmountValue; set => _upgateIntAmountValue = value; }
+    public float CharacterFloatDamageUpgrade { get => _characterFloatDamageUpgrade; set => _characterFloatDamageUpgrade = value; }
+    public float CharacterFloatValueUpgrade { get => _characterFloatValueUpgrade; set => _characterFloatValueUpgrade = value; }
+    public float UpgradeFloatDamageWeeknessBonus { get => _upgradeFloatDamageWeeknessBonus; set => _upgradeFloatDamageWeeknessBonus = value; }
 
     private void Start()
     {
@@ -80,11 +88,17 @@ public class TowerBulletBehavior : MonoBehaviour
         _maxDistance = _towerSO.MaxBulletDistance;
         _timeDOT = _towerSO.BulletDOTTime;
         _duration = _towerSO.BulletDuration;
-        _damage = _towerSO.TowerDamage;
+        _damage = _towerSO.TowerDamage * _characterFloatDamageUpgrade;
+
+        if (_currentEnemyHealth.HasDamageWeekness)
+        {
+            _damage = _damage * _upgradeFloatDamageWeeknessBonus;
+        }
 
         if (_towerSO.TowerEnum == TowerEnum.Catapult)
         {
             _aoeCollizion = gameObject.GetComponentInChildren<SphereCollider>();
+            _aoeBulletSprite.transform.localScale = _aoeSpriteRatio * _aoeCollizion.radius;
 
             if (_firstUpgrade)
             {
@@ -117,11 +131,6 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_currentEnemyHealth.HasDamageWeekness)
-        {
-            _damage = _damage * _updateFloatDamageValue;
-        }
-
         if (_towerEnum == TowerEnum.Cannon)
         {
             SetDirectionToTarget(_bulletsCurrentTarget);
@@ -184,7 +193,7 @@ public class TowerBulletBehavior : MonoBehaviour
     private void DealDamage(EnemyParametrs enemy, float damage)
     {
         float colorValue = enemy.CurrentPaintValue;
-        float currentHealth = _currentEnemyHealth.CurrentHealth;
+        float currentHealth = enemy.CurrentHealth;
 
         switch (colorValue)
         {
@@ -206,12 +215,12 @@ public class TowerBulletBehavior : MonoBehaviour
             float colorValue = enemy.CurrentPaintValue;
             float currentHealth = enemy.CurrentHealth;
 
-            CountDamage(colorValue, currentHealth);
-            enemy.CurrentHealth = currentHealth;
+            CountDamage(enemy, colorValue, currentHealth);
         }
+
     }
 
-    private void CountDamage(float colorValue, float currentHealth)
+    private void CountDamage(EnemyParametrs enemy, float colorValue, float currentHealth)
     {
         float distanceFine = 0;
 
@@ -238,6 +247,8 @@ public class TowerBulletBehavior : MonoBehaviour
             case 3: currentHealth = currentHealth - (damageWithFin * _thirdPaintingStage); break;
             case 4: currentHealth = currentHealth - (damageWithFin * _fourthPaintingStage); break;
         }
+
+        enemy.CurrentHealth = currentHealth;
     }
 
     private void SetDirectionToTarget(GameObject target)
@@ -279,6 +290,7 @@ public class TowerBulletBehavior : MonoBehaviour
         if (_timerDOTDuration.ReachingTimerMaxValue != true)
         {
             _timerDOTSpace.Wait();
+
             if (!_timerDOTSpace.StartTimer)
             {
                 _timerDOTSpace.StartCountdown();
@@ -288,6 +300,7 @@ public class TowerBulletBehavior : MonoBehaviour
             {
                 _timerDOTSpace.StopCountdown();
                 DealAOEDamage(targetList);
+                DamageOverTime();
             }
         }
         else
@@ -315,22 +328,24 @@ public class TowerBulletBehavior : MonoBehaviour
     #region addLiseners
     private void UpdateDamage()
     {
-        _damage += _updateIntDamageValue;
+        _damage += _upgateIntDamageValue;
     }
 
     private void IncreaseAoeRange()
     {
-        _aoeCollizion.radius += _updateFloatRadiusValue;
+        gameObject.GetComponentInChildren<SphereCollider>().radius *= _upgateFloatRadiusValue;
+        _aoeCollizion = gameObject.GetComponentInChildren<SphereCollider>();
+        _aoeBulletSprite.transform.localScale = _aoeSpriteRatio * _aoeCollizion.radius;
     }
 
     private void UpdateTimerTime()
     {
-        _timeDOT -= _updateFloatTimerValue;
+        _timerDOTSpace.ResetTimerMaxTime(_upgateFloatTimerValue);
     }
 
     private void IncreasedBulletLifeDistance()
     {
-        _maxDistance += _updateIntDistanceValue;
+        _maxDistance += _upgateIntDistanceValue;
     }
 
     private void SetNewTarget()
@@ -361,7 +376,7 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private void DealDOTDamage()
     {
-        _timerUpgradeDOT = new Timer(_updateFloatTimerValue);
+        _timerUpgradeDOT = new Timer(_upgateFloatTimerValue);
 
         int repeatAmount = 0;
         ReloadDOTTimer(repeatAmount);
@@ -369,7 +384,7 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private void ReloadDOTTimer(int repeatAmount)
     {
-        if (repeatAmount < _updateIntAmountValue)
+        if (repeatAmount < _upgateIntAmountValue)
         {
             StartDOTTimerReload(repeatAmount);
         }
@@ -391,7 +406,7 @@ public class TowerBulletBehavior : MonoBehaviour
                 _timerUpgradeDOT.StopCountdown();
                 repeatAmount += 1;
 
-                DealDamage(_currentEnemyHealth, _updateFloatDamageValue);
+                DealDamage(_currentEnemyHealth, _upgateFloatDamageValue);
                 ReloadDOTTimer(repeatAmount);
             }
         }

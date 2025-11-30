@@ -19,7 +19,7 @@ MonoBehaviour:
   TowerEnum: 10
   TowerSprite: {fileID: 21300000, guid: 09a83d66cfa49c340a32d46f9d1c77cc, type: 3}
   UpgradeIntValue: 1
-  UpgradeFloatValue: 1
+  UpgradeFloatValue: 1.5
   AddUpgradeFloatValue: 1
   UpgradeIndex: 1
   UpgradeCost: 2

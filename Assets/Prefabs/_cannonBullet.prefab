@@ -88,6 +88,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: _cannonBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 7496209941669776340, guid: 4ede4f1198493ee41b24716123f9f2d8,
+        type: 3}
+      propertyPath: _speed
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

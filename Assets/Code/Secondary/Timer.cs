@@ -12,8 +12,14 @@ public class Timer
     public bool ReachingTimerMaxValue { get => _isReachingTimerMaxValue; set => _isReachingTimerMaxValue = value; }
     public bool StartTimer { get => _isStartTimer; set => _isStartTimer = value; }
     public float TimerCurrentTime { get => _timerCurrentTime; set => _timerCurrentTime = value; }
+    public float MaxTimerValue { get => _maxTimerValue; set => _maxTimerValue = value; }
 
     public Timer(float maxTimerValue) 
+    {
+        _maxTimerValue = maxTimerValue;
+    }
+
+    public void ResetTimerMaxTime(float maxTimerValue)
     {
         _maxTimerValue = maxTimerValue;
     }
@@ -22,10 +28,12 @@ public class Timer
     {
         _isStartTimer = true;
     }
+
     public void PauseCountdown()
     {
         _isStartTimer = false;
     }
+
     public void StopCountdown()
     {
         _isStartTimer = false;

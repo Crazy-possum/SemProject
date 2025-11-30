@@ -19,6 +19,8 @@ public class CharacterMovement : MonoBehaviour
     private float _loBorder = -9.5f;
     private float _leBorder = -20f;
 
+    private bool _isTeleportOn;
+
     private void Start()
     {
         _characterRb = GetComponent<Rigidbody>();
@@ -39,6 +41,21 @@ public class CharacterMovement : MonoBehaviour
                 OnLeftSide();break;
             default: break;
         }
+    }
+
+    private void OnEnable()
+    {
+        CharacterUpgrader.OnTeleport += ActivateTeleport;
+    }
+
+    private void OnDisable()
+    {
+        CharacterUpgrader.OnTeleport -= ActivateTeleport;
+    }
+
+    private void ActivateTeleport()
+    {
+        _isTeleportOn = true;
     }
 
     private void OnUpperSide()
@@ -65,8 +82,11 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            _charPos.position = new Vector3(_charPos.position.x, _loBorder, _charPos.position.z);
-            _sideIndex = SideIndexEnum.Lower;
+            if(_isTeleportOn)
+            {
+                _charPos.position = new Vector3(_charPos.position.x, _loBorder, _charPos.position.z);
+                _sideIndex = SideIndexEnum.Lower;
+            }
         }
         else if (Input.GetKey(KeyCode.D))
         {
@@ -130,8 +150,11 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            _charPos.position = new Vector3(_leBorder, _charPos.position.y, _charPos.position.z);
-            _sideIndex = SideIndexEnum.Left;
+            if (_isTeleportOn)
+            {
+                _charPos.position = new Vector3(_leBorder, _charPos.position.y, _charPos.position.z);
+                _sideIndex = SideIndexEnum.Left;
+            }
         }
         else if (Input.GetKey(KeyCode.S))
         {
@@ -175,8 +198,11 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            _charPos.position = new Vector3(_charPos.position.x, _upBorder, _charPos.position.z);
-            _sideIndex = SideIndexEnum.Upper;
+            if (_isTeleportOn)
+            {
+                _charPos.position = new Vector3(_charPos.position.x, _upBorder, _charPos.position.z);
+                _sideIndex = SideIndexEnum.Upper;
+            }
         }
         else if (Input.GetKey(KeyCode.A))
         {
@@ -280,8 +306,11 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            _charPos.position = new Vector3(_riBorder, _charPos.position.y, _charPos.position.z);
-            _sideIndex = SideIndexEnum.Right;
+            if (_isTeleportOn)
+            {
+                _charPos.position = new Vector3(_riBorder, _charPos.position.y, _charPos.position.z);
+                _sideIndex = SideIndexEnum.Right;
+            }
         }
         else
         {

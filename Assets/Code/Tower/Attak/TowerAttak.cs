@@ -9,11 +9,11 @@ public class TowerAttak : MonoBehaviour
     [SerializeField] private Transform _bulletSpawner;
     [SerializeField] private GameObject _bulletSpawnerGO;
     [Tooltip("Таймер перезарядки в сек")]
-    public float AttakReload;
+    private float _attakReload;
 
     private TowerBehavior _towerBehavior;
     private List<GameObject> _targetsList;
-    private TowerScriptable _towerSO;
+    private TowerSO _towerSO;
     private PurchasedUpgrade _purchasedUpgrade;
     private Timer _attakTimer;
 
@@ -29,8 +29,10 @@ public class TowerAttak : MonoBehaviour
 
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
-    public TowerScriptable TowerSO { get => _towerSO; set => _towerSO = value; }
+    public TowerSO TowerSO { get => _towerSO; set => _towerSO = value; }
     public GameObject CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
+    public float AttakReload { get => _attakReload; set => _attakReload = value; }
+    public TowerBehavior TowerBehavior { get => _towerBehavior; set => _towerBehavior = value; }
 
     private void Start()
     {
@@ -74,17 +76,70 @@ public class TowerAttak : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        CharUpgradeViewer.OnSubscriptionTower += ResetNewTowerReloadTimerTime;
+        CharacterUpgrader.OnSpeedUpTowerReload += ResetAllTowerReloadTimerTime;
+
+        TowerUpgrader.OnActivateShotgunThirdUpgrade += ResetShotgunReloadTimerTime;
+        TowerUpgrader.OnActivateSniperFirstUpgrade += ResetSniperReloadTimerTime;
+    }
+
+    private void OnDisable()
+    {
+        CharUpgradeViewer.OnSubscriptionTower -= ResetNewTowerReloadTimerTime;
+        CharacterUpgrader.OnSpeedUpTowerReload -= ResetAllTowerReloadTimerTime;
+
+        TowerUpgrader.OnActivateShotgunThirdUpgrade -= ResetShotgunReloadTimerTime;
+        TowerUpgrader.OnActivateSniperFirstUpgrade -= ResetSniperReloadTimerTime;
+    }
+
     public void SetTargetList(List<GameObject> targetsList)
     {
         _towerBehavior.TargetsList = targetsList;
     }
 
-    //-----------------------Liseners--------------------------------------------------------------------------
-
     public void SetReloatTimer()
     {
         AttakReload = _towerSO.TowerReloadTime;
         _attakTimer = new Timer(AttakReload);
+    }
+
+    //-----------------------Liseners--------------------------------------------------------------------------
+
+    public void ResetShotgunReloadTimerTime(float cutReload, GameObject tower)
+    {
+        if(_towerEnum == TowerEnum.Shotgun)
+        {
+            _attakTimer.ResetTimerMaxTime(_attakReload * cutReload);
+            _attakReload *= cutReload;
+        }
+    }
+
+    public void ResetSniperReloadTimerTime(float cutReload, GameObject tower)
+    {
+        if (_towerEnum == TowerEnum.Sniper)
+        {
+            _attakTimer.ResetTimerMaxTime(_attakReload * cutReload);
+            _attakReload *= cutReload;
+        }
+    }
+
+    public void ResetNewTowerReloadTimerTime(GameObject towerGO, bool isTowerDamageOn, float towerDamage, bool isTowerRadiusOn, float towerRadius, bool isTowerReloadOn, float towerReload)
+    {
+        if (isTowerReloadOn)
+        {
+            if(gameObject == towerGO)
+            {
+                ResetAllTowerReloadTimerTime(towerReload);
+            }
+        }
+    }
+
+    public void ResetAllTowerReloadTimerTime(float towerReload)
+    {
+        _attakTimer.ResetTimerMaxTime(_attakReload * towerReload);
+        _attakReload *= towerReload;
     }
 }
 

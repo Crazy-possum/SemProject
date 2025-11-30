@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class TowerUpgrader : MonoBehaviour
@@ -55,10 +54,6 @@ public class TowerUpgrader : MonoBehaviour
         SetUpgradeSprite();
         ChooseTowerUpgrade();
     }
-
-
-    //Action<int, float> doSmth
-    //doSmth?.invoke(int, float)
 
     private void SetUpgradeSprite()
     {

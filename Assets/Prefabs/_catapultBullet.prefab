@@ -95,7 +95,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4014999578377875147}
@@ -236,6 +236,11 @@ PrefabInstance:
       propertyPath: _aoeBullet
       value: 
       objectReference: {fileID: 5444812322008199954}
+    - target: {fileID: 7496209941669776340, guid: 4ede4f1198493ee41b24716123f9f2d8,
+        type: 3}
+      propertyPath: _aoeBulletSprite
+      value: 
+      objectReference: {fileID: 5729052898744446967}
     - target: {fileID: 7496209941669776340, guid: 4ede4f1198493ee41b24716123f9f2d8,
         type: 3}
       propertyPath: _singleBulletSprite

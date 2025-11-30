@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerBehavior
 {
-    protected TowerScriptable _towerSO;
+    protected TowerSO _towerSO;
     protected List<GameObject> _targetsList;
     protected Timer _attakTimer;
 
@@ -19,6 +19,7 @@ public class TowerBehavior
     protected TowerTargetEnum _towerAtkPattern;
 
     protected float _attakReload;
+    protected float _currentReloadTime;
 
     protected bool _firstUpgrade = false;
     protected bool _secondUpgrade = false;
@@ -30,30 +31,44 @@ public class TowerBehavior
     protected float _updateFloatRadiusValue = 0;
     protected float _updateFloatDamageValue = 0;
 
+    protected bool _isCharDamageUpgrade;
+    protected bool _isCharRadiusUpgrade;
+    protected bool _isCharReloadUpgrade;
+
+    protected float _charFloatDamageUpgrade = 1;
+    protected float _charFloatValueUpgrade = 1;
+    protected float _charRadiusUpgrade = 1;
+    protected float _upgradeFloatDamageWeeknessBonus = 1;
+
     private Timer _doubleShotTimer;
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
 
-    public TowerBehavior(TowerScriptable towerSO, Rigidbody rb, Timer reloadTimer,
+    public TowerBehavior(TowerSO towerSO, Rigidbody rb, Timer reloadTimer,
         GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO)
     {
+        CharUpgradeViewer.OnSubscriptionTower += CheckPurchasedCharUpgrade;
+
         _towerSO = towerSO;
         _towerRb = rb;
         _attakTimer = reloadTimer;
+        towerObject.GetComponent<TowerAttak>().AttakReload = towerSO.TowerReloadTime;
         _towerBulletPrefab = bulletPref;
         _towerObject = towerObject;
         _bulletSpawner = bulletSpawner;
         _bulletSpawnerRb = bulletSpawnerGO.GetComponent<Rigidbody>();
         _towerTriggerCollizion = _towerObject.GetComponentInChildren<TowerTriggerZone>().gameObject.GetComponent<SphereCollider>();
         _targetsList = new List<GameObject>();
+        _currentReloadTime = _attakReload;
+
 
         if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
         {
-            _towerTriggerCollizion.radius = _towerSO.TowerRange + _updateFloatRadiusValue; //------------Liseners------------
+            _towerTriggerCollizion.radius = (_towerSO.TowerRange + _updateFloatRadiusValue) * _charRadiusUpgrade; //------------Liseners------------
         }
-        else
+        else 
         {
-            _towerTriggerCollizion.radius = _towerSO.TowerRange;
+            _towerTriggerCollizion.radius = _towerSO.TowerRange * _charRadiusUpgrade;
         }
 
         AddLiseners();
@@ -73,6 +88,9 @@ public class TowerBehavior
         TowerUpgrader.OnActivateSniperFirstUpgrade += ActivateSniperFirstUpgrade;
         TowerUpgrader.OnActivateSniperSecondUpgrade += ActivateSniperSecondUpgrade;
         TowerUpgrader.OnActivateSniperThirdUpgrade += ActivateSniperThirdUpgrade;
+
+        CharacterUpgrader.OnIncreaseTowerDamage += ActivateCharUpgradeTowerDamage;
+        CharacterUpgrader.OnIncreaseTowerRadius += ActivateCharUpgradeTowerRadius;
     }
 
     public virtual void SetTarget()
@@ -89,16 +107,14 @@ public class TowerBehavior
 
     public void SpawnBullet()
     {
+        int bulletAmount = _towerSO.BulletAmount;
+
         if (_firstUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
         {
-            int bulletAmount = _towerSO.BulletAmount + _updateIntAmountValue; //------------Liseners------------
-        }
-        else
-        {
-            int bulletAmount = _towerSO.BulletAmount;
+            bulletAmount = _towerSO.BulletAmount + _updateIntAmountValue; //------------Liseners------------
         }
 
-        for (int i = 0; i < _towerSO.BulletAmount; i++)
+        for (int i = 0; i < bulletAmount; i++)
         {
             Vector3 position = _bulletSpawner.position;
             GameObject localBullet = GameObject.Instantiate(_towerBulletPrefab, position, Quaternion.identity, _bulletSpawner);
@@ -112,16 +128,17 @@ public class TowerBehavior
             towerBulletBehavior.FirstUpgrade = _firstUpgrade;
             towerBulletBehavior.SecondUpgrade = _secondUpgrade;
             towerBulletBehavior.ThirdUpgrade = _thirdUpgrade;
-            towerBulletBehavior.UpdateFloatTimerValue = _updateFloatTimerValue;
-            towerBulletBehavior.UpdateFloatRadiusValue = _updateFloatRadiusValue;
-            towerBulletBehavior.UpdateFloatDamageValue = _updateFloatDamageValue;
-            towerBulletBehavior.UpdateIntValue = _updateIntDamageValue;
-            towerBulletBehavior.UpdateIntDistanceValue = _updateIntDistanceValue;
-            towerBulletBehavior.UpdateIntAmountValue = _updateIntAmountValue;
+            towerBulletBehavior.UpgateFloatTimerValue = _updateFloatTimerValue;
+            towerBulletBehavior.UpgateFloatRadiusValue = _updateFloatRadiusValue;
+            towerBulletBehavior.UpgateFloatDamageValue = _updateFloatDamageValue;
+            towerBulletBehavior.UpgradeFloatDamageWeeknessBonus = _upgradeFloatDamageWeeknessBonus;
+            towerBulletBehavior.UpgateIntValue = _updateIntDamageValue;
+            towerBulletBehavior.UpgateIntDistanceValue = _updateIntDistanceValue;
+            towerBulletBehavior.UpgateIntAmountValue = _updateIntAmountValue;
+            towerBulletBehavior.CharacterFloatDamageUpgrade = _charFloatDamageUpgrade;
             towerBulletBehavior.TargetsList = _targetsList;
         }
     }
-
 
     public void TowerRotate()
     {
@@ -134,6 +151,7 @@ public class TowerBehavior
     public virtual void RealoadTimer()
     {
         _attakTimer.Wait();
+        Debug.Log(_attakTimer.MaxTimerValue);
 
         if (_currentTarget != null)
         {
@@ -144,6 +162,7 @@ public class TowerBehavior
 
             if (_attakTimer.ReachingTimerMaxValue == true)
             {
+                Debug.Log("here");
                 if (_towerSO.TowerEnum == TowerEnum.Cannon && _firstUpgrade)
                 {
                     ReloadDoubleShotTimer();
@@ -160,6 +179,24 @@ public class TowerBehavior
     {
         SpawnBullet();
     }
+
+    public void CheckPurchasedCharUpgrade(GameObject towerGO, bool _isTowerDamage, float towerDamage, bool _isTowerRadius, float towerRadius,  bool _isTowerReload, float towerReload)
+    {
+        _isCharDamageUpgrade = _isTowerDamage;
+        _isCharRadiusUpgrade = _isTowerRadius;
+        _isCharReloadUpgrade = _isTowerReload;
+
+        if (_isTowerDamage)
+        {
+            ActivateCharUpgradeTowerDamage(towerDamage);
+        }
+
+        if (_isTowerRadius)
+        {
+            ActivateCharUpgradeTowerRadius(towerRadius);
+        }
+    }
+
     //---------------------------------------------------------------------------------------------------------------------------------------------------------
     #region addLiseners
     public void ActivateCannonFirstUpgrade(float newTimerTime, GameObject tower)
@@ -202,7 +239,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _secondUpgrade = true;
-            _updateFloatRadiusValue = addTowerRange;
+            _towerObject.GetComponentInChildren<TowerTriggerZone>().GetComponent<SphereCollider>().radius *= addTowerRange; 
         }
     }
 
@@ -211,7 +248,6 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _thirdUpgrade = true;
-            tower.GetComponent<TowerAttak>().AttakReload -= cutReload;
         }
     }
 
@@ -229,8 +265,8 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _secondUpgrade = true;
-            _updateFloatDamageValue = damageBonus;
         }
+        _upgradeFloatDamageWeeknessBonus = damageBonus;
     }
 
     public void ActivateCatapultThirdUpgrade(float cutDotTriggeredTime, GameObject tower)
@@ -247,7 +283,6 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _firstUpgrade = true;
-            tower.GetComponent<TowerAttak>().AttakReload -= cutReload;
         }
     }
 
@@ -271,6 +306,27 @@ public class TowerBehavior
         }
     }
     #endregion
+
+    #region CharacterUpgrade
+    private void ActivateCharUpgradeTowerDamage(float towerDamage)
+    {
+        _charFloatDamageUpgrade = towerDamage;
+    }
+
+    private void ActivateCharUpgradeTowerRadius(float towerRange)
+    {
+        _charRadiusUpgrade = towerRange;
+
+        if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
+        {
+            _towerTriggerCollizion.radius = (_towerSO.TowerRange + _updateFloatRadiusValue) * _charRadiusUpgrade; //------------Liseners------------
+        }
+        else
+        {
+            _towerTriggerCollizion.radius = _towerSO.TowerRange * _charRadiusUpgrade;
+        }
+    }
+    #endregion
     //---------------------------------------------------------------------------------------------------------------------------------------------------------
 
     private void AddDoubleShot(float newTimerTime)
@@ -281,7 +337,6 @@ public class TowerBehavior
     private void ReloadDoubleShotTimer()
     {
         _doubleShotTimer.Wait();
-
         if (_currentTarget != null)
         {
             if (!_doubleShotTimer.StartTimer)
@@ -294,6 +349,10 @@ public class TowerBehavior
                 TowerRotate();
                 AttakTarget();
                 _doubleShotTimer.StopCountdown();
+            }
+            else
+            {
+                ReloadDoubleShotTimer();
             }
         }
     }

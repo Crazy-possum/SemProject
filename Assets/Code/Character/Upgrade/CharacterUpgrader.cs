@@ -1,0 +1,340 @@
+using System;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
+
+public class CharacterUpgrader : MonoBehaviour
+{
+    [SerializeField] private GameObject _buttonPrefab;
+    [SerializeField] private GameObject _charUpgradePanel;
+    [SerializeField] private GameObject _charUpgradeButtonPanel;
+
+    private List<DecisionButton> _charButtonList = new List<DecisionButton>();
+    private List<CharUpgradeRareSO> _charUpgradeRareSOList;
+    private List<CharUpgradeSO> _charRegularUpgradeSOList;
+    private List<CharUpgradeSO> _charRareUpgradeSOList;
+    private List<CharUpgradeSO> _charLegendaryUpgradeSOList;
+    private List<CharUpgradeSO> _charUniqueUpgradeSOList;
+    private List<CharUpgradeSO> _activeCharUpgradeList;
+
+    private static Action<float, float> _onExperienceIncome;
+    private static Action<float> _onIncreaseTowerDamage;
+    private static Action<float> _onIncreaseTowerRadius;
+    private static Action<float, int> _onMoneyIncome;
+    private static Action<float, float> _onSlowDownMobs;
+    private static Action<float> _onSlowMobsMove;
+    private static Action<float> _onSpeedUpCharReload;
+    private static Action<float> _onSpeedUpTowerReload;
+    private static Action<float> _onDoubleKill;
+    private static Action<int> _onDoublePaint;
+    private static Action _onDoubleShot;
+    private static Action _onTeleport;
+
+    private CharacterUpgrader _charUpgrader;
+    private CharUpgradeSO _charUpgradeSO;
+    private int _intParametrUpgrade;
+    private float _floatParametrUpgrade;
+    private float _addFloatParametrUpgrade;
+    private bool _isCharButtonHere;
+
+    public static Action<float, float> OnExperienceIncome { get => _onExperienceIncome; set => _onExperienceIncome = value; }
+    public static Action<float> OnIncreaseTowerDamage { get => _onIncreaseTowerDamage; set => _onIncreaseTowerDamage = value; }
+    public static Action<float> OnIncreaseTowerRadius { get => _onIncreaseTowerRadius; set => _onIncreaseTowerRadius = value; }
+    public static Action<float, int> OnMoneyIncome { get => _onMoneyIncome; set => _onMoneyIncome = value; }
+    public static Action<float, float> OnSlowDownMobs { get => _onSlowDownMobs; set => _onSlowDownMobs = value; }
+    public static Action<float> OnSlowMobsMove { get => _onSlowMobsMove; set => _onSlowMobsMove = value; }
+    public static Action<float> OnSpeedUpCharReload { get => _onSpeedUpCharReload; set => _onSpeedUpCharReload = value; }
+    public static Action<float> OnSpeedUpTowerReload { get => _onSpeedUpTowerReload; set => _onSpeedUpTowerReload = value; }
+    public static Action<float> OnDoubleKill { get => _onDoubleKill; set => _onDoubleKill = value; }
+    public static Action<int> OnDoublePaint { get => _onDoublePaint; set => _onDoublePaint = value; }
+    public static Action OnDoubleShot { get => _onDoubleShot; set => _onDoubleShot = value; }
+    public static Action OnTeleport { get => _onTeleport; set => _onTeleport = value; }
+
+    private void Awake()
+    {
+        _charUpgradeRareSOList = Resources.Load<ScriptableListScript>("Character/CharUpgradesList").CharUpgradeRareSOList;
+        _charUpgrader = gameObject.GetComponent<CharacterUpgrader>();
+
+        foreach (CharUpgradeRareSO list in _charUpgradeRareSOList)
+        {
+            if (list.CharUpgradeRare == CharUpgradeRareEnum.Regular)
+            {
+                _charRegularUpgradeSOList = list.CharUpgradeSOList;
+            }
+            else if (list.CharUpgradeRare == CharUpgradeRareEnum.Rare)
+            {
+                _charRareUpgradeSOList = list.CharUpgradeSOList;
+            }
+            else if (list.CharUpgradeRare == CharUpgradeRareEnum.Legendary)
+            {
+                _charLegendaryUpgradeSOList = list.CharUpgradeSOList;
+            }
+            else if (list.CharUpgradeRare == CharUpgradeRareEnum.Unique)
+            {
+                _charUniqueUpgradeSOList = list.CharUpgradeSOList;
+            }
+        }
+
+        _activeCharUpgradeList = new List<CharUpgradeSO>();
+    }
+
+    private void OnEnable()
+    {
+        ExperienceController.OnLevelUp += InitializeCharacterButton;
+    }
+
+    private void OnDisable()
+    {
+        ExperienceController.OnLevelUp -= InitializeCharacterButton;
+    }
+
+    private void InitializeCharacterButton()
+    {
+        _charUpgradePanel.SetActive(true);
+        Time.timeScale = 0.3f;
+
+        if (!_isCharButtonHere)
+        {
+            int buttonAmount = 3;
+
+            for (int i = 0; i < buttonAmount; i++)
+            {
+                GameObject uiGObject = GameObject.Instantiate(_buttonPrefab, _charUpgradeButtonPanel.GetComponentInChildren<LayoutGroup>().gameObject.transform);
+                DecisionButton buttonScript = uiGObject.GetComponentInChildren<DecisionButton>();
+
+                _charButtonList.Add(buttonScript);
+            }
+            _isCharButtonHere = true;
+        }
+
+        foreach (DecisionButton button in _charButtonList)
+        {
+            SpinUpgradesRare(button);
+        }
+    }
+
+    private void SpinUpgradesRare(DecisionButton button)
+    {
+        System.Random rnd = new System.Random();
+        int randomInt = Random.Range(1, 101);
+
+        if (randomInt >= 1 & randomInt <= 40)
+        {
+            SpineUpgrade(_charRegularUpgradeSOList, button);
+        }
+        else if (randomInt >= 41 & randomInt <= 70)
+        {
+            SpineUpgrade(_charRareUpgradeSOList, button);
+        }
+        else if (randomInt >= 71 & randomInt <= 90)
+        {
+            SpineUpgrade(_charLegendaryUpgradeSOList, button);
+        }
+        else if (randomInt >= 91 & randomInt <= 100)
+        {
+            SpineUpgrade(_charUniqueUpgradeSOList, button);
+        }
+    }
+
+    private void SpineUpgrade(List<CharUpgradeSO> upgradeList, DecisionButton button)
+    {
+        System.Random rnd = new System.Random();
+        int randIndex = rnd.Next(upgradeList.Count);
+
+        if (upgradeList[randIndex] != null)
+        {
+            if (_activeCharUpgradeList.Count > 0)
+            {
+                foreach (CharUpgradeSO upgrade in _activeCharUpgradeList)
+                {
+                    if (upgrade == upgradeList[randIndex])
+                    {
+                        SpineUpgrade(upgradeList, button);
+                        return;
+                    }
+                }
+            }
+
+            CharUpgradeSO charUpgradeSO = upgradeList[randIndex];
+            button.CharUpgradePanel = _charUpgradePanel;
+            button.CharacterUpgrader1 = _charUpgrader;
+            button.CustomizationCharacterButton(charUpgradeSO);
+
+            _activeCharUpgradeList.Add(charUpgradeSO);
+        }
+        else
+        {
+            SpinUpgradesRare(button);
+        }
+    }
+
+    public void ApplyUpgrade(CharUpgradeSO charUpgradeSO)
+    {
+        _charUpgradeSO = charUpgradeSO;
+        _intParametrUpgrade = _charUpgradeSO.UpgradeIntValue;
+        _floatParametrUpgrade = _charUpgradeSO.UpgradeFloatValue;
+        _addFloatParametrUpgrade = _charUpgradeSO.AddUpgradeFloatValue;
+
+        RemoveUpgrade(charUpgradeSO);
+        _activeCharUpgradeList.Clear();
+
+        ChooseUpgradeImpact();
+    }
+
+    private void RemoveUpgrade(CharUpgradeSO charUpgradeSO)
+    {
+        if (charUpgradeSO.CharUpgradeRare == CharUpgradeRareEnum.Regular)
+        {
+            _charRegularUpgradeSOList.Remove(charUpgradeSO);
+        }
+        else if (charUpgradeSO.CharUpgradeRare == CharUpgradeRareEnum.Rare)
+        {
+            _charRareUpgradeSOList.Remove(charUpgradeSO);
+        }
+        else if (charUpgradeSO.CharUpgradeRare == CharUpgradeRareEnum.Legendary)
+        {
+            _charLegendaryUpgradeSOList.Remove(charUpgradeSO);
+        }
+        else if (charUpgradeSO.CharUpgradeRare == CharUpgradeRareEnum.Unique)
+        {
+            _charUniqueUpgradeSOList.Remove(charUpgradeSO);
+        }
+    }
+
+    private void ChooseUpgradeImpact()
+    {
+        if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.ExperienceIncome)
+        {
+            ActivateExperienceIncome();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.IncreaseTowerDamage)
+        {
+            ActivateIncreaseTowerDamage();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.IncreaseTowerRadius)
+        {
+            ActivateIncreaseTowerRadius();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.MoneyIncome)
+        {
+            ActivateMoneyIncome();
+        }
+        else if(_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SlowDownMobs)
+        {
+            ActivateSlowDownMobs();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SlowMobsMove)
+        {
+            ActivateSlowMobsMove();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SpeedUpCharReload)
+        {
+            ActivateSpeedUpCharReload();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.SpeedUpTowerReload)
+        {
+            ActivateSpeedUpTowerReload();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.DoubleKill)
+        {
+            ActivateDoubleKill();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.DoublePaint)
+        {
+            ActivateDoublePaint();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.DoubleShot)
+        {
+            ActivateDoubleShot();
+        }
+        else if (_charUpgradeSO.UpgradeEnum == CharacterUpgradeEnum.Teleport)
+        {
+            ActivateTeleport();
+        }
+    }
+
+    private void ActivateExperienceIncome()
+    {
+        float incomeTimerValue = _floatParametrUpgrade;
+        float experienceIncome = _addFloatParametrUpgrade;
+
+        _onExperienceIncome?.Invoke(incomeTimerValue, experienceIncome);
+    }
+
+    private void ActivateIncreaseTowerDamage()
+    {
+        float towerDamage = _floatParametrUpgrade;
+
+        _onIncreaseTowerDamage?.Invoke(towerDamage);
+    }
+
+    private void ActivateIncreaseTowerRadius()
+    {
+        float towerRange = _floatParametrUpgrade;
+
+        _onIncreaseTowerRadius?.Invoke(towerRange);
+    }
+
+    private void ActivateMoneyIncome()
+    {
+        float incomeTimerValue = _floatParametrUpgrade;
+        int moneyIncome = _intParametrUpgrade;
+
+        _onMoneyIncome?.Invoke(incomeTimerValue, moneyIncome);
+    }
+
+    private void ActivateSlowDownMobs()
+    {
+        float debuffTimerValue = _floatParametrUpgrade;
+        float slowingDown = _addFloatParametrUpgrade;
+
+        _onSlowDownMobs?.Invoke(debuffTimerValue, slowingDown);
+    }
+
+    private void ActivateSlowMobsMove()
+    {
+        float slowingDown = _floatParametrUpgrade;
+
+        _onSlowMobsMove?.Invoke(slowingDown);
+    }
+
+    private void ActivateSpeedUpCharReload()
+    {
+        float cutCharReload = _floatParametrUpgrade;
+
+        _onSpeedUpCharReload?.Invoke(cutCharReload);
+    }
+
+    private void ActivateSpeedUpTowerReload()
+    {
+        float cutTowerReload = _floatParametrUpgrade;
+
+        _onSpeedUpTowerReload?.Invoke(cutTowerReload); 
+    }
+
+    private void ActivateDoubleKill()
+    {
+        float doubleKillTimerValue = _floatParametrUpgrade;
+
+        _onDoubleKill?.Invoke(doubleKillTimerValue);
+    }
+
+    private void ActivateDoublePaint()
+    {
+        int paintUpValue = _intParametrUpgrade;
+
+        _onDoublePaint?.Invoke(paintUpValue);
+    }
+
+    private void ActivateDoubleShot()
+    {
+        _onDoubleShot?.Invoke();
+    }
+
+    private void ActivateTeleport()
+    {
+        _onTeleport?.Invoke(); 
+    }
+}

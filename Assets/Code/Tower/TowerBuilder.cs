@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using UnityEngine;
 
@@ -14,16 +15,31 @@ public class TowerBuilder : MonoBehaviour
     [SerializeField] private int _buildCost;
 
     private ScriptableListScript _towerObjectListSO;
-    private TowerScriptable _towerSO;
+    private TowerSO _towerSO;
     private GameObject _buildPointObject;
     private Transform _buildPointTransform;
 
+    private static Action<GameObject> _onBuildTower;
+
+    private GameObject _buildedTower;
+    private bool _isTowerBuilded;
+
     public GameObject BuildPointObject { get => _buildPointObject; set => _buildPointObject = value; }
+    public static Action<GameObject> OnBuildTower { get => _onBuildTower; set => _onBuildTower = value; }
 
     private void Start()
     {
         _economyController.CurrentCost = _buildCost;
         _towerObjectListSO = Resources.Load<ScriptableListScript>("Tower/TowerObjects_SO");
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isTowerBuilded)
+        {
+            _onBuildTower?.Invoke(_buildedTower);
+            _isTowerBuilded = false;
+        }
     }
 
     public void BuildTower(TowerEnum towerEnum)
@@ -33,6 +49,9 @@ public class TowerBuilder : MonoBehaviour
         Vector3 position = _buildPointTransform.position;
         GameObject towerGO = GameObject.Instantiate(_towerSO.TowerPrefab, position, Quaternion.identity, _towerGroup.transform);
         towerGO.GetComponent<TowerAttak>().TowerSO = _towerSO;
+
+        _isTowerBuilded = true;
+        _buildedTower = towerGO;
 
         Destroy(_buildPointObject);
 
