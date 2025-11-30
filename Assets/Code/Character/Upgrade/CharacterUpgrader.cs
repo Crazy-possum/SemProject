@@ -17,6 +17,7 @@ public class CharacterUpgrader : MonoBehaviour
     private List<CharUpgradeSO> _charRareUpgradeSOList;
     private List<CharUpgradeSO> _charLegendaryUpgradeSOList;
     private List<CharUpgradeSO> _charUniqueUpgradeSOList;
+    private List<CharUpgradeSO> _activeCharUpgradeList;
 
     private static Action<float, float> _onExperienceIncome;
     private static Action<float> _onIncreaseTowerDamage;
@@ -75,6 +76,8 @@ public class CharacterUpgrader : MonoBehaviour
                 _charUniqueUpgradeSOList = list.CharUpgradeSOList;
             }
         }
+
+        _activeCharUpgradeList = new List<CharUpgradeSO>();
     }
 
     private void OnEnable()
@@ -140,26 +143,30 @@ public class CharacterUpgrader : MonoBehaviour
         System.Random rnd = new System.Random();
         int randIndex = rnd.Next(upgradeList.Count);
 
-        CharUpgradeSO charUpgradeSO = upgradeList[randIndex];
-        button.CharUpgradePanel = _charUpgradePanel;
-        button.CharacterUpgrader1 = _charUpgrader;
-        button.CustomizationCharacterButton(charUpgradeSO);
+        if (upgradeList[randIndex] != null)
+        {
+            if (_activeCharUpgradeList.Count > 0)
+            {
+                foreach (CharUpgradeSO upgrade in _activeCharUpgradeList)
+                {
+                    if (upgrade == upgradeList[randIndex])
+                    {
+                        SpineUpgrade(upgradeList, button);
+                        return;
+                    }
+                }
+            }
 
-        if (upgradeList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Regular)
-        {
-            _charRegularUpgradeSOList.Remove(charUpgradeSO);
+            CharUpgradeSO charUpgradeSO = upgradeList[randIndex];
+            button.CharUpgradePanel = _charUpgradePanel;
+            button.CharacterUpgrader1 = _charUpgrader;
+            button.CustomizationCharacterButton(charUpgradeSO);
+
+            _activeCharUpgradeList.Add(charUpgradeSO);
         }
-        else if (upgradeList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Rare)
+        else
         {
-            _charRareUpgradeSOList.Remove(charUpgradeSO);
-        }
-        else if (upgradeList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Legendary)
-        {
-            _charLegendaryUpgradeSOList.Remove(charUpgradeSO);
-        }
-        else if (upgradeList[randIndex].CharUpgradeRare == CharUpgradeRareEnum.Unique)
-        {
-            _charUniqueUpgradeSOList.Remove(charUpgradeSO);
+            SpinUpgradesRare(button);
         }
     }
 
@@ -170,7 +177,30 @@ public class CharacterUpgrader : MonoBehaviour
         _floatParametrUpgrade = _charUpgradeSO.UpgradeFloatValue;
         _addFloatParametrUpgrade = _charUpgradeSO.AddUpgradeFloatValue;
 
+        RemoveUpgrade(charUpgradeSO);
+        _activeCharUpgradeList.Clear();
+
         ChooseUpgradeImpact();
+    }
+
+    private void RemoveUpgrade(CharUpgradeSO charUpgradeSO)
+    {
+        if (charUpgradeSO.CharUpgradeRare == CharUpgradeRareEnum.Regular)
+        {
+            _charRegularUpgradeSOList.Remove(charUpgradeSO);
+        }
+        else if (charUpgradeSO.CharUpgradeRare == CharUpgradeRareEnum.Rare)
+        {
+            _charRareUpgradeSOList.Remove(charUpgradeSO);
+        }
+        else if (charUpgradeSO.CharUpgradeRare == CharUpgradeRareEnum.Legendary)
+        {
+            _charLegendaryUpgradeSOList.Remove(charUpgradeSO);
+        }
+        else if (charUpgradeSO.CharUpgradeRare == CharUpgradeRareEnum.Unique)
+        {
+            _charUniqueUpgradeSOList.Remove(charUpgradeSO);
+        }
     }
 
     private void ChooseUpgradeImpact()
@@ -260,14 +290,14 @@ public class CharacterUpgrader : MonoBehaviour
         float debuffTimerValue = _floatParametrUpgrade;
         float slowingDown = _addFloatParametrUpgrade;
 
-        _onSlowDownMobs?.Invoke(debuffTimerValue, slowingDown); //+++
+        _onSlowDownMobs?.Invoke(debuffTimerValue, slowingDown);
     }
 
     private void ActivateSlowMobsMove()
     {
-        float slowingDown = _intParametrUpgrade;
+        float slowingDown = _floatParametrUpgrade;
 
-        _onSlowMobsMove?.Invoke(slowingDown); //+++
+        _onSlowMobsMove?.Invoke(slowingDown);
     }
 
     private void ActivateSpeedUpCharReload()
@@ -281,26 +311,26 @@ public class CharacterUpgrader : MonoBehaviour
     {
         float cutTowerReload = _floatParametrUpgrade;
 
-        _onSpeedUpTowerReload?.Invoke(cutTowerReload); //+++
+        _onSpeedUpTowerReload?.Invoke(cutTowerReload); 
     }
 
     private void ActivateDoubleKill()
     {
         float doubleKillTimerValue = _floatParametrUpgrade;
 
-        _onDoubleKill?.Invoke(doubleKillTimerValue); //+++
+        _onDoubleKill?.Invoke(doubleKillTimerValue);
     }
 
     private void ActivateDoublePaint()
     {
         int paintUpValue = _intParametrUpgrade;
 
-        _onDoublePaint?.Invoke(paintUpValue); //+++
+        _onDoublePaint?.Invoke(paintUpValue);
     }
 
     private void ActivateDoubleShot()
     {
-        _onDoubleShot?.Invoke(); //+++
+        _onDoubleShot?.Invoke();
     }
 
     private void ActivateTeleport()

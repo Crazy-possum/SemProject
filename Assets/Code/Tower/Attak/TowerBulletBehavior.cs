@@ -88,7 +88,6 @@ public class TowerBulletBehavior : MonoBehaviour
         _maxDistance = _towerSO.MaxBulletDistance;
         _timeDOT = _towerSO.BulletDOTTime;
         _duration = _towerSO.BulletDuration;
-        Debug.Log(_characterFloatDamageUpgrade);
         _damage = _towerSO.TowerDamage * _characterFloatDamageUpgrade;
 
         if (_currentEnemyHealth.HasDamageWeekness)
@@ -158,7 +157,6 @@ public class TowerBulletBehavior : MonoBehaviour
         {
             DamageOverTime();
         }
-        Debug.Log(_damage);
     }
 
     private void OnTriggerEnter (Collider other)

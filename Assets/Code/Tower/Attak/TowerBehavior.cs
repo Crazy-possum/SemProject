@@ -91,7 +91,6 @@ public class TowerBehavior
 
         CharacterUpgrader.OnIncreaseTowerDamage += ActivateCharUpgradeTowerDamage;
         CharacterUpgrader.OnIncreaseTowerRadius += ActivateCharUpgradeTowerRadius;
-        CharacterUpgrader.OnSpeedUpTowerReload += ActivateCharUpgradeTowerReload;
     }
 
     public virtual void SetTarget()
@@ -152,6 +151,7 @@ public class TowerBehavior
     public virtual void RealoadTimer()
     {
         _attakTimer.Wait();
+        Debug.Log(_attakTimer.MaxTimerValue);
 
         if (_currentTarget != null)
         {
@@ -162,6 +162,7 @@ public class TowerBehavior
 
             if (_attakTimer.ReachingTimerMaxValue == true)
             {
+                Debug.Log("here");
                 if (_towerSO.TowerEnum == TowerEnum.Cannon && _firstUpgrade)
                 {
                     ReloadDoubleShotTimer();
@@ -179,7 +180,7 @@ public class TowerBehavior
         SpawnBullet();
     }
 
-    public void CheckPurchasedCharUpgrade(bool _isTowerDamage, float towerDamage, bool _isTowerRadius, float towerRadius,  bool _isTowerReload, float towerReload)
+    public void CheckPurchasedCharUpgrade(GameObject towerGO, bool _isTowerDamage, float towerDamage, bool _isTowerRadius, float towerRadius,  bool _isTowerReload, float towerReload)
     {
         _isCharDamageUpgrade = _isTowerDamage;
         _isCharRadiusUpgrade = _isTowerRadius;
@@ -193,11 +194,6 @@ public class TowerBehavior
         if (_isTowerRadius)
         {
             ActivateCharUpgradeTowerRadius(towerRadius);
-        }
-        
-        if (_isTowerReload)
-        {
-            ActivateCharUpgradeTowerReload(towerReload);
         }
     }
 
@@ -309,6 +305,7 @@ public class TowerBehavior
             _updateIntDistanceValue = addDistance;
         }
     }
+    #endregion
 
     #region CharacterUpgrade
     private void ActivateCharUpgradeTowerDamage(float towerDamage)
@@ -329,14 +326,6 @@ public class TowerBehavior
             _towerTriggerCollizion.radius = _towerSO.TowerRange * _charRadiusUpgrade;
         }
     }
-
-    private void ActivateCharUpgradeTowerReload(float cutCharReload)
-    {
-        _currentReloadTime = _currentReloadTime - (_attakReload * cutCharReload);
-        _attakTimer.ResetTimerMaxTime(_currentReloadTime);
-    }
-    #endregion
-
     #endregion
     //---------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -78,12 +78,18 @@ public class TowerAttak : MonoBehaviour
 
     private void OnEnable()
     {
+        CharUpgradeViewer.OnSubscriptionTower += ResetNewTowerReloadTimerTime;
+        CharacterUpgrader.OnSpeedUpTowerReload += ResetAllTowerReloadTimerTime;
+
         TowerUpgrader.OnActivateShotgunThirdUpgrade += ResetShotgunReloadTimerTime;
         TowerUpgrader.OnActivateSniperFirstUpgrade += ResetSniperReloadTimerTime;
     }
 
     private void OnDisable()
     {
+        CharUpgradeViewer.OnSubscriptionTower -= ResetNewTowerReloadTimerTime;
+        CharacterUpgrader.OnSpeedUpTowerReload -= ResetAllTowerReloadTimerTime;
+
         TowerUpgrader.OnActivateShotgunThirdUpgrade -= ResetShotgunReloadTimerTime;
         TowerUpgrader.OnActivateSniperFirstUpgrade -= ResetSniperReloadTimerTime;
     }
@@ -93,13 +99,13 @@ public class TowerAttak : MonoBehaviour
         _towerBehavior.TargetsList = targetsList;
     }
 
-    //-----------------------Liseners--------------------------------------------------------------------------
-
     public void SetReloatTimer()
     {
         AttakReload = _towerSO.TowerReloadTime;
         _attakTimer = new Timer(AttakReload);
     }
+
+    //-----------------------Liseners--------------------------------------------------------------------------
 
     public void ResetShotgunReloadTimerTime(float cutReload, GameObject tower)
     {
@@ -117,6 +123,23 @@ public class TowerAttak : MonoBehaviour
             _attakTimer.ResetTimerMaxTime(_attakReload * cutReload);
             _attakReload *= cutReload;
         }
+    }
+
+    public void ResetNewTowerReloadTimerTime(GameObject towerGO, bool isTowerDamageOn, float towerDamage, bool isTowerRadiusOn, float towerRadius, bool isTowerReloadOn, float towerReload)
+    {
+        if (isTowerReloadOn)
+        {
+            if(gameObject == towerGO)
+            {
+                ResetAllTowerReloadTimerTime(towerReload);
+            }
+        }
+    }
+
+    public void ResetAllTowerReloadTimerTime(float towerReload)
+    {
+        _attakTimer.ResetTimerMaxTime(_attakReload * towerReload);
+        _attakReload *= towerReload;
     }
 }
 

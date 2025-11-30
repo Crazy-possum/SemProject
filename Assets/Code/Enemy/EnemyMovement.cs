@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -23,6 +22,11 @@ public class EnemyMovement : MonoBehaviour
     private GameObject _enemyTarget;
     private bool _isSlowOnce;
     private float _slowingDownValue;
+
+    private GameObject _spawnedEnemy;
+    private bool _isSlowMoveOn;
+    private float _slowingMoveValue;
+    private bool _isSlowMoveOnce;
 
     public Transform[] EnemyWayPintsList { get => _enemyWayPintsList; set => _enemyWayPintsList = value; }
     public static Action OnEnemyEnter { get => _onEnemyEnter; set => _onEnemyEnter = value; }
@@ -59,16 +63,26 @@ public class EnemyMovement : MonoBehaviour
         {
             SlowingCountdown(_enemyTarget, _slowingDownTimer, _slowingDownValue);
         }
+        if (_isSlowMoveOn & !_isSlowMoveOnce)
+        {
+            ResetMoveSpeed(_spawnedEnemy, _slowingMoveValue);
+        }
     }
 
     private void OnEnable()
     {
+        //------------------------------------------------------------------------------ Для спавнящихся противников
+        CharUpgradeViewer.OnSubscriptionEnemy += IsSlowingMoveOn;
+
+        //------------------------------------------------------------------------------ Для находящихся на сцене
         CharacterUpgrader.OnSlowMobsMove += UpdateMoveSpeed;
         CharacterBulletBehavior.OnHitEnemy += SlowingDownOnHit;
     }
 
     private void OnDisable()
     {
+        CharUpgradeViewer.OnSubscriptionEnemy -= IsSlowingMoveOn;
+
         CharacterUpgrader.OnSlowMobsMove -= UpdateMoveSpeed;
         CharacterBulletBehavior.OnHitEnemy -= SlowingDownOnHit;
     }
@@ -91,9 +105,26 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void UpdateMoveSpeed(float slowingDown)
+    private void IsSlowingMoveOn(GameObject enemy, bool isSlowMoveOn, float slowingMoveValue)
     {
-        _speed = _speed - (_baseSpeed - (_baseSpeed * slowingDown));
+        _spawnedEnemy = enemy;
+        _isSlowMoveOn = isSlowMoveOn;
+        _slowingMoveValue = slowingMoveValue;
+    }
+
+    private void ResetMoveSpeed(GameObject enemy, float slowingMoveValue)
+    {
+        if (gameObject == enemy)
+        {
+            UpdateMoveSpeed(slowingMoveValue);
+        }
+        _isSlowMoveOnce = true;
+    }
+
+    private void UpdateMoveSpeed(float slowingMoveValue)
+    {
+        _speed = _speed - (_baseSpeed - (_baseSpeed * slowingMoveValue));
+        _baseSpeed = (_baseSpeed * slowingMoveValue);
     }
 
     private void SlowingDownOnHit(GameObject enemy, float slowingTimerValue, float slowingDownValue)

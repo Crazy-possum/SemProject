@@ -19,12 +19,13 @@ public class TowerBuilder : MonoBehaviour
     private GameObject _buildPointObject;
     private Transform _buildPointTransform;
 
-    private static Action _onBuildTower;
+    private static Action<GameObject> _onBuildTower;
 
+    private GameObject _buildedTower;
     private bool _isTowerBuilded;
 
     public GameObject BuildPointObject { get => _buildPointObject; set => _buildPointObject = value; }
-    public static Action OnBuildTower { get => _onBuildTower; set => _onBuildTower = value; }
+    public static Action<GameObject> OnBuildTower { get => _onBuildTower; set => _onBuildTower = value; }
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class TowerBuilder : MonoBehaviour
     {
         if (_isTowerBuilded)
         {
-            _onBuildTower?.Invoke();
+            _onBuildTower?.Invoke(_buildedTower);
             _isTowerBuilded = false;
         }
     }
@@ -50,6 +51,7 @@ public class TowerBuilder : MonoBehaviour
         towerGO.GetComponent<TowerAttak>().TowerSO = _towerSO;
 
         _isTowerBuilded = true;
+        _buildedTower = towerGO;
 
         Destroy(_buildPointObject);
 

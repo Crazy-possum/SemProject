@@ -91,6 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bullet: {fileID: 7570986084572919295, guid: 9978ea36a4560fe4abb128cddc2c2ece, type: 3}
   _bulletSpawner: {fileID: 5745869190095287002}
+  _doublebulletSpawnerLeft: {fileID: 8320851228476081986}
+  _doublebulletSpawnerRight: {fileID: 427962815864755925}
   CurrentTime: 0
 --- !u!1 &1538568124020532886
 GameObject:
@@ -148,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 2916592110782814862}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.145, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -179,7 +181,7 @@ Transform:
   m_GameObject: {fileID: 3143910025924024599}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.145, y: 0, z: 0}
+  m_LocalPosition: {x: -0.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

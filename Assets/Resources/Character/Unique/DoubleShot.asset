@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfc086295ddbc045a36415209ff3cb7, type: 3}
   m_Name: DoubleShot
   m_EditorClassIdentifier: 
-  Name: "\u0414\u0430\u0431\u043B \u0448\u043E\u0442"
+  Name: "\u0414\u0443\u043F\u043B\u0435\u0442"
   Description: "\u0444\u0440\u0443"
   UpgradeEnum: 11
   CharUpgradeRare: 4

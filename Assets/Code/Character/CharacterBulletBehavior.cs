@@ -43,14 +43,12 @@ public class CharacterBulletBehavior : MonoBehaviour
 
     private void OnEnable()
     {
-        CharUpgradeViewer.OnSubscriptionCharBullet += IsSlowingMobsActive;
-
-        CharacterUpgrader.OnDoublePaint += IsDoublePaintOn;
+        CharUpgradeViewer.OnSubscriptionCharBullet += CheckPurchasedCharUpgrade;
     }
 
     private void OnDisable()
     {
-        CharacterUpgrader.OnDoublePaint -= IsDoublePaintOn;
+        CharUpgradeViewer.OnSubscriptionCharBullet -= CheckPurchasedCharUpgrade;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,16 +99,13 @@ public class CharacterBulletBehavior : MonoBehaviour
         }
     }
 
-    private void IsSlowingMobsActive( bool isSlowDownOn, float debuffTimerValue, float slowingDown)
+    private void CheckPurchasedCharUpgrade(bool isSlowDownOn, float debuffTimerValue, float slowingDown, bool isDoublePaintOn, int doublePaintValue)
     {
         _isSlowDownOn = isSlowDownOn;
         _slowingTimerValue = debuffTimerValue;
         _slowingDownValue = slowingDown;
-    }
 
-    private void IsDoublePaintOn(int paintUpValue)
-    {
-        _isDoublePaintOn = true;
-        _doublePaintValue = paintUpValue;
+        _isDoublePaintOn = isDoublePaintOn;
+        _doublePaintValue = doublePaintValue;
     }
 }

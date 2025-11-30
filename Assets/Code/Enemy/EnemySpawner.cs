@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform[] _enemyWayPointsList;
 
     [SerializeField] private LevelSO _levelConfig;
+
+    private static Action<GameObject> _onEnemySpawn;
 
     private SpawnPresetSO _currentWave;
     private Timer _globalTimer;
@@ -26,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
     public int CurrentEnemyListLength { get => _currentEnemyListLength; set => _currentEnemyListLength = value; }
     public List<GameObject> EnemyList { get => _enemyList; set => _enemyList = value; }
     public bool IsAllWaveSpawned { get => _isAllWaveSpawned; set => _isAllWaveSpawned = value; }
+    public static Action<GameObject> OnEnemySpawn { get => _onEnemySpawn; set => _onEnemySpawn = value; }
 
     private void Start()
     {
@@ -85,10 +89,12 @@ public class EnemySpawner : MonoBehaviour
             GameObject enemyPrefab = _currentWave.enemySequenceList[_currentEnemyIndex];
 
             Vector3 position = _enemyWayPointsList[0].position;
-            GameObject sceneGObject = GameObject.Instantiate(enemyPrefab, position, Quaternion.identity, _enemiesGroup.transform);
+            GameObject enemyObject = GameObject.Instantiate(enemyPrefab, position, Quaternion.identity, _enemiesGroup.transform);
 
-            _enemyList.Add(sceneGObject.gameObject);
-            sceneGObject.GetComponent<EnemyMovement>().EnemyWayPintsList = _enemyWayPointsList;
+            _onEnemySpawn?.Invoke(enemyObject);
+
+            _enemyList.Add(enemyObject.gameObject);
+            enemyObject.GetComponent<EnemyMovement>().EnemyWayPintsList = _enemyWayPointsList;
 
             _currentEnemyIndex++;
         }

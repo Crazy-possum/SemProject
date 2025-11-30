@@ -139,6 +139,7 @@ public class CharacterShoot : MonoBehaviour
 
     private void ActivateDoubleShot()
     {
+        Debug.Log("here");
         _isDoubleShotOn = true;
     }
 }
