@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcff3c8aedaa07c468caa5cf19f8aba6, type: 3}
+  m_Name: Tut_6_FirstTowerStrike
+  m_EditorClassIdentifier: 
+  Name: 
+  TutorEnum: 6
+  TutorDialogSOList:
+  - {fileID: 11400000, guid: f49e1193e8e2be34ca4fcde0502b322c, type: 2}
+  - {fileID: 11400000, guid: d6785c14be8cc4b4da26d6c8d89acfb1, type: 2}
+  - {fileID: 11400000, guid: 937243096351ef043ac133c2689cc927, type: 2}
+  - {fileID: 11400000, guid: 7e13de263698417408f159a37b8683fd, type: 2}
+  - {fileID: 11400000, guid: 8758b2ccaf353a848a1d86daf462c300, type: 2}
+  - {fileID: 11400000, guid: 779911ca279d2964997e6f79c20928a7, type: 2}
+  - {fileID: 11400000, guid: 7e5023c875b10464292ad7737032fd31, type: 2}

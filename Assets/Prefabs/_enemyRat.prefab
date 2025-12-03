@@ -47,7 +47,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -61,6 +61,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1771667094165765290, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: _enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: dc04a47021a2a574f888b92ab436124d,
+        type: 2}
     - target: {fileID: 2455834386172449121, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
         type: 3}
       propertyPath: _healTrigger
@@ -72,10 +78,35 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: f0e1a566dab510043a7a5efccc870ce2,
         type: 3}
+    - target: {fileID: 6946348201229030526, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946348201229030526, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 0524d7f395f193645bd6fccdeefa8509, type: 2}
+    - target: {fileID: 6946348201229030526, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_PlayAutomatically
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946348201229030526, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_Animations.Array.data[0]
+      value: 
+      objectReference: {fileID: 7400000, guid: 0524d7f395f193645bd6fccdeefa8509, type: 2}
     - target: {fileID: 7772418324337359552, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
         type: 3}
       propertyPath: m_Name
       value: _enemyRat
+      objectReference: {fileID: 0}
+    - target: {fileID: 7848377523538358666, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8039095460037899665, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
         type: 3}

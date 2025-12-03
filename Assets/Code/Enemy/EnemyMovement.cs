@@ -8,7 +8,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float _tolerance;
 
     private static Action _onEnemyEnter;
+    private EnemyEnum _enemyEnum;
     private Transform[] _enemyWayPintsList;
+    private Animator _animator;
     private Rigidbody _rb;
     private Timer _slowingDownTimer;
 
@@ -33,6 +35,7 @@ public class EnemyMovement : MonoBehaviour
     public Timer SlowingDownTimer { get => _slowingDownTimer; set => _slowingDownTimer = value; }
     public float Speed { get => _speed; set => _speed = value; }
     public bool IsAlreadySlowing { get => _isAlreadySlowing; set => _isAlreadySlowing = value; }
+    public EnemyEnum EnemyEnum { get => _enemyEnum; set => _enemyEnum = value; }
 
     void Start()
     {
@@ -42,6 +45,16 @@ public class EnemyMovement : MonoBehaviour
         _currentIndex = 0;
         _checkDistance = _speed * _tolerance;
         _baseSpeed = _speed;
+
+        _animator = GetComponent<Animator>();
+
+        switch (_enemyEnum)
+        {
+            case EnemyEnum.Mole: _animator.SetBool("isMole", true); break;
+            case EnemyEnum.Anteater: _animator.SetBool("isAnteater", true); break;
+            case EnemyEnum.Lizard: _animator.SetBool("isLizard", true); break;
+            case EnemyEnum.Rat: _animator.SetBool("isRat", true); break;
+        }
     }
 
     void FixedUpdate()

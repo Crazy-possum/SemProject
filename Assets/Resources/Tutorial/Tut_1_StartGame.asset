@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcff3c8aedaa07c468caa5cf19f8aba6, type: 3}
+  m_Name: Tut_1_StartGame
+  m_EditorClassIdentifier: 
+  Name: 
+  TutorEnum: 1
+  TutorDialogSOList:
+  - {fileID: 11400000, guid: fd03a755fde62ff46a80d87a9e06a4c2, type: 2}
+  - {fileID: 11400000, guid: 0bdc58b4e7e1a1941b780c7183266a0e, type: 2}
+  - {fileID: 11400000, guid: 7bd9cb77ca05cdf40b99ad0cfbde4a6b, type: 2}
+  - {fileID: 11400000, guid: 03f324b228318ba43a59375e18fdf3d9, type: 2}
+  - {fileID: 11400000, guid: afea6ddbfd1765c42b1bf0ba8d0a9add, type: 2}

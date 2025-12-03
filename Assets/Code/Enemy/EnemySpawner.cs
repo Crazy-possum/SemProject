@@ -96,6 +96,9 @@ public class EnemySpawner : MonoBehaviour
             _enemyList.Add(enemyObject.gameObject);
             enemyObject.GetComponent<EnemyMovement>().EnemyWayPintsList = _enemyWayPointsList;
 
+            EnemyEnum enemyEnum = enemyObject.GetComponent<EnemyParametrs>().EnemySO.EnemyEnum;
+            enemyObject.GetComponent<EnemyMovement>().EnemyEnum = enemyEnum;
+
             _currentEnemyIndex++;
         }
         else
