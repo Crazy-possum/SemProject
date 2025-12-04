@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 569f09ec88112424eb25dea39200b8e0, type: 3}
   m_Name: Phase_3
   m_EditorClassIdentifier: Assembly-CSharp::TutorDialogSO
   IsCharacterSpeak: 0

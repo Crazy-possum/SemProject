@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,12 +33,16 @@ public class TutorStageActivator : MonoBehaviour
     private void Start()
     {
         _buttonNext.onClick.AddListener(NextButton);
-        _tutorStageSOList = new List<TutorStageSO>();
     }
 
     private void OnEnable()
     {
         TutorController.OnTutorActive += SetTutorialConfig;
+
+        /**if (_tutorStageSOList)
+        {
+
+        }**/
     }
 
     private void OnDisable()
@@ -48,6 +54,7 @@ public class TutorStageActivator : MonoBehaviour
     {
         _tutorPanel.SetActive(true);
         _darkPanel.SetActive(true);
+
         CustomizePanel();
     }
 
@@ -58,20 +65,31 @@ public class TutorStageActivator : MonoBehaviour
             _textCharacter.text = _tutorDialogSO.CharacterText;
             _textNPC.text = _tutorDialogSO.NPCText;
 
-            _imageCharacterLocker.gameObject.SetActive(false);
-            _imageNPCLocker.gameObject.SetActive(true);
+            SetMainImage(_imageCharacter, _imageCharacterLocker, _imageNPC, _imageNPCLocker);
         }
         else
         {
             _textNPC.text = _tutorDialogSO.NPCText;
             _textCharacter.text = _tutorDialogSO.CharacterText;
 
-            _imageNPCLocker.gameObject.SetActive(false);
-            _imageCharacterLocker.gameObject.SetActive(true);
+            SetMainImage(_imageNPC, _imageNPCLocker, _imageCharacter, _imageCharacterLocker);
         }
 
         _imageCharacter.sprite = _tutorDialogSO.CharacterSprite;
         _imageNPC.sprite = _tutorDialogSO.NPCSprite;
+
+        Debug.Log(_tutorDialogSO);
+        Debug.Log(_tutorDialogSO.CharacterSprite);
+        Debug.Log(_tutorDialogSO.NPCSprite);
+    }
+
+    private void SetMainImage(Image mainImage, Image mainImageLocker, Image secondImage, Image secondImageLocker)
+    {
+        mainImageLocker.gameObject.SetActive(false);
+        secondImageLocker.gameObject.SetActive(true);
+
+        mainImage.transform.localScale = new Vector3(1.1f, 1.1f, 1f);
+        secondImage.transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
     private void SetTutorialConfig()
@@ -79,16 +97,17 @@ public class TutorStageActivator : MonoBehaviour
         string tutorStage = PlayerPrefs.GetString("TutorStage");
         foreach (var stage in _tutorStageSOList)
         {
-            Debug.Log(_tutorStageSO);
             if (stage.TutorEnum.ToString() == tutorStage)
             {
                 _tutorStageSO = stage;
                 break;
             }
         }
+        Debug.Log(_tutorStageSO);
 
         _currentDialogIndex = 0;
         _tutorDialogSO = _tutorStageSO.TutorDialogSOList[_currentDialogIndex];
+        Debug.Log(_tutorStageSO.TutorDialogSOList[_currentDialogIndex]);
         SetActivePanel();
     }
 
@@ -110,7 +129,9 @@ public class TutorStageActivator : MonoBehaviour
 
     private void LoadTutorStage()
     {
-        /**var tutNames = new[] 
+        _tutorStageSOList = new List<TutorStageSO>();
+
+        var tutNames = new[] 
             {"StartGame", "PickFirstLevel", "LoadFirstLevel", "FirstEnemyHere", 
             "EnemyNearTowerPoint", "FirstTowerStrike", "FirstEnemyDie", 
             "SecondTowerBuild", "OwnPlay", "AllEnemiesKilled", "SelectSecondLevel",
@@ -119,23 +140,7 @@ public class TutorStageActivator : MonoBehaviour
         for (int i = 0; i < tutNames.Length; i++)
         {
             _tutorStageSOList.Add(Resources.Load<TutorStageSO>($"Tutorial/Tut_{i+1}_{tutNames[i]}"));
-        }**/
-
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_1_StartGame"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_2_PickFirstLevel"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_3_LoadFirstLevel"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_4_FirstEnemyHere"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_5_EnemyNearTowerPoint"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_6_FirstTowerStrike"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_7_FirstEnemyDie"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_8_SecondTowerBuild"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_9_OwnPlay"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_10_AllEnemiesKilled"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_11_SelectSecondLevel"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_12_TowerInSecondLevel"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_13_FinishFirstWave"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_14_CanUpgrade"));
-        _tutorStageSOList.Add(Resources.Load<TutorStageSO>("Tutorial/Tut_15_FreeWay"));
+        }
     }
 
     private void SetConfig(string tutorStage, string boolName)

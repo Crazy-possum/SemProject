@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 569f09ec88112424eb25dea39200b8e0, type: 3}
   m_Name: Phase_1
-  m_EditorClassIdentifier: Assembly-CSharp::TutorDialogSO
-  IsCharacterSpeak: 0
-  CharacterText: 
-  NPCText: "\u043B\u0448\u043E\u0440\u043F\u0430\u0432"
-  CharacterSprite: {fileID: 21300000, guid: a273e7ce874cdcc4c8f4c910921ec0ea, type: 3}
+  m_EditorClassIdentifier: 
+  IsCharacterSpeak: 1
+  CharacterText: "\u043E\u0433\u043D\u0440\u043F\u0430"
+  NPCText: 
+  CharacterSprite: {fileID: 21300000, guid: c3f0a18d59db207499d92f935e638233, type: 3}
   NPCSprite: {fileID: 21300000, guid: c4ae7a68fe9c0e74999aa906f9cd5629, type: 3}
