@@ -14,7 +14,7 @@ public class OnLoad : MonoBehaviour
             TutorController.AddLockPlayerPrefs();
         }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 && 
+        if (SceneManager.GetActiveScene().buildIndex == 1 && 
             PlayerPrefs.GetString($"{TutorConstantMaganer.START_GAME}") == false.ToString())
         {
             TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.START_GAME}");

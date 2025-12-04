@@ -24,12 +24,18 @@ public class TutorStageActivator : MonoBehaviour
     private TutorDialogSO _tutorDialogSO;
     private int _currentDialogIndex;
 
+    private Vector3 _charImagePos;
+    private Vector3 _NPCImagePos;
+    private Vector3 _imageShift = new Vector3(0, 35, 0);
+
     //private static Action
 
     private void Awake()
     {
         LoadTutorStage();
+        GetImageVector();
     }
+
     private void Start()
     {
         _buttonNext.onClick.AddListener(NextButton);
@@ -38,11 +44,6 @@ public class TutorStageActivator : MonoBehaviour
     private void OnEnable()
     {
         TutorController.OnTutorActive += SetTutorialConfig;
-
-        /**if (_tutorStageSOList)
-        {
-
-        }**/
     }
 
     private void OnDisable()
@@ -55,6 +56,7 @@ public class TutorStageActivator : MonoBehaviour
         _tutorPanel.SetActive(true);
         _darkPanel.SetActive(true);
 
+        TutorController.StopGame();
         CustomizePanel();
     }
 
@@ -65,31 +67,30 @@ public class TutorStageActivator : MonoBehaviour
             _textCharacter.text = _tutorDialogSO.CharacterText;
             _textNPC.text = _tutorDialogSO.NPCText;
 
-            SetMainImage(_imageCharacter, _imageCharacterLocker, _imageNPC, _imageNPCLocker);
+            SetMainImage(_imageCharacter, _imageCharacterLocker, _charImagePos, _imageNPC, _imageNPCLocker, _NPCImagePos);
         }
         else
         {
             _textNPC.text = _tutorDialogSO.NPCText;
             _textCharacter.text = _tutorDialogSO.CharacterText;
 
-            SetMainImage(_imageNPC, _imageNPCLocker, _imageCharacter, _imageCharacterLocker);
+            SetMainImage(_imageNPC, _imageNPCLocker, _NPCImagePos, _imageCharacter, _imageCharacterLocker, _charImagePos);
         }
 
         _imageCharacter.sprite = _tutorDialogSO.CharacterSprite;
         _imageNPC.sprite = _tutorDialogSO.NPCSprite;
-
-        Debug.Log(_tutorDialogSO);
-        Debug.Log(_tutorDialogSO.CharacterSprite);
-        Debug.Log(_tutorDialogSO.NPCSprite);
     }
 
-    private void SetMainImage(Image mainImage, Image mainImageLocker, Image secondImage, Image secondImageLocker)
+    private void SetMainImage(Image mainImage, Image mainImageLocker, Vector3 mainImagePos, Image secondImage, Image secondImageLocker, Vector3 secondImagePos)
     {
         mainImageLocker.gameObject.SetActive(false);
         secondImageLocker.gameObject.SetActive(true);
 
-        mainImage.transform.localScale = new Vector3(1.1f, 1.1f, 1f);
+        mainImage.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+        mainImage.transform.position = mainImagePos + _imageShift;
+
         secondImage.transform.localScale = new Vector3(1f, 1f, 1f);
+        secondImage.transform.position = secondImagePos;
     }
 
     private void SetTutorialConfig()
@@ -103,11 +104,9 @@ public class TutorStageActivator : MonoBehaviour
                 break;
             }
         }
-        Debug.Log(_tutorStageSO);
 
         _currentDialogIndex = 0;
         _tutorDialogSO = _tutorStageSO.TutorDialogSOList[_currentDialogIndex];
-        Debug.Log(_tutorStageSO.TutorDialogSOList[_currentDialogIndex]);
         SetActivePanel();
     }
 
@@ -122,9 +121,17 @@ public class TutorStageActivator : MonoBehaviour
         }
         else
         {
-            _tutorPanel.SetActive(false);
-            _darkPanel.SetActive(false);
+            CompleteTutorStage();
         }
+    }
+
+    private void CompleteTutorStage()
+    {
+        TutorController.PlayGame();
+        _tutorPanel.SetActive(false);
+        _darkPanel.SetActive(false);
+
+        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.START_GAME_TRUE}");
     }
 
     private void LoadTutorStage()
@@ -141,6 +148,12 @@ public class TutorStageActivator : MonoBehaviour
         {
             _tutorStageSOList.Add(Resources.Load<TutorStageSO>($"Tutorial/Tut_{i+1}_{tutNames[i]}"));
         }
+    }
+
+    private void GetImageVector()
+    {
+        _charImagePos = _imageCharacter.transform.position;
+        _NPCImagePos = _imageNPC.transform.position;
     }
 
     private void SetConfig(string tutorStage, string boolName)
