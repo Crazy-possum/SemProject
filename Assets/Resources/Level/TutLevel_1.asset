@@ -17,4 +17,3 @@ MonoBehaviour:
   WavePresetList:
   - {fileID: 11400000, guid: e57ccd28313fd2d4a92852d237a91e6a, type: 2}
   - {fileID: 11400000, guid: 9dce577266a841b48b68545f37a40a19, type: 2}
-  - {fileID: 11400000, guid: e53ed5e0ece92ba48a8ef9d530b56a36, type: 2}

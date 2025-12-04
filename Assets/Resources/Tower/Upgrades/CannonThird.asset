@@ -22,4 +22,4 @@ MonoBehaviour:
   UpgradeFloatValue: 1
   AddUpgradeFloatValue: 1
   UpgradeIndex: 3
-  UpgradeCost: 2
+  UpgradeCost: 15
