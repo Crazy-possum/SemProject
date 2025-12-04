@@ -16,5 +16,5 @@ MonoBehaviour:
   EnemyEnum: 2
   EnemyPrefab: {fileID: 3024655669155888098, guid: d8c87708a40dbc1429f563e14104fe0a,
     type: 3}
-  Speed: 80
+  Speed: 40
   MaxHealth: 1000

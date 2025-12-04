@@ -28,7 +28,11 @@ public class TutorStageActivator : MonoBehaviour
     private Vector3 _NPCImagePos;
     private Vector3 _imageShift = new Vector3(0, 35, 0);
 
-    //private static Action
+    private static Action<int> _onNeedsLoad;
+    private static Action _onNeedsWin;
+
+    public static Action<int> OnNeedsLoad { get => _onNeedsLoad; set => _onNeedsLoad = value; }
+    public static Action OnNeedsWin { get => _onNeedsWin; set => _onNeedsWin = value; }
 
     private void Awake()
     {
@@ -87,10 +91,10 @@ public class TutorStageActivator : MonoBehaviour
         secondImageLocker.gameObject.SetActive(true);
 
         mainImage.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
-        mainImage.transform.position = mainImagePos + _imageShift;
+        mainImage.rectTransform.localPosition = mainImagePos + _imageShift;
 
         secondImage.transform.localScale = new Vector3(1f, 1f, 1f);
-        secondImage.transform.position = secondImagePos;
+        secondImage.rectTransform.localPosition = secondImagePos;
     }
 
     private void SetTutorialConfig()
@@ -131,7 +135,76 @@ public class TutorStageActivator : MonoBehaviour
         _tutorPanel.SetActive(false);
         _darkPanel.SetActive(false);
 
-        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.START_GAME_TRUE}");
+        ChangeTutorStageToComplite();
+    }
+
+    private void ChangeTutorStageToComplite()
+    {
+        string tutorStage = PlayerPrefs.GetString("TutorStage");
+        string isTutorDone = PlayerPrefs.GetString("IsTutorDone");
+
+        if (tutorStage == $"{TutorEnum.StartGame}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.START_GAME_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.PickFirstLevel}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.PICK_FIRST_LEVEL_TRUE}");
+            _onNeedsLoad?.Invoke(2);
+        }
+        else if (tutorStage == $"{TutorEnum.LoadFirstLevel}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.LOAD_FIRST_LEVEL_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.FirstEnemyHere}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_HERE_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.EnemyNearTowerPoint}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ENEMY_NEAR_TOWER_POINT_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.FirstTowerStrike}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_TOWER_STRIKE_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.FirstEnemyDie}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_DIE_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.SecondTowerBuild}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SECOND_TOWER_BUILD_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.OwnPlay}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.OWN_PLAY_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.AllEnemiesKilled}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ALL_ENEMIES_KILLED_TRUE}");
+            _onNeedsWin?.Invoke();
+        }
+        else if (tutorStage == $"{TutorEnum.SelectSecondLevel}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SELECT_SECOND_LEVEL_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.TowerInSecondLevel}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.FinishFirstWave}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FINISH_FIRST_WAVE_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.CanUpgrade}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.CAN_UPGRADE_TRUE}");
+        }
+        else if (tutorStage == $"{TutorEnum.FreeWay}" && isTutorDone == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FREE_WAY_TRUE}");
+        }
     }
 
     private void LoadTutorStage()
@@ -152,242 +225,118 @@ public class TutorStageActivator : MonoBehaviour
 
     private void GetImageVector()
     {
-        _charImagePos = _imageCharacter.transform.position;
-        _NPCImagePos = _imageNPC.transform.position;
+        _charImagePos = _imageCharacter.rectTransform.localPosition;
+        _NPCImagePos = _imageNPC.rectTransform.localPosition;
     }
 
     private void SetConfig(string tutorStage, string boolName)
     {
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.StartGame}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.START_GAME_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.START_GAME_TRUE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.LoadFirstLevel}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_ENEMY_HERE}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_HERE}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.StartGame}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.PICK_FIRST_LEVEL}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.PICK_FIRST_LEVEL}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstEnemyHere}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.ENEMY_NEAR_TOWER_POINT}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ENEMY_NEAR_TOWER_POINT}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.PickFirstLevel}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.PICK_FIRST_LEVEL_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.PICK_FIRST_LEVEL_TRUE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.EnemyNearTowerPoint}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_TOWER_STRIKE}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_TOWER_STRIKE}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.PickFirstLevel}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.LOAD_FIRST_LEVEL}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.LOAD_FIRST_LEVEL}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstTowerStrike}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_ENEMY_DIE}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_DIE}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.LoadFirstLevel}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.LOAD_FIRST_LEVEL_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.LOAD_FIRST_LEVEL_TRUE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstEnemyDie}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.SECOND_TOWER_BUILD}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SECOND_TOWER_BUILD}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.LoadFirstLevel}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_ENEMY_HERE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_HERE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SecondTowerBuild}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.OWN_PLAY}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.OWN_PLAY}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstEnemyHere}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_ENEMY_HERE_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_HERE_TRUE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.OwnPlay}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstEnemyHere}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.ENEMY_NEAR_TOWER_POINT}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ENEMY_NEAR_TOWER_POINT}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.AllEnemiesKilled}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.SELECT_SECOND_LEVEL}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SELECT_SECOND_LEVEL}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.EnemyNearTowerPoint}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.ENEMY_NEAR_TOWER_POINT_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ENEMY_NEAR_TOWER_POINT_TRUE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SelectSecondLevel}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.EnemyNearTowerPoint}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_TOWER_STRIKE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_TOWER_STRIKE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.TowerInSecondLevel}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.FINISH_FIRST_WAVE}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FINISH_FIRST_WAVE}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstTowerStrike}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_TOWER_STRIKE_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_TOWER_STRIKE_TRUE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FinishFirstWave}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.CAN_UPGRADE}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.CAN_UPGRADE}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
 
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstTowerStrike}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_ENEMY_DIE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_DIE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstEnemyDie}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_ENEMY_DIE_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_DIE_TRUE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstEnemyDie}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.SECOND_TOWER_BUILD}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SECOND_TOWER_BUILD}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SecondTowerBuild}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.SECOND_TOWER_BUILD_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SECOND_TOWER_BUILD_TRUE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SecondTowerBuild}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.OWN_PLAY}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.OWN_PLAY}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.OwnPlay}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.OWN_PLAY_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.OWN_PLAY_TRUE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.OwnPlay}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.AllEnemiesKilled}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.ALL_ENEMIES_KILLED_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ALL_ENEMIES_KILLED_TRUE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.AllEnemiesKilled}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.SELECT_SECOND_LEVEL}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SELECT_SECOND_LEVEL}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SelectSecondLevel}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.SELECT_SECOND_LEVEL_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SELECT_SECOND_LEVEL_TRUE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SelectSecondLevel}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.TowerInSecondLevel}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL_TRUE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.TowerInSecondLevel}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FINISH_FIRST_WAVE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FINISH_FIRST_WAVE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FinishFirstWave}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FINISH_FIRST_WAVE_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FINISH_FIRST_WAVE_TRUE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FinishFirstWave}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.CAN_UPGRADE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.CAN_UPGRADE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.CanUpgrade}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.CAN_UPGRADE_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.CAN_UPGRADE_TRUE}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.CanUpgrade}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FREE_WAY}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FREE_WAY}");
-        }
-
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FreeWay}" &&
-            PlayerPrefs.GetString("IsTutorDone") == false.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.FREE_WAY_TRUE}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FREE_WAY_TRUE}");
-        }
+                    if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                        PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.CanUpgrade}" &&
+                        PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                        PlayerPrefs.GetString($"{TutorConstantMaganer.FREE_WAY}") == false.ToString())
+                    {
+                        TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FREE_WAY}");
+                        TutorController.OnTutorActive?.Invoke();
+                    }
     }
 }

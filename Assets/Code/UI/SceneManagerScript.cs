@@ -14,6 +14,16 @@ public class SceneManagerScript : MonoBehaviour
         _button.onClick.AddListener(CheckTutor);
     }
 
+    private void OnEnable()
+    {
+        TutorStageActivator.OnNeedsLoad += LoadScene;
+    }
+
+    private void OnDisable()
+    {
+        TutorStageActivator.OnNeedsLoad -= LoadScene;
+    }
+
     private void OnDestroy()
     {
         _button.onClick.RemoveAllListeners();
@@ -21,7 +31,7 @@ public class SceneManagerScript : MonoBehaviour
 
     private void CheckTutor()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 2 &&
+        if (SceneManager.GetActiveScene().buildIndex == 1 &&
             PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.StartGame}" &&
             PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
             PlayerPrefs.GetString($"{TutorConstantMaganer.PICK_FIRST_LEVEL}") == false.ToString())
@@ -31,12 +41,13 @@ public class SceneManagerScript : MonoBehaviour
         }
         else
         {
-            LoadScene();
+            LoadScene(_sceneIndex);
         }
     }
 
-    private void LoadScene()
+    private void LoadScene(int index)
     {
-        SceneManager.LoadScene(_sceneIndex);
+        Debug.Log(index);
+        SceneManager.LoadScene(index);
     }
 }

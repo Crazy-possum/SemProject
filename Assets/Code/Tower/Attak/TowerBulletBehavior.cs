@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TowerBulletBehavior : MonoBehaviour
 {
@@ -203,6 +204,15 @@ public class TowerBulletBehavior : MonoBehaviour
             {
                 DealDOTDamage();
             }
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 2 &&
+            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.EnemyNearTowerPoint}" &&
+            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+            PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_TOWER_STRIKE}") == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_TOWER_STRIKE}");
+            TutorController.OnTutorActive?.Invoke();
         }
     }
     #endregion

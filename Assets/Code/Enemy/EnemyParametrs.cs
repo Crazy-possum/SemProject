@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EnemyParametrs : MonoBehaviour  
@@ -7,7 +8,7 @@ public class EnemyParametrs : MonoBehaviour
     [SerializeField] private EnemySO _enemySO;
     [Tooltip("Слайдер ХП")]
     [SerializeField] private Slider _healthSlider;
-    [Tooltip("Слайдер покраски")] //Нужно будет заменить логику, когда появятся спрайты для покраса
+    [Tooltip("Слайдер покраски")] 
     [SerializeField] private Slider _paintSlider;
     [Tooltip("Максимальная степень покраски противника")]
     [SerializeField] private float _maxPaintValue = 4;
@@ -47,8 +48,22 @@ public class EnemyParametrs : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
-            _onEnemyDied?.Invoke();
-            Destroy(gameObject);
+            EnemyDie();
+        }
+    }
+
+    private void EnemyDie()
+    {
+        _onEnemyDied?.Invoke();
+        Destroy(gameObject);
+
+        if (SceneManager.GetActiveScene().buildIndex == 2 &&
+            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstTowerStrike}" &&
+            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+            PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_ENEMY_DIE}") == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_DIE}");
+            TutorController.OnTutorActive?.Invoke();
         }
     }
 

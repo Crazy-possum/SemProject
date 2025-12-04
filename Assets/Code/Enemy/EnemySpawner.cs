@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -100,6 +101,15 @@ public class EnemySpawner : MonoBehaviour
             enemyObject.GetComponent<EnemyMovement>().EnemyEnum = enemyEnum;
 
             _currentEnemyIndex++;
+
+            if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.LoadFirstLevel}" &&
+                PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                PlayerPrefs.GetString($"{TutorConstantMaganer.FIRST_ENEMY_HERE}") == false.ToString())
+            {
+                TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FIRST_ENEMY_HERE}");
+                TutorController.OnTutorActive?.Invoke();
+            }
         }
         else
         {
@@ -114,6 +124,26 @@ public class EnemySpawner : MonoBehaviour
             _currentEnemyIndex = 0;
             _currentWaveIndex++;
             _currentWave = _levelConfig.WavePresetList[_currentWaveIndex];
+
+            Debug.Log(PlayerPrefs.GetString("TutorStage"));
+
+            if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SecondTowerBuild}" &&
+                PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                PlayerPrefs.GetString($"{TutorConstantMaganer.OWN_PLAY}") == false.ToString())
+            {
+                TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.OWN_PLAY}");
+                TutorController.OnTutorActive?.Invoke();
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 3 &&
+                PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.TowerInSecondLevel}" &&
+                PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                PlayerPrefs.GetString($"{TutorConstantMaganer.FINISH_FIRST_WAVE}") == false.ToString())
+            {
+                TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FINISH_FIRST_WAVE}");
+                TutorController.OnTutorActive?.Invoke();
+            }
         }
         else
         {

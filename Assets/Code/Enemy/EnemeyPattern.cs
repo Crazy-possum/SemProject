@@ -48,9 +48,6 @@ public class EnemeyPattern : MonoBehaviour
 
         if (_enemyParametrs.CurrentHealth <= _enemyParametrs.MaxHealth * _finishingBoarder)
         {
-            Debug.Log(_enemyParametrs.MaxHealth);
-            Debug.Log(_enemyParametrs.CurrentHealth);
-            Debug.Log(_enemyParametrs.MaxHealth * _finishingBoarder);
             if (_isLizard)
             {
                 _enemyMovement.Speed *= 1.5f;
