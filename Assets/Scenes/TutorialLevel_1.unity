@@ -1362,6 +1362,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.14
       objectReference: {fileID: 0}
+    - target: {fileID: 5039719632335119227, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
+      propertyPath: GeneralCurrency
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7963039608782970439, guid: e4392b4abc61fc34cb087cf17757d8e6,
         type: 3}
       propertyPath: _tutorStageActivator

@@ -11,6 +11,8 @@ public class CharacterShoot : MonoBehaviour
     [SerializeField] private Transform _doublebulletSpawnerLeft;
     [SerializeField] private Transform _doublebulletSpawnerRight;
 
+    [SerializeField] private Animator _gunAnimator;
+
     public float CurrentTime;
 
     private Timer _attakReloadTimer;
@@ -99,6 +101,7 @@ public class CharacterShoot : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Mouse0)))
         {
+            _gunAnimator.Play("Character_gun", -1, 0f);
             if (!_isDoubleShotOn)
             {
                 Vector3 position = _bulletSpawner.position;

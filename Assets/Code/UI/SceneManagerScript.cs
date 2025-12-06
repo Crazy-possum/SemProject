@@ -8,20 +8,12 @@ public class SceneManagerScript : MonoBehaviour
 
     private Button _button;
 
+    public int SceneIndex { get => _sceneIndex; set => _sceneIndex = value; }
+
     private void Awake()
     {
         _button = gameObject.GetComponent<Button>();
-        _button.onClick.AddListener(CheckTutor);
-    }
-
-    private void OnEnable()
-    {
-        TutorStageActivator.OnNeedsLoad += LoadScene;
-    }
-
-    private void OnDisable()
-    {
-        TutorStageActivator.OnNeedsLoad -= LoadScene;
+        _button.onClick.AddListener(LoadOnButton);
     }
 
     private void OnDestroy()
@@ -29,20 +21,9 @@ public class SceneManagerScript : MonoBehaviour
         _button.onClick.RemoveAllListeners();
     }
 
-    private void CheckTutor()
+    private void LoadOnButton()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.StartGame}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.PICK_FIRST_LEVEL}") == false.ToString())
-        {
-            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.PICK_FIRST_LEVEL}");
-            TutorController.OnTutorActive?.Invoke();
-        }
-        else
-        {
-            LoadScene(_sceneIndex);
-        }
+        SceneManager.LoadScene(_sceneIndex);
     }
 
     private void LoadScene(int index)

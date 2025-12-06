@@ -78,6 +78,21 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 5111799803017818141, guid: 4ede4f1198493ee41b24716123f9f2d8,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.8588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111799803017818141, guid: 4ede4f1198493ee41b24716123f9f2d8,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.7254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 5111799803017818141, guid: 4ede4f1198493ee41b24716123f9f2d8,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.9294118
+      objectReference: {fileID: 0}
     - target: {fileID: 6493727303628258625, guid: 4ede4f1198493ee41b24716123f9f2d8,
         type: 3}
       propertyPath: m_Name

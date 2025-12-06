@@ -620,6 +620,11 @@ PrefabInstance:
       propertyPath: m_ChildControlWidth
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5039719632335119227, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
+      propertyPath: GeneralCurrency
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 8247813018747760832, guid: e4392b4abc61fc34cb087cf17757d8e6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -680,7 +685,9 @@ PrefabInstance:
       propertyPath: m_ChildControlWidth
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 207188814940007143, guid: e4392b4abc61fc34cb087cf17757d8e6, type: 3}
+    - {fileID: 7963039608782970439, guid: e4392b4abc61fc34cb087cf17757d8e6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

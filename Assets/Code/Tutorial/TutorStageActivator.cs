@@ -28,10 +28,10 @@ public class TutorStageActivator : MonoBehaviour
     private Vector3 _NPCImagePos;
     private Vector3 _imageShift = new Vector3(0, 35, 0);
 
-    private static Action<int> _onNeedsLoad;
+    private static Action _onNeedsLoad;
     private static Action _onNeedsWin;
 
-    public static Action<int> OnNeedsLoad { get => _onNeedsLoad; set => _onNeedsLoad = value; }
+    public static Action OnNeedsLoad { get => _onNeedsLoad; set => _onNeedsLoad = value; }
     public static Action OnNeedsWin { get => _onNeedsWin; set => _onNeedsWin = value; }
 
     private void Awake()
@@ -150,7 +150,7 @@ public class TutorStageActivator : MonoBehaviour
         else if (tutorStage == $"{TutorEnum.PickFirstLevel}" && isTutorDone == false.ToString())
         {
             TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.PICK_FIRST_LEVEL_TRUE}");
-            _onNeedsLoad?.Invoke(2);
+            _onNeedsLoad?.Invoke();
         }
         else if (tutorStage == $"{TutorEnum.LoadFirstLevel}" && isTutorDone == false.ToString())
         {

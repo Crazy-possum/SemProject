@@ -30,6 +30,6 @@ EditorBuildSettings:
     path: Assets/Scenes/ThirdLevel.unity
     guid: 3566b64320407464faa86f74924d153d
   - enabled: 0
-    path: Assets/Scenes/2DPrototypeScene.unity
+    path: Assets/Scenes/ToDelete/2DPrototypeScene.unity
     guid: f53d7254eae0c8b44958f01dc3792f21
   m_configObjects: {}
