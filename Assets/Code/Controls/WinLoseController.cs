@@ -81,6 +81,14 @@ public class WinLoseController : MonoBehaviour
                 TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}");
                 TutorController.OnTutorActive?.Invoke();
             }
+            else if (SceneManager.GetActiveScene().buildIndex == 2 &&
+                PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SecondTowerBuild}" &&
+                PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                PlayerPrefs.GetString($"{TutorConstantMaganer.OWN_PLAY}") == false.ToString())
+            {
+                TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}");
+                TutorController.OnTutorActive?.Invoke();
+            }
             else
             {
                 WinPanel();

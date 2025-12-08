@@ -222,7 +222,8 @@ public class TowerAttak : MonoBehaviour
 
     public void ResetAllTowerReloadTimerTime(float towerReload)
     {
-        _attakTimer.ResetTimerMaxTime(_attakReload * towerReload);
+        _attakReload = _attakReload - (_attakReload * towerReload);
+        _attakTimer.ResetTimerMaxTime(_attakReload);
         _attakReload *= towerReload;
     }
 }

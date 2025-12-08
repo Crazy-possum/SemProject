@@ -22,7 +22,7 @@ public class ExperienceController : MonoBehaviour
     private bool _isDoubleKillOn;
     private bool _isWasMurder;
     private float _passExpTimerValue;
-    private float _passExpIncome;
+    private float _passExpIncome = 0;
     private float _doubleKillTimerValue;
 
     private float _currentExp;
@@ -111,7 +111,7 @@ public class ExperienceController : MonoBehaviour
         }
 
         _passExpTimerValue = incomeTimerValue;
-        _passExpIncome = experienceIncome;
+        _passExpIncome += experienceIncome;
 
         _passiveIncomeTimer.ResetTimerMaxTime(_passExpTimerValue);
     }

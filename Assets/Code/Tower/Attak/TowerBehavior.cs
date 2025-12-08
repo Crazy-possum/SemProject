@@ -69,7 +69,6 @@ public class TowerBehavior
         _currentReloadTime = _attakReload;
         _towerAttak = towerObject.GetComponentInChildren<TowerAttak>();
 
-
         if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
         {
             _towerTriggerCollizion.radius = (_towerSO.TowerRange + _updateFloatRadiusValue) * _charRadiusUpgrade; //------------Liseners------------
@@ -334,12 +333,12 @@ public class TowerBehavior
     #region CharacterUpgrade
     private void ActivateCharUpgradeTowerDamage(float towerDamage)
     {
-        _charFloatDamageUpgrade = towerDamage;
+        _charFloatDamageUpgrade += towerDamage;
     }
 
     private void ActivateCharUpgradeTowerRadius(float towerRange)
     {
-        _charRadiusUpgrade = towerRange;
+        _charRadiusUpgrade += towerRange;
 
         if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
         {

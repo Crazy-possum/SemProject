@@ -73,7 +73,7 @@ public class EconomyController : MonoBehaviour
         }
 
         _passMoneyTimerValue = incomeTimerValue;
-        _passMoneyIncome = moneyIncome;
+        _passMoneyIncome += moneyIncome;
 
         _passiveIncomeTimer.ResetTimerMaxTime(_passMoneyTimerValue);
     }

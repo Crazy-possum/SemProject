@@ -31,10 +31,11 @@ public class ClickController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            if (objectUnderMouse.TryGetComponent(out BuildPointTag towerBehavior))
+            if (objectUnderMouse.TryGetComponent(out BuildPointTag towerPoint))
             {
                 InitializeBuildButton();
                 _towerBuildPanel.SetActive(true);
+                Time.timeScale = 0.3f;
 
                 if (SceneManager.GetActiveScene().buildIndex == 3 &&
                     PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SelectSecondLevel}" &&
@@ -49,6 +50,7 @@ public class ClickController : MonoBehaviour
             {
                 InitializeUpgradeButton(objectUnderMouse);
                 _towerUpgradePanel.SetActive(true);
+                Time.timeScale = 0.3f;
             }
 
             _towerBuilder.BuildPointObject = objectUnderMouse;
@@ -60,6 +62,11 @@ public class ClickController : MonoBehaviour
         if (!_isTownBuildButtenHere)
         {
             int buttonAmount = 4;
+
+            if (SceneManager.GetActiveScene().buildIndex == 2)
+            {
+                buttonAmount = 1;
+            }
 
             for (int i = 0; i < buttonAmount; i++)
             {
@@ -107,7 +114,8 @@ public class ClickController : MonoBehaviour
 
     private void CheckTowerType(List<DecisionButton> buttonScriptList, GameObject currentObject)
     {
-        TowerEnum towerEnum = currentObject.GetComponent<TowerAttak>().TowerSO.TowerEnum;
+        TowerAttak towerAttak = currentObject.GetComponent<TowerAttak>();
+        TowerEnum towerEnum = towerAttak.TowerSO.TowerEnum;
 
         for (int i = 0; i < buttonScriptList.Count; i++)
         {
@@ -156,7 +164,7 @@ public class ClickController : MonoBehaviour
             currentButton.TowerUpgradePanel = _towerUpgradePanel;
             currentButton.EconomyController = _economyController;
             currentButton.Tower = currentObject;
-            currentButton.CustomizationUpgradeButton(upgradeSO);
+            currentButton.CustomizationUpgradeButton(upgradeSO, towerAttak);
         }
     }
 }

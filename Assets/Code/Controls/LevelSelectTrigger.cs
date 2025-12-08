@@ -57,6 +57,8 @@ public class LevelSelectTrigger : MonoBehaviour
         {
             _inTrigger = false;
             _confirmDelayTimer.StopCountdown();
+            Debug.Log(_sceneIndex);
+            Debug.Log("da");
         }
     }
 
@@ -91,16 +93,17 @@ public class LevelSelectTrigger : MonoBehaviour
             _isTimer = false;
             _confirmDelayTimer.StopCountdown();
 
-            SetPanelActive();
+            SetPanelActive(_sceneIndex);
         }
     }
 
-    private void SetPanelActive()
+    private void SetPanelActive(int sceneIndex)
     {
         _confirmPanel.SetActive(true);
-        _confirmButton.GetComponent<SceneManagerScript>().SceneIndex = _sceneIndex;
+        _confirmButton.GetComponent<SceneManagerScript>().SceneIndex = sceneIndex;
+        Debug.Log(sceneIndex);
 
-        switch (_sceneIndex)
+        switch (sceneIndex)
         {
             case 2: _confirmText.text = "Загрузить первый уровень"; break;
             case 3: _confirmText.text = "Загрузить второй уровень"; break;

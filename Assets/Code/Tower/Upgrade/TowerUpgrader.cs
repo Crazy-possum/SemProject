@@ -6,7 +6,6 @@ public class TowerUpgrader : MonoBehaviour
     private GameObject _towerObject;
     private TowerUpgradeSO _upgradeSO;
     private TowerView _view;
-    private ScriptableListScript _towerUpgradeListSO;
 
     private static Action<float, GameObject> _onActivateCannonFirstUpgrade;
     private static Action<int, GameObject> _onActivateCannonSecondUpgrade;
@@ -37,11 +36,6 @@ public class TowerUpgrader : MonoBehaviour
     public static Action<float, GameObject> OnActivateSniperFirstUpgrade { get => _onActivateSniperFirstUpgrade; set => _onActivateSniperFirstUpgrade = value; }
     public static Action<float, float, int, GameObject> OnActivateSniperSecondUpgrade { get => _onActivateSniperSecondUpgrade; set => _onActivateSniperSecondUpgrade = value; }
     public static Action<int, GameObject> OnActivateSniperThirdUpgrade { get => _onActivateSniperThirdUpgrade; set => _onActivateSniperThirdUpgrade = value; }
-
-    private void Awake()
-    {
-        _towerUpgradeListSO = Resources.Load<ScriptableListScript>("Tower/Upgrades/TowerUpgrades_SO");
-    }
 
     public void SetTowerUpgrade(GameObject tower, TowerUpgradeSO upgradeSO)
     {

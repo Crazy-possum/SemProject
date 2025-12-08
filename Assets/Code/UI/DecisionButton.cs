@@ -29,6 +29,7 @@ public class DecisionButton : MonoBehaviour
     private TowerSO _towerSO = null;
     private CharUpgradeSO _charUpgradeSO = null;
     private bool _isEnoughMoney;
+    private bool _canUpgrade = true;
 
     public TowerBuilder TowerBuilder { get => _towerBuilder; set => _towerBuilder = value; }
     public TowerUpgrader TowerUpgrader { get => _towerUpgrader; set => _towerUpgrader = value; }
@@ -63,10 +64,11 @@ public class DecisionButton : MonoBehaviour
         {
             if (!_isEnoughMoney)
             {
-                gameObject.GetComponent<Button>().interactable = false;
+                LockButton();
             }
-            else
+            else if (_isEnoughMoney && _canUpgrade)
             {
+                _buttonLocker.SetActive(false);
                 gameObject.GetComponent<Button>().interactable = true;
             }
         }
@@ -87,9 +89,55 @@ public class DecisionButton : MonoBehaviour
         _towerSO = towerSO;
     }
 
-    public void CustomizationUpgradeButton(TowerUpgradeSO upgradeSO)
+    public void CustomizationUpgradeButton(TowerUpgradeSO upgradeSO, TowerAttak towerAttak)
     {
-        _towerImage.sprite = upgradeSO.TowerSprite;
+        if (upgradeSO.TowerEnum == TowerEnum.Cannon_firstUpgrade || upgradeSO.TowerEnum == TowerEnum.Shotgun_firstUpgrade || 
+            upgradeSO.TowerEnum == TowerEnum.Catapult_firstUpgrade || upgradeSO.TowerEnum == TowerEnum.Sniper_firstUpgrade)
+        {
+            if (towerAttak.FirstUpgrade)
+            {
+                LockButton();
+                _canUpgrade = false;
+            }
+            else
+            {
+                _canUpgrade = true;
+                _buttonLocker.SetActive(false);
+                gameObject.GetComponent<Button>().interactable = true;
+            }
+        }
+        else if (upgradeSO.TowerEnum == TowerEnum.Cannon_secondUpgrade || upgradeSO.TowerEnum == TowerEnum.Shotgun_secondUpgrade ||
+            upgradeSO.TowerEnum == TowerEnum.Catapult_secondUpgrade || upgradeSO.TowerEnum == TowerEnum.Sniper_secondUpgrade)
+        {
+            if (towerAttak.SecondUpgrade)
+            {
+                LockButton();
+                _canUpgrade = false;
+            }
+            else
+            {
+                _canUpgrade = true;
+                _buttonLocker.SetActive(false);
+                gameObject.GetComponent<Button>().interactable = true;
+            }
+        }
+        else if (upgradeSO.TowerEnum == TowerEnum.Cannon_thirdUpgrade || upgradeSO.TowerEnum == TowerEnum.Shotgun_thirdUpgrade ||
+            upgradeSO.TowerEnum == TowerEnum.Catapult_thirdUpgrade || upgradeSO.TowerEnum == TowerEnum.Sniper_thirdUpgrade)
+        {
+            if (towerAttak.ThirdUpgrade)
+            {
+                LockButton();  
+                _canUpgrade = false;
+            }
+            else
+            {
+                _canUpgrade = true;
+                _buttonLocker.SetActive(false);
+                gameObject.GetComponent<Button>().interactable = true;
+            }
+        }
+
+            _towerImage.sprite = upgradeSO.TowerSprite;
         _towerNameText.text = upgradeSO.Name;
         _towerCostText.text = $"{upgradeSO.UpgradeCost}";
         _towerDescriptionText.text = upgradeSO.Description;
@@ -114,6 +162,7 @@ public class DecisionButton : MonoBehaviour
             {
                 _towerBuilder.BuildTower(_localTowerEnum);
                 _towerBuildPanel.SetActive(false);
+                Time.timeScale = 1f;
             }
         }
     }
@@ -126,6 +175,7 @@ public class DecisionButton : MonoBehaviour
             {
                 _towerUpgrader.SetTowerUpgrade(_tower, _upgradeSO);
                 _towerUpgradePanel.SetActive(false);
+                Time.timeScale = 1f;
             }
         }
     }
@@ -138,5 +188,11 @@ public class DecisionButton : MonoBehaviour
             _charUpgraderPanel.SetActive(false);
             Time.timeScale = 1f;
         }
+    }
+
+    private void LockButton()
+    {
+        _buttonLocker.SetActive(true);
+        gameObject.GetComponent<Button>().interactable = false;
     }
 }

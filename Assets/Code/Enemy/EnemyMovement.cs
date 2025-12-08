@@ -28,6 +28,8 @@ public class EnemyMovement : MonoBehaviour
 
     private GameObject _spawnedEnemy;
     private bool _isSlowMoveOn;
+    private float _slowDownTimerValue;
+    private float _slowDownValue;
     private float _slowingMoveValue;
     private bool _isSlowMoveOnce;
 
@@ -166,14 +168,23 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        if (_slowingDownTimer== null)
+        if (_slowingDownTimer == null)
         {
             _slowingDownTimer = new Timer(slowingTimerValue);
+            _slowDownTimerValue = slowingDownValue;
+        }
+        else
+        {
+            _slowingDownTimer.ResetTimerMaxTime(_slowDownTimerValue + slowingTimerValue);
+            _slowDownTimerValue += slowingTimerValue;
         }
 
         if (!_isAlreadySlowing)
         {
-            _speed = _speed - (_baseSpeed - (_baseSpeed * slowingDownValue));
+            _slowDownValue = slowingDownValue;
+            _speed = _speed - (_baseSpeed - (_baseSpeed * (_slowDownValue + slowingDownValue)));
+            _slowDownValue += slowingDownValue;
+
             _isAlreadySlowing = true;
 
             if (_speed < 0)
