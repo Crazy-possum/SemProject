@@ -9,6 +9,15 @@ public class TowerAttak : MonoBehaviour
     [SerializeField] private Transform _bulletSpawner;
     [SerializeField] private GameObject _bulletSpawnerGO;
     [Tooltip("Таймер перезарядки в сек")]
+
+    [SerializeField] private Animator _mainAnimator;
+    [SerializeField] private Animator _secondaryAnimator;
+    [SerializeField] private GameObject _firstUpgradeSprite;
+    [SerializeField] private GameObject _secondUpgradeSprite;
+    [SerializeField] private GameObject _thirdUpgradeSprite;
+    [SerializeField] private GameObject _spriteToInactivate;
+    [SerializeField] private GameObject _spriteToInactivate2;
+
     private float _attakReload;
 
     private TowerBehavior _towerBehavior;
@@ -26,6 +35,9 @@ public class TowerAttak : MonoBehaviour
     private bool _firstUpgrade;
     private bool _secondUpgrade;
     private bool _thirdUpgrade;
+    private bool _firstUpgradeOn;
+    private bool _secondUpgradeOn;
+    private bool _thirdUpgradeOn;
 
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
@@ -33,6 +45,9 @@ public class TowerAttak : MonoBehaviour
     public GameObject CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
     public float AttakReload { get => _attakReload; set => _attakReload = value; }
     public TowerBehavior TowerBehavior { get => _towerBehavior; set => _towerBehavior = value; }
+    public bool FirstUpgrade { get => _firstUpgrade; set => _firstUpgrade = value; }
+    public bool SecondUpgrade { get => _secondUpgrade; set => _secondUpgrade = value; }
+    public bool ThirdUpgrade { get => _thirdUpgrade; set => _thirdUpgrade = value; }
 
     private void Start()
     {
@@ -63,6 +78,9 @@ public class TowerAttak : MonoBehaviour
         {
             _towerBehavior = new TowerBehavior(_towerSO, _towerRb, _attakTimer, _towerBulletPrefab, gameObject, _bulletSpawner, _bulletSpawnerGO);
         }
+
+        _towerBehavior.OnTowerShoot += ActivateAnim;
+        _towerBehavior.OnSecondTowerShoot += ActivateSecondaryAnim;
     }
 
     private void FixedUpdate()
@@ -73,6 +91,45 @@ public class TowerAttak : MonoBehaviour
         if (_towerBehavior.TargetsList.Count > 0)
         {
             _towerBehavior.TowerRotate();
+        }
+
+        if (_firstUpgrade && !_firstUpgradeOn)
+        {
+            _firstUpgradeOn = true;
+            _firstUpgradeSprite.SetActive(true);
+
+            if (_towerEnum == TowerEnum.Shotgun)
+            {
+                _spriteToInactivate.SetActive(false);
+            }
+        }
+        if (_secondUpgrade && !_secondUpgradeOn)
+        {
+            _secondUpgradeOn = true;
+            _secondUpgradeSprite.SetActive(true);
+
+            if (_towerEnum == TowerEnum.Catapult)
+            {
+                _spriteToInactivate.SetActive(false);
+            }
+            if (_towerEnum == TowerEnum.Shotgun)
+            {
+                _spriteToInactivate2.SetActive(false);
+            }
+            if (_towerEnum == TowerEnum.Sniper)
+            {
+                _spriteToInactivate.SetActive(false);
+            }
+        }
+        if (_thirdUpgrade && !_thirdUpgradeOn)
+        {
+            _thirdUpgradeOn = true;
+            _thirdUpgradeSprite.SetActive(true);
+
+            if (_towerEnum == TowerEnum.Cannon)
+            {
+                _spriteToInactivate.SetActive(false);
+            }
         }
     }
 
@@ -92,17 +149,44 @@ public class TowerAttak : MonoBehaviour
 
         TowerUpgrader.OnActivateShotgunThirdUpgrade -= ResetShotgunReloadTimerTime;
         TowerUpgrader.OnActivateSniperFirstUpgrade -= ResetSniperReloadTimerTime;
+
+        _towerBehavior.OnTowerShoot -= ActivateAnim;
     }
 
     public void SetTargetList(List<GameObject> targetsList)
     {
         _towerBehavior.TargetsList = targetsList;
+        _currentTarget = null;
+        _towerBehavior.CurrentTarget = null;
     }
 
     public void SetReloatTimer()
     {
         AttakReload = _towerSO.TowerReloadTime;
         _attakTimer = new Timer(AttakReload);
+    }
+
+    private void ActivateAnim()
+    {
+        if (_towerEnum == TowerEnum.Shotgun && _secondUpgrade)
+        {
+            _secondaryAnimator.Play("Tower_shotgun_2", -1, 0f);
+        }
+        else
+        {
+            switch (_towerEnum)
+            {
+                case TowerEnum.Cannon: _mainAnimator.Play("Tower_cannon", -1, 0f); break;
+                case TowerEnum.Shotgun: _mainAnimator.Play("Tower_shotgun", -1, 0f); break;
+                case TowerEnum.Catapult: _mainAnimator.Play("Tower_catapult", -1, 0f); break;
+                case TowerEnum.Sniper: _mainAnimator.Play("Tower_sniper", -1, 0f); break;
+            }
+        }
+    }
+
+    private void ActivateSecondaryAnim()
+    {
+        _secondaryAnimator.Play("Tower_cannon_2", -1, 0f);
     }
 
     //-----------------------Liseners--------------------------------------------------------------------------

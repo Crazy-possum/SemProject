@@ -7,6 +7,10 @@ public class TowerBehavior
     protected TowerSO _towerSO;
     protected List<GameObject> _targetsList;
     protected Timer _attakTimer;
+    protected TowerAttak _towerAttak;
+
+    protected Action _onTowerShoot;
+    protected Action _onSecondTowerShoot;
 
     protected GameObject _towerBulletPrefab;
     protected GameObject _currentTarget;
@@ -43,6 +47,9 @@ public class TowerBehavior
     private Timer _doubleShotTimer;
 
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
+    public GameObject CurrentTarget { get => _currentTarget; set => _currentTarget = value; }
+    public Action OnTowerShoot { get => _onTowerShoot; set => _onTowerShoot = value; }
+    public Action OnSecondTowerShoot { get => _onSecondTowerShoot; set => _onSecondTowerShoot = value; }
 
     public TowerBehavior(TowerSO towerSO, Rigidbody rb, Timer reloadTimer,
         GameObject bulletPref, GameObject towerObject, Transform bulletSpawner, GameObject bulletSpawnerGO)
@@ -60,6 +67,7 @@ public class TowerBehavior
         _towerTriggerCollizion = _towerObject.GetComponentInChildren<TowerTriggerZone>().gameObject.GetComponent<SphereCollider>();
         _targetsList = new List<GameObject>();
         _currentReloadTime = _attakReload;
+        _towerAttak = towerObject.GetComponentInChildren<TowerAttak>();
 
 
         if (_secondUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
@@ -142,6 +150,11 @@ public class TowerBehavior
 
     public void TowerRotate()
     {
+        if (_currentTarget == null)
+        {
+            return;
+        }
+
         Vector3 targetDirection = _towerObject.transform.position - _currentTarget.transform.position;
 
         Quaternion angle = Quaternion.LookRotation(Vector3.forward, targetDirection);
@@ -168,6 +181,7 @@ public class TowerBehavior
 
                 TowerRotate();
                 AttakTarget();
+                _onTowerShoot?.Invoke();
                 _attakTimer.StopCountdown();
             }
         }
@@ -202,6 +216,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _firstUpgrade = true;
+            _towerAttak.FirstUpgrade = true;
             AddDoubleShot(newTimerTime);
         }
     }
@@ -211,6 +226,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _secondUpgrade = true;
+            _towerAttak.SecondUpgrade = true;
             _updateIntDamageValue = addDamage;
         }
     }
@@ -220,6 +236,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _thirdUpgrade = true;
+            _towerAttak.ThirdUpgrade = true;
         }
     }
 
@@ -228,6 +245,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _firstUpgrade = true;
+            _towerAttak.FirstUpgrade = true;
             _updateIntAmountValue = addBulletAmount;
         }
     }
@@ -237,6 +255,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _secondUpgrade = true;
+            _towerAttak.SecondUpgrade = true;
             _towerObject.GetComponentInChildren<TowerTriggerZone>().GetComponent<SphereCollider>().radius *= addTowerRange; 
         }
     }
@@ -246,6 +265,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _thirdUpgrade = true;
+            _towerAttak.ThirdUpgrade = true;
         }
     }
 
@@ -254,6 +274,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _firstUpgrade = true;
+            _towerAttak.FirstUpgrade = true;
             _updateFloatRadiusValue = addAoeRange;
         }
     }
@@ -263,6 +284,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _secondUpgrade = true;
+            _towerAttak.SecondUpgrade = true;
         }
         _upgradeFloatDamageWeeknessBonus = damageBonus;
     }
@@ -272,6 +294,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _thirdUpgrade = true;
+            _towerAttak.ThirdUpgrade = true;
             _updateFloatTimerValue = cutDotTriggeredTime;
         }
     }
@@ -281,6 +304,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _firstUpgrade = true;
+            _towerAttak.FirstUpgrade = true;
         }
     }
 
@@ -289,6 +313,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _secondUpgrade = true;
+            _towerAttak.SecondUpgrade = true;
             _updateFloatDamageValue = dotDamage;  
             _updateFloatTimerValue = timerTime;
             _updateIntAmountValue = count;
@@ -300,6 +325,7 @@ public class TowerBehavior
         if (_towerObject == tower)
         {
             _thirdUpgrade = true;
+            _towerAttak.ThirdUpgrade = true;
             _updateIntDistanceValue = addDistance;
         }
     }
@@ -346,6 +372,7 @@ public class TowerBehavior
             {
                 TowerRotate();
                 AttakTarget();
+                _onSecondTowerShoot.Invoke();
                 _doubleShotTimer.StopCountdown();
             }
             else

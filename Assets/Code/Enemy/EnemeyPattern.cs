@@ -51,17 +51,15 @@ public class EnemeyPattern : MonoBehaviour
         {
             if (_isLizard &&  !_isSpeedUp)
             {
-                Debug.Log(_enemyMovement.Speed);
                 _enemyMovement.Speed *= 1.5f;
                 _isSpeedUp = true;
-                Debug.Log(_enemyMovement.Speed);
             }
 
             if (_isRat)
             {
                 if (!_isHeal)
                 {
-                    //HealArea();
+                    HealArea();
                 }
             }
         }

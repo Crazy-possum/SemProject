@@ -107,6 +107,11 @@ public class TowerBulletBehavior : MonoBehaviour
         _duration = _towerSO.BulletDuration;
         _damage = _towerSO.TowerDamage * _characterFloatDamageUpgrade;
 
+        _timerDOTDuration = new Timer(_duration);
+        _timerDOTSpace = new Timer(_timeDOT);
+        Debug.Log(_timerDOTSpace);
+
+
         if (_currentEnemyHealth.HasDamageWeekness)
         {
             _damage = _damage * _upgradeFloatDamageWeeknessBonus;
@@ -132,9 +137,6 @@ public class TowerBulletBehavior : MonoBehaviour
         {
             UpdateTimerTime();
         }
-
-        _timerDOTDuration = new Timer(_duration);
-        _timerDOTSpace = new Timer(_timeDOT);
 
         if (_towerEnum != TowerEnum.Cannon && _towerEnum != TowerEnum.Shotgun)
         {
@@ -222,19 +224,18 @@ public class TowerBulletBehavior : MonoBehaviour
     private void DealDamage(EnemyParametrs enemy, float damage)
     {
         float colorValue = enemy.CurrentPaintValue;
-        float currentHealth = enemy.CurrentHealth;
+        float modifiedDamage = 0;
 
         switch (colorValue)
         {
-            case 0: currentHealth -= 0; break;
-            case 1: currentHealth = currentHealth - (damage * _firstPaintingStage); break;
-            case 2: currentHealth = currentHealth - (damage * _secondPaintingStage); break;
-            case 3: currentHealth = currentHealth - (damage * _thirdPaintingStage); break;
-            case 4: currentHealth = currentHealth - (damage * _fourthPaintingStage); break;
+            case 0: modifiedDamage = 0; break;
+            case 1: modifiedDamage = (damage * _firstPaintingStage); break;
+            case 2: modifiedDamage = (damage * _secondPaintingStage); break;
+            case 3: modifiedDamage = (damage * _thirdPaintingStage); break;
+            case 4: modifiedDamage = (damage * _fourthPaintingStage); break;
         }
 
-        _currentEnemyHealth.CurrentHealth = currentHealth;
-        Debug.Log(_currentEnemyHealth.CurrentHealth);
+        _currentEnemyHealth.CurrentHealth -= modifiedDamage;
     }
 
     private void DealAOEDamage(List<EnemyParametrs> targetList)
@@ -377,6 +378,8 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private void UpdateTimerTime()
     {
+        Debug.Log(_timerDOTSpace);
+        Debug.Log(_upgateFloatTimerValue);
         _timerDOTSpace.ResetTimerMaxTime(_upgateFloatTimerValue);
     }
 
