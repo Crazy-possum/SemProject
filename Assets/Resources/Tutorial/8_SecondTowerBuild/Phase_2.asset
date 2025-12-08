@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TutorDialogSO
   IsCharacterSpeak: 0
   CharacterText: 
-  NPCText: "\u0448\u043B\u043E\u0440\u043F\u0430"
+  NPCText: "\u0422\u0435\u043F\u0435\u0440\u044C \u043F\u043E\u043F\u0440\u043E\u0431\u0443\u0439
+    \u0443\u0431\u0438\u0442\u044C \u0438\u0445 \u0441\u0430\u043C"
   CharacterSprite: {fileID: 21300000, guid: a273e7ce874cdcc4c8f4c910921ec0ea, type: 3}
   NPCSprite: {fileID: 21300000, guid: c4ae7a68fe9c0e74999aa906f9cd5629, type: 3}

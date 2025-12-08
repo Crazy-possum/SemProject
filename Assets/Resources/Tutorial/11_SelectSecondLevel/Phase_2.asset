@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Phase_2
   m_EditorClassIdentifier: Assembly-CSharp::TutorDialogSO
   IsCharacterSpeak: 1
-  CharacterText: "\u0440\u043F\u0430\u0432"
+  CharacterText: "\u041F\u043E\u0441\u0442\u0435\u043F\u0435\u043D\u043D\u043E \u0442\u0435\u0431\u0435
+    \u0431\u0443\u0434\u0443\u0442 \u043E\u0442\u043A\u0440\u044B\u0432\u0430\u0442\u044C\u0441\u044F
+    \u0443\u0440\u0432\u043E\u043D\u0438. \u0412\u044B\u0431\u0435\u0440\u0438 \u0441\u043B\u0435\u0434\u0443\u044E\u0449\u0438\u0439"
   NPCText: 
   CharacterSprite: {fileID: 21300000, guid: c3f0a18d59db207499d92f935e638233, type: 3}
   NPCSprite: {fileID: 21300000, guid: 4bba2d5b4ac97d543a93494a5a181b5b, type: 3}

@@ -622,8 +622,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5039719632335119227, guid: e4392b4abc61fc34cb087cf17757d8e6,
         type: 3}
+      propertyPath: CurrentIncome
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5039719632335119227, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
       propertyPath: GeneralCurrency
-      value: 50
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951948942139803686, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
+      propertyPath: _ratioExpUp
+      value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951948942139803686, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
+      propertyPath: _levelUpExpValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951948942139803686, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
+      propertyPath: _currentExpIncome
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8247813018747760832, guid: e4392b4abc61fc34cb087cf17757d8e6,
         type: 3}

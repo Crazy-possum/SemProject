@@ -1182,7 +1182,7 @@ PrefabInstance:
     - target: {fileID: 6587742106632761030, guid: 3b64dcaf969ba8343984dc9fc09502ba,
         type: 3}
       propertyPath: CurrentIncome
-      value: 1
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6587742106632761030, guid: 3b64dcaf969ba8343984dc9fc09502ba,
         type: 3}
@@ -1192,7 +1192,7 @@ PrefabInstance:
     - target: {fileID: 6587742106632761030, guid: 3b64dcaf969ba8343984dc9fc09502ba,
         type: 3}
       propertyPath: GeneralCurrency
-      value: 50
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 9027136592783198524, guid: 3b64dcaf969ba8343984dc9fc09502ba,
         type: 3}
@@ -3610,9 +3610,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _experienceSlider: {fileID: 752585789}
-  _levelUpExpValue: 10
-  _ratioExpUp: 1.1
-  _currentExpIncome: 2
+  _levelUpExpValue: 100
+  _ratioExpUp: 1.15
+  _currentExpIncome: 12
 --- !u!114 &1262381842
 MonoBehaviour:
   m_ObjectHideFlags: 0

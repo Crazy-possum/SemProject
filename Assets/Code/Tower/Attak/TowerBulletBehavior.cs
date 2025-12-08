@@ -234,6 +234,7 @@ public class TowerBulletBehavior : MonoBehaviour
         }
 
         _currentEnemyHealth.CurrentHealth = currentHealth;
+        Debug.Log(_currentEnemyHealth.CurrentHealth);
     }
 
     private void DealAOEDamage(List<EnemyParametrs> targetList)

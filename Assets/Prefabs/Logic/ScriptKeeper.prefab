@@ -66,9 +66,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currencyText: {fileID: 0}
-  GeneralCurrency: 0
+  GeneralCurrency: 50
   CurrentCost: 0
-  CurrentIncome: 0
+  CurrentIncome: 15
 --- !u!114 &4633275101394077586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clickController: {fileID: 3238090039313323642}
+  _moveOnClick: {fileID: 0}
   _mainCamera: {fileID: 0}
 --- !u!114 &3238090039313323642
 MonoBehaviour:
@@ -126,3 +127,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tutorPanel: {fileID: 0}
+  _darkPanel: {fileID: 0}
+  _buttonNext: {fileID: 0}
+  _textCharacter: {fileID: 0}
+  _textNPC: {fileID: 0}
+  _imageCharacter: {fileID: 0}
+  _imageCharacterLocker: {fileID: 0}
+  _imageNPC: {fileID: 0}
+  _imageNPCLocker: {fileID: 0}

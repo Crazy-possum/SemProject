@@ -13,6 +13,7 @@ public class EnemyMovement : MonoBehaviour
     private Animator _animator;
     private Rigidbody _rb;
     private Timer _slowingDownTimer;
+    private SpriteRenderer _enemySprite;
 
     private Vector3 _wayPointVector;
     private int _currentIndex;
@@ -40,6 +41,7 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         _speed = _enemyParametrs.EnemySO.Speed;
+        _enemySprite = gameObject.GetComponentInChildren<SpriteRenderer>();
 
         _rb = GetComponent<Rigidbody>();
         _currentIndex = 0;
@@ -80,6 +82,8 @@ public class EnemyMovement : MonoBehaviour
         {
             ResetMoveSpeed(_spawnedEnemy, _slowingMoveValue);
         }
+
+        RotateEnemy();
     }
 
     private void OnEnable()
@@ -118,6 +122,21 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    private void RotateEnemy()
+    {
+        float x = _wayPointVector.x;
+
+        if(x >= 0)
+        {
+            _enemySprite.flipX = true;
+        }
+        else
+        {
+            _enemySprite.flipX = false;
+        }
+    }
+
+    #region Listenets
     private void IsSlowingMoveOn(GameObject enemy, bool isSlowMoveOn, float slowingMoveValue)
     {
         _spawnedEnemy = enemy;
@@ -186,4 +205,5 @@ public class EnemyMovement : MonoBehaviour
             _speed = _baseSpeed;
         }
     }
+    #endregion
 }

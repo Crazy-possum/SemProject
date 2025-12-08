@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Phase_3
   m_EditorClassIdentifier: Assembly-CSharp::TutorDialogSO
   IsCharacterSpeak: 1
-  CharacterText: "\u0446\u0443\u043D\u0440\u0443\u043A\u0440\u043A\u0440"
+  CharacterText: "\u0422\u044B \u043C\u043E\u0436\u0435\u0448\u044C \u0441\u0442\u0440\u043E\u0438\u0442\u044C
+    \u0440\u0430\u0437\u043D\u044B\u0435 \u0431\u0430\u0448\u043D\u0438. \u0423 \u0432\u0441\u0435\u0445
+    \u0438\u0437 \u043D\u0438\u0445 \u0435\u0441\u0442\u044C \u0441\u0432\u043E\u0438
+    \u043E\u0441\u043E\u0431\u0435\u043D\u043D\u043E\u0441\u0442\u0438"
   NPCText: 
   CharacterSprite: {fileID: 21300000, guid: c3f0a18d59db207499d92f935e638233, type: 3}
   NPCSprite: {fileID: 21300000, guid: 4bba2d5b4ac97d543a93494a5a181b5b, type: 3}
