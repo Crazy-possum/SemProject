@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ExperienceController : MonoBehaviour
@@ -88,6 +89,15 @@ public class ExperienceController : MonoBehaviour
         _experienceSlider.maxValue = _levelUpExpValue;
 
         _onLevelUp?.Invoke();
+
+        if (SceneManager.GetActiveScene().buildIndex == 3 &&
+            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.CanUpgrade}" &&
+            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+            PlayerPrefs.GetString($"{TutorConstantMaganer.FREE_WAY}") == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.FREE_WAY}");
+            TutorController.OnTutorActive?.Invoke();
+        }
     }
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------------

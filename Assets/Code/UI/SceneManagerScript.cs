@@ -8,10 +8,12 @@ public class SceneManagerScript : MonoBehaviour
 
     private Button _button;
 
+    public int SceneIndex { get => _sceneIndex; set => _sceneIndex = value; }
+
     private void Awake()
     {
         _button = gameObject.GetComponent<Button>();
-        _button.onClick.AddListener(LoadScene);
+        _button.onClick.AddListener(LoadOnButton);
     }
 
     private void OnDestroy()
@@ -19,8 +21,14 @@ public class SceneManagerScript : MonoBehaviour
         _button.onClick.RemoveAllListeners();
     }
 
-    private void LoadScene()
+    private void LoadOnButton()
     {
         SceneManager.LoadScene(_sceneIndex);
+    }
+
+    private void LoadScene(int index)
+    {
+        Debug.Log(index);
+        SceneManager.LoadScene(index);
     }
 }

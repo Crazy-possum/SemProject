@@ -151,7 +151,6 @@ public class TowerBehavior
     public virtual void RealoadTimer()
     {
         _attakTimer.Wait();
-        Debug.Log(_attakTimer.MaxTimerValue);
 
         if (_currentTarget != null)
         {
@@ -162,7 +161,6 @@ public class TowerBehavior
 
             if (_attakTimer.ReachingTimerMaxValue == true)
             {
-                Debug.Log("here");
                 if (_towerSO.TowerEnum == TowerEnum.Cannon && _firstUpgrade)
                 {
                     ReloadDoubleShotTimer();

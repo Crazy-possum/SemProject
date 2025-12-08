@@ -8,9 +8,12 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float _tolerance;
 
     private static Action _onEnemyEnter;
+    private EnemyEnum _enemyEnum;
     private Transform[] _enemyWayPintsList;
+    private Animator _animator;
     private Rigidbody _rb;
     private Timer _slowingDownTimer;
+    private SpriteRenderer _enemySprite;
 
     private Vector3 _wayPointVector;
     private int _currentIndex;
@@ -33,15 +36,27 @@ public class EnemyMovement : MonoBehaviour
     public Timer SlowingDownTimer { get => _slowingDownTimer; set => _slowingDownTimer = value; }
     public float Speed { get => _speed; set => _speed = value; }
     public bool IsAlreadySlowing { get => _isAlreadySlowing; set => _isAlreadySlowing = value; }
+    public EnemyEnum EnemyEnum { get => _enemyEnum; set => _enemyEnum = value; }
 
     void Start()
     {
         _speed = _enemyParametrs.EnemySO.Speed;
+        _enemySprite = gameObject.GetComponentInChildren<SpriteRenderer>();
 
         _rb = GetComponent<Rigidbody>();
         _currentIndex = 0;
         _checkDistance = _speed * _tolerance;
         _baseSpeed = _speed;
+
+        _animator = GetComponent<Animator>();
+
+        switch (_enemyEnum)
+        {
+            case EnemyEnum.Mole: _animator.SetBool("isMole", true); break;
+            case EnemyEnum.Anteater: _animator.SetBool("isAnteater", true); break;
+            case EnemyEnum.Lizard: _animator.SetBool("isLizard", true); break;
+            case EnemyEnum.Rat: _animator.SetBool("isRat", true); break;
+        }
     }
 
     void FixedUpdate()
@@ -67,6 +82,8 @@ public class EnemyMovement : MonoBehaviour
         {
             ResetMoveSpeed(_spawnedEnemy, _slowingMoveValue);
         }
+
+        RotateEnemy();
     }
 
     private void OnEnable()
@@ -105,6 +122,21 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    private void RotateEnemy()
+    {
+        float x = _wayPointVector.x;
+
+        if(x >= 0)
+        {
+            _enemySprite.flipX = true;
+        }
+        else
+        {
+            _enemySprite.flipX = false;
+        }
+    }
+
+    #region Listenets
     private void IsSlowingMoveOn(GameObject enemy, bool isSlowMoveOn, float slowingMoveValue)
     {
         _spawnedEnemy = enemy;
@@ -173,4 +205,5 @@ public class EnemyMovement : MonoBehaviour
             _speed = _baseSpeed;
         }
     }
+    #endregion
 }

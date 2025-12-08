@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ClickController : MonoBehaviour
@@ -34,6 +35,15 @@ public class ClickController : MonoBehaviour
             {
                 InitializeBuildButton();
                 _towerBuildPanel.SetActive(true);
+
+                if (SceneManager.GetActiveScene().buildIndex == 3 &&
+                    PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SelectSecondLevel}" &&
+                    PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                    PlayerPrefs.GetString($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL}") == false.ToString())
+                {
+                    TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.TOWER_IN_SECOND_LEVEL}");
+                    TutorController.OnTutorActive?.Invoke();
+                }
             }
             else if(objectUnderMouse.TryGetComponent(out TowerAttak towerAttak))
             {

@@ -20,6 +20,7 @@ public class EnemeyPattern : MonoBehaviour
     private float _staticHealth;
     private bool _isAnteater;
     private bool _isLizard;
+    private bool _isSpeedUp;
     private bool _isRat;
     private bool _isHeal;
 
@@ -42,22 +43,25 @@ public class EnemeyPattern : MonoBehaviour
 
             if (_resistanceTimer.ReachingTimerMaxValue != true)
             {
-                _enemyParametrs.CurrentHealth = _staticHealth;
+                _staticHealth = _enemyParametrs.CurrentHealth;
             }
         }
 
-        if (_enemyParametrs.MaxHealth - _enemyParametrs.CurrentHealth <= _enemyParametrs.MaxHealth * _finishingBoarder)
+        if (_enemyParametrs.CurrentHealth <= _enemyParametrs.MaxHealth * _finishingBoarder)
         {
-            if (_isLizard)
+            if (_isLizard &&  !_isSpeedUp)
             {
+                Debug.Log(_enemyMovement.Speed);
                 _enemyMovement.Speed *= 1.5f;
+                _isSpeedUp = true;
+                Debug.Log(_enemyMovement.Speed);
             }
 
             if (_isRat)
             {
                 if (!_isHeal)
                 {
-                    HealArea();
+                    //HealArea();
                 }
             }
         }

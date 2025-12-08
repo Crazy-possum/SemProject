@@ -8,16 +8,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1771667094165765290, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: _enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: d7b6f4b76e3eef2489b69ffd32eb29a2,
+        type: 2}
     - target: {fileID: 3440997602430039241, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
         type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9490a8bc2a9429c4cb77d9413aa31736,
         type: 3}
+    - target: {fileID: 6946348201229030526, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946348201229030526, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 3bc9ee864dba2e84cad4c48f2d10ea61, type: 2}
+    - target: {fileID: 6946348201229030526, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_Animations.Array.data[0]
+      value: 
+      objectReference: {fileID: 7400000, guid: 3bc9ee864dba2e84cad4c48f2d10ea61, type: 2}
     - target: {fileID: 7772418324337359552, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
         type: 3}
       propertyPath: m_Name
       value: _enemyLizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7848377523538358666, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8039095460037899665, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
         type: 3}

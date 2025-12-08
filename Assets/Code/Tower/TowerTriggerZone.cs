@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TowerTriggerZone : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class TowerTriggerZone : MonoBehaviour
     private void FixedUpdate()
     {
         SearchMissingObject();
-        //Debug.Log(gameObject.GetComponent<SphereCollider>().radius);
     }
 
     private void OnTriggerEnter(Collider other)

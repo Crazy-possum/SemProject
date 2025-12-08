@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TowerBuilder : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class TowerBuilder : MonoBehaviour
     private GameObject _buildedTower;
     private bool _isTowerBuilded;
 
+    private int _towerAmount;
+
     public GameObject BuildPointObject { get => _buildPointObject; set => _buildPointObject = value; }
     public static Action<GameObject> OnBuildTower { get => _onBuildTower; set => _onBuildTower = value; }
 
@@ -39,6 +42,18 @@ public class TowerBuilder : MonoBehaviour
         {
             _onBuildTower?.Invoke(_buildedTower);
             _isTowerBuilded = false;
+        }
+
+        if (_towerAmount == 3 && _economyController.GeneralCurrency >= 20)
+        {
+            if (SceneManager.GetActiveScene().buildIndex == 3 &&
+                PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FinishFirstWave}" &&
+                PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                PlayerPrefs.GetString($"{TutorConstantMaganer.CAN_UPGRADE}") == false.ToString())
+            {
+                TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.CAN_UPGRADE}");
+                TutorController.OnTutorActive?.Invoke();
+            }
         }
     }
 
@@ -56,6 +71,19 @@ public class TowerBuilder : MonoBehaviour
         Destroy(_buildPointObject);
 
         TakeMoney();
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            _towerAmount++;
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 2 &&
+            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.FirstEnemyDie}" &&
+            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+            PlayerPrefs.GetString($"{TutorConstantMaganer.SECOND_TOWER_BUILD}") == false.ToString())
+        {
+            TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.SECOND_TOWER_BUILD}");
+            TutorController.OnTutorActive?.Invoke();
+        }
     }
 
     private void TakeMoney()

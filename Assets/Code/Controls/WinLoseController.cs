@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinLoseController : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class WinLoseController : MonoBehaviour
         _currentEnemyMiss = _enemyCount.Score;
         _currentEnemyListLength = _enemySpawner.EnemyList.Count;
 
-        if (_currentEnemyListLength == 0 && _currentEnemyCount > 0 && _enemySpawner.isActiveAndEnabled)
+        if (_currentEnemyListLength == 0 && _currentEnemyCount > 0 && _enemySpawner.IsAllWaveSpawned)
         {
             _isWin = true;
         }
@@ -34,11 +35,13 @@ public class WinLoseController : MonoBehaviour
     private void OnEnable()
     {
         EnemyParametrs.OnEnemyDied += CheckKillCount;
+        TutorStageActivator.OnNeedsWin += WinPanel;
     }
 
     private void OnDisable()
     {
         EnemyParametrs.OnEnemyDied -= CheckKillCount;
+        TutorStageActivator.OnNeedsWin -= WinPanel;
     }
 
     private void GameStop()
@@ -70,8 +73,19 @@ public class WinLoseController : MonoBehaviour
         }
         else if (!_isDeafeated && _isWin)
         {
-            WinPanel();
-            GameStop();
+            if (SceneManager.GetActiveScene().buildIndex == 2 &&
+            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.OwnPlay}" &&
+            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+            PlayerPrefs.GetString($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}") == false.ToString())
+            {
+                TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}");
+                TutorController.OnTutorActive?.Invoke();
+            }
+            else
+            {
+                WinPanel();
+                GameStop();
+            }
         }
     }
 }

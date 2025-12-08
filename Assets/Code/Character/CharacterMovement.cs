@@ -5,6 +5,8 @@ public class CharacterMovement : MonoBehaviour
     [Tooltip("Скорость движения персонажа")]
     [SerializeField] private int _characterSpeed;
 
+    [SerializeField] private Animator _bugAnimator;
+
     private SideIndexEnum _sideIndex = SideIndexEnum.Upper;
     private Vector3 _moveToUp = new Vector3(0, 1, 0);
     private Vector3 _moveToRight = new Vector3(1, 0, 0);
@@ -62,6 +64,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
+            RunAnimOn();
             if (_charPos.position.x > _leBorder && _charPos.position.y >= _upBorder)
             {
                 _move = _moveToLeft;
@@ -82,7 +85,8 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            if(_isTeleportOn)
+            RunAnimOn();
+            if (_isTeleportOn)
             {
                 _charPos.position = new Vector3(_charPos.position.x, _loBorder, _charPos.position.z);
                 _sideIndex = SideIndexEnum.Lower;
@@ -90,6 +94,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            RunAnimOn();
             if (_charPos.position.x < _riBorder && _charPos.position.y >= _upBorder)
             {
                 _move = _moveToRight;
@@ -110,6 +115,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
+            IdleAnimOn();
             _characterRb.velocity = Vector3.zero;
             if (_charPos.position.y <= _loBorder)
             {
@@ -130,6 +136,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
+            RunAnimOn();
             if (_charPos.position.x >= _riBorder && _charPos.position.y < _upBorder)
             {
                 _move = _moveToUp;
@@ -150,6 +157,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.A))
         {
+            RunAnimOn();
             if (_isTeleportOn)
             {
                 _charPos.position = new Vector3(_leBorder, _charPos.position.y, _charPos.position.z);
@@ -158,6 +166,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.S))
         {
+            RunAnimOn();
             if (_charPos.position.x >= _riBorder && _charPos.position.y > _loBorder)
             {
                 _move = _moveToDown;
@@ -178,6 +187,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
+            IdleAnimOn();
             _characterRb.velocity = Vector3.zero;
             if (_charPos.position.y <= _loBorder)
             {
@@ -198,6 +208,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
+            RunAnimOn();
             if (_isTeleportOn)
             {
                 _charPos.position = new Vector3(_charPos.position.x, _upBorder, _charPos.position.z);
@@ -206,6 +217,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.A))
         {
+            RunAnimOn();
             if (_charPos.position.x > _leBorder && _charPos.position.y <= _loBorder)
             {
                 _move = _moveToLeft;
@@ -226,6 +238,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            RunAnimOn();
             if (_charPos.position.x < _riBorder && _charPos.position.y <= _loBorder)
             {
                 _move = _moveToRight;
@@ -246,6 +259,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
+            IdleAnimOn();
             _characterRb.velocity = Vector3.zero;
             if (_charPos.position.x <= _leBorder)
             {
@@ -266,6 +280,7 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
+            RunAnimOn();
             if (_charPos.position.x <= _leBorder && _charPos.position.y < _upBorder)
             {
                 _move = _moveToUp;
@@ -286,6 +301,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.S))
         {
+            RunAnimOn();
             if (_charPos.position.x <= _leBorder && _charPos.position.y > _loBorder)
             {
                 _move = _moveToDown;
@@ -306,6 +322,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            RunAnimOn();
             if (_isTeleportOn)
             {
                 _charPos.position = new Vector3(_riBorder, _charPos.position.y, _charPos.position.z);
@@ -314,6 +331,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
+            IdleAnimOn();
             _characterRb.velocity = Vector3.zero;
             if (_charPos.position.y <= _loBorder)
             {
@@ -328,5 +346,14 @@ public class CharacterMovement : MonoBehaviour
                 _sideIndex = SideIndexEnum.Right;
             }
         }
+    }
+
+    private void RunAnimOn()
+    {
+        _bugAnimator.SetBool("isMove", true);
+    }
+    private void IdleAnimOn()
+    {
+        _bugAnimator.SetBool("isMove", false);
     }
 }

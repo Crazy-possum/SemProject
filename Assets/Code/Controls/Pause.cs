@@ -17,11 +17,11 @@ public class Pause : MonoBehaviour
 
             if (isOpened)
             {
-                Time.timeScale = 0f;
+                TutorController.StopGame();
             }
             else
             {
-                Time.timeScale = 1f;
+                TutorController.PlayGame();
             }
         }
     }

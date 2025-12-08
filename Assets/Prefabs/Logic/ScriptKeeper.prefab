@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6587742106632761030}
   - component: {fileID: 4633275101394077586}
   - component: {fileID: 3238090039313323642}
+  - component: {fileID: 8079058139296617466}
+  - component: {fileID: 2052770505717573466}
   m_Layer: 0
   m_Name: ScriptKeeper
   m_TagString: Untagged
@@ -49,9 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _economyController: {fileID: 6587742106632761030}
   _towerGroup: {fileID: 0}
-  _towerObgect: {fileID: 8986731706862224067, guid: f9085653670c27848af63051f5e61a02,
-    type: 3}
-  BuildPointObject: {fileID: 0}
+  _towerPrefab: {fileID: 0}
+  _buildCost: 0
 --- !u!114 &6587742106632761030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,8 +66,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currencyText: {fileID: 0}
-  GeneralCurrency: 0
+  GeneralCurrency: 50
   CurrentCost: 0
+  CurrentIncome: 15
 --- !u!114 &4633275101394077586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,8 +82,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clickController: {fileID: 3238090039313323642}
+  _moveOnClick: {fileID: 0}
   _mainCamera: {fileID: 0}
-  MauseTransform: {fileID: 0}
 --- !u!114 &3238090039313323642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,4 +97,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerBuilder: {fileID: 3612853950144765143}
-  ObjectUnderMouse: {fileID: 0}
+  _economyController: {fileID: 0}
+  _towerBuildPanel: {fileID: 0}
+  _towerUpgradePanel: {fileID: 0}
+  _towerButton: {fileID: 0}
+--- !u!114 &8079058139296617466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9027136592783198524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4383f2f6cd70547818f7d227dc7690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorStageActivator: {fileID: 0}
+--- !u!114 &2052770505717573466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9027136592783198524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1a6c139bed0a84fb3981f52f4705cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorPanel: {fileID: 0}
+  _darkPanel: {fileID: 0}
+  _buttonNext: {fileID: 0}
+  _textCharacter: {fileID: 0}
+  _textNPC: {fileID: 0}
+  _imageCharacter: {fileID: 0}
+  _imageCharacterLocker: {fileID: 0}
+  _imageNPC: {fileID: 0}
+  _imageNPCLocker: {fileID: 0}
