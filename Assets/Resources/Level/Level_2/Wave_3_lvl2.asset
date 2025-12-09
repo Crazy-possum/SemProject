@@ -20,5 +20,5 @@ MonoBehaviour:
   - {fileID: 6177337174358161710, guid: 14d977fa7dbc6ef4694c66917a920ed0, type: 3}
   - {fileID: 7772418324337359552, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4, type: 3}
   - {fileID: 3024655669155888098, guid: d8c87708a40dbc1429f563e14104fe0a, type: 3}
-  spawnTimerValue: 1
-  waveStartTime: 64
+  spawnTimerValue: 2.5
+  waveStartTime: 83
