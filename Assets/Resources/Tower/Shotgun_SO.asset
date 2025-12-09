@@ -28,5 +28,5 @@ MonoBehaviour:
   TowerRange: 5
   MaxBulletDistance: 5
   BulletAmount: 4
-  TowerDamage: 60
+  TowerDamage: 85
   TowerCost: 45
