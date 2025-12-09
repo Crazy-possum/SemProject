@@ -26,14 +26,14 @@ public class MousePosition3D : MonoBehaviour
             {
                 _moveOnClick.ClickChecker(raycastHit.point);
             }
-
-            if (Physics.Raycast(ray, out raycastHit, Mathf.Infinity, 
-                LayerMask.GetMask(_interactlayer)))
-            {
-                GameObject currentObject = raycastHit.collider.gameObject;
-
-                _clickController.ClickBehavior(currentObject);
-            }
         }
+
+        if (Physics.Raycast(ray, out raycastHit, Mathf.Infinity,
+            LayerMask.GetMask(_interactlayer)))
+        {
+            GameObject currentObject = raycastHit.collider.gameObject;
+            _clickController.ClickBehavior(currentObject);
+        }
+
     }
 }
