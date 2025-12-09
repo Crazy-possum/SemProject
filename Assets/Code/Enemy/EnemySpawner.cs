@@ -125,8 +125,6 @@ public class EnemySpawner : MonoBehaviour
             _currentWaveIndex++;
             _currentWave = _levelConfig.WavePresetList[_currentWaveIndex];
 
-            Debug.Log(PlayerPrefs.GetString("TutorStage"));
-
             if (SceneManager.GetActiveScene().buildIndex == 2 &&
                 PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.SecondTowerBuild}" &&
                 PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&

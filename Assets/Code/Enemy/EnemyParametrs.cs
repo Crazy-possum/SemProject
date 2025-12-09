@@ -13,6 +13,10 @@ public class EnemyParametrs : MonoBehaviour
     [Tooltip("ћаксимальна€ степень покраски противника")]
     [SerializeField] private float _maxPaintValue = 4;
 
+    [SerializeField] private GameObject _electroEffectSprite;
+    [SerializeField] private GameObject _damageEffectSprite;
+    [SerializeField] private GameObject _slowEffectSprite;
+
     private static Action _onEnemyDied;
     private float _maxHealth;
     private float _currentHealth;

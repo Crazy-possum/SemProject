@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,11 +13,15 @@ public class WinLoseController : MonoBehaviour
     [Tooltip("Панель с победой")]
     [SerializeField] private GameObject _winPanel;
 
+    private static Action<int> _onCompliteLevel;
+
     private bool _isDeafeated = false;
     private bool _isWin = false;
     private int _currentEnemyMiss;
     private int _currentEnemyCount;
     private int _currentEnemyListLength;
+
+    public static Action<int> OnCompliteLevel { get => _onCompliteLevel; set => _onCompliteLevel = value; }
 
     private void FixedUpdate()
     {
@@ -57,6 +62,8 @@ public class WinLoseController : MonoBehaviour
     private void WinPanel()
     {
         _winPanel.SetActive(true);
+
+        int index = SceneManager.GetActiveScene().buildIndex + 1;
     }
 
     private void CheckKillCount()

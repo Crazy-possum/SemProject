@@ -109,7 +109,6 @@ public class TowerBulletBehavior : MonoBehaviour
 
         _timerDOTDuration = new Timer(_duration);
         _timerDOTSpace = new Timer(_timeDOT);
-        Debug.Log(_timerDOTSpace);
 
 
         if (_currentEnemyHealth.HasDamageWeekness)

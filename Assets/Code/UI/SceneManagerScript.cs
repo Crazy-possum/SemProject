@@ -25,10 +25,4 @@ public class SceneManagerScript : MonoBehaviour
     {
         SceneManager.LoadScene(_sceneIndex);
     }
-
-    private void LoadScene(int index)
-    {
-        Debug.Log(index);
-        SceneManager.LoadScene(index);
-    }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.231231, g: 0.27670252, b: 0.40914786, a: 1}
+  m_IndirectSpecularColor: {r: 0.18554428, g: 0.22203979, b: 0.32832602, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 847c41499dea1574e9a7c0ae91534e9a,
+    type: 2}
   m_LightingSettings: {fileID: 552995520}
 --- !u!196 &4
 NavMeshSettings:
@@ -131,6 +132,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 480088000871101046, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: _sceneIndex
@@ -151,6 +157,21 @@ PrefabInstance:
       propertyPath: _confirmButton
       value: 
       objectReference: {fileID: 257264546}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _activeTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b3bbadcbfd7578248877cf63f6f360d9, type: 2}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _inactiveTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e7a2ae126212d94daed291d8f83629c, type: 2}
+    - target: {fileID: 2967040920989726317, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 5014303122069822925, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_Name
@@ -164,7 +185,7 @@ PrefabInstance:
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.67
+      value: 0.153
       objectReference: {fileID: 0}
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
@@ -387,6 +408,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tree (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980390969955480238, guid: 1cb36eae0a7eb7744ab33873442bab4d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1690,7 +1716,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.9573152, b: 0.8915094, a: 1}
-  m_Intensity: 1.2
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2108,7 +2134,7 @@ GameObject:
   - component: {fileID: 493221583}
   - component: {fileID: 493221582}
   - component: {fileID: 493221585}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2281,8 +2307,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0443\u0440\u043E\u0432\u0435\u043D\u044C?"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4fc09894ae608734aa8b15a659c003a4, type: 2}
+  m_sharedMaterial: {fileID: -3592905913343011659, guid: 4fc09894ae608734aa8b15a659c003a4,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2369,7 +2396,7 @@ GameObject:
   - component: {fileID: 498430337}
   - component: {fileID: 498430336}
   - component: {fileID: 498430339}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2496,7 +2523,7 @@ GameObject:
   - component: {fileID: 504932511}
   - component: {fileID: 504932510}
   - component: {fileID: 504932513}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2687,6 +2714,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tree (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980390969955480238, guid: 1cb36eae0a7eb7744ab33873442bab4d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3071,7 +3103,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.8726415, b: 0.94989175, a: 1}
-  m_Intensity: 0.3
+  m_Intensity: 0.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -3233,7 +3265,7 @@ GameObject:
   - component: {fileID: 697967361}
   - component: {fileID: 697967360}
   - component: {fileID: 697967363}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3444,7 +3476,7 @@ GameObject:
   - component: {fileID: 736975522}
   - component: {fileID: 736975521}
   - component: {fileID: 736975524}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3617,8 +3649,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u041D\u0430\u0437\u0430\u0434"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2047e48a284a01a4692a11487c08eb50, type: 2}
+  m_sharedMaterial: {fileID: 2373370934591728018, guid: 2047e48a284a01a4692a11487c08eb50,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4143,6 +4176,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 480088000871101046, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: _sceneIndex
@@ -4163,6 +4201,16 @@ PrefabInstance:
       propertyPath: _confirmButton
       value: 
       objectReference: {fileID: 257264546}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _activeTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b3bbadcbfd7578248877cf63f6f360d9, type: 2}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _inactiveTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e7a2ae126212d94daed291d8f83629c, type: 2}
     - target: {fileID: 5014303122069822925, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_Name
@@ -4176,7 +4224,7 @@ PrefabInstance:
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.56
+      value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
@@ -4236,7 +4284,7 @@ GameObject:
   - component: {fileID: 1035832131}
   - component: {fileID: 1035832130}
   - component: {fileID: 1035832133}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4534,6 +4582,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 480088000871101046, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: _sceneIndex
@@ -4554,6 +4607,16 @@ PrefabInstance:
       propertyPath: _confirmButton
       value: 
       objectReference: {fileID: 257264546}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _activeTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b3bbadcbfd7578248877cf63f6f360d9, type: 2}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _inactiveTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e7a2ae126212d94daed291d8f83629c, type: 2}
     - target: {fileID: 5014303122069822925, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_Name
@@ -4567,7 +4630,7 @@ PrefabInstance:
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.43
+      value: 0.182
       objectReference: {fileID: 0}
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
@@ -4874,6 +4937,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7980390969955480238, guid: 1cb36eae0a7eb7744ab33873442bab4d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4898,7 +4966,7 @@ GameObject:
   - component: {fileID: 1162398920}
   - component: {fileID: 1162398919}
   - component: {fileID: 1162398922}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5025,7 +5093,7 @@ GameObject:
   - component: {fileID: 1180891863}
   - component: {fileID: 1180891862}
   - component: {fileID: 1180891865}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5241,7 +5309,7 @@ GameObject:
   - component: {fileID: 1184468564}
   - component: {fileID: 1184468563}
   - component: {fileID: 1184468566}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5452,7 +5520,7 @@ GameObject:
   - component: {fileID: 1235369836}
   - component: {fileID: 1235369835}
   - component: {fileID: 1235369838}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5579,7 +5647,7 @@ GameObject:
   - component: {fileID: 1275272710}
   - component: {fileID: 1275272709}
   - component: {fileID: 1275272712}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6629,6 +6697,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree
       objectReference: {fileID: 0}
+    - target: {fileID: 7980390969955480238, guid: 1cb36eae0a7eb7744ab33873442bab4d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6653,7 +6726,7 @@ GameObject:
   - component: {fileID: 1601475950}
   - component: {fileID: 1601475949}
   - component: {fileID: 1601475952}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6829,6 +6902,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tree (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7980390969955480238, guid: 1cb36eae0a7eb7744ab33873442bab4d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7518,6 +7596,7 @@ GameObject:
   - component: {fileID: 1836237023}
   - component: {fileID: 1836237025}
   - component: {fileID: 1836237026}
+  - component: {fileID: 1836237027}
   m_Layer: 0
   m_Name: ScriptKeeper
   m_TagString: Untagged
@@ -7589,6 +7668,18 @@ MonoBehaviour:
   _clickController: {fileID: 0}
   _moveOnClick: {fileID: 2102380191}
   _mainCamera: {fileID: 1402506935}
+--- !u!114 &1836237027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836237022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7be8f14253b44448c3a12dd1a5b8f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1848300158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7597,6 +7688,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 480088000871101046, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: _sceneIndex
@@ -7617,6 +7713,16 @@ PrefabInstance:
       propertyPath: _confirmButton
       value: 
       objectReference: {fileID: 257264546}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _activeTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b3bbadcbfd7578248877cf63f6f360d9, type: 2}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _inactiveTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e7a2ae126212d94daed291d8f83629c, type: 2}
     - target: {fileID: 5014303122069822925, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_Name
@@ -7630,7 +7736,7 @@ PrefabInstance:
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.33
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
@@ -8717,6 +8823,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 480088000871101046, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: _sceneIndex
@@ -8737,6 +8848,16 @@ PrefabInstance:
       propertyPath: _confirmButton
       value: 
       objectReference: {fileID: 257264546}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _activeTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b3bbadcbfd7578248877cf63f6f360d9, type: 2}
+    - target: {fileID: 1670602355542340456, guid: 5de8e06d482465246a26c08fbb4630c0,
+        type: 3}
+      propertyPath: _inactiveTileMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e7a2ae126212d94daed291d8f83629c, type: 2}
     - target: {fileID: 5014303122069822925, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_Name
@@ -8750,7 +8871,7 @@ PrefabInstance:
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.38
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: 5682894790869043063, guid: 5de8e06d482465246a26c08fbb4630c0,
         type: 3}

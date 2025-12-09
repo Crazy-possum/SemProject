@@ -7,6 +7,10 @@ public class EnemeyPattern : MonoBehaviour
     [SerializeField] private EnemyParametrs _enemyParametrs;
     [SerializeField] private EnemyMovement _enemyMovement;
 
+    [SerializeField] private GameObject _healEffectSprite;
+    [SerializeField] private GameObject _anteaterEffectSprite;
+    [SerializeField] private GameObject _lizardEffectSprite;
+
     [SerializeField] private List<EnemyParametrs> _healTargetsList = new List<EnemyParametrs>();
 
     private Timer _shieldTimer;
@@ -25,6 +29,7 @@ public class EnemeyPattern : MonoBehaviour
     private bool _isHeal;
 
     public List<EnemyParametrs> HealTargetsList { get => _healTargetsList; set => _healTargetsList = value; }
+    public GameObject HealEffectSprite { get => _healEffectSprite; set => _healEffectSprite = value; }
 
     private void Start()
     {
@@ -40,19 +45,19 @@ public class EnemeyPattern : MonoBehaviour
         if (_isAnteater)
         {
             ReloadShieldTimer();
-
-            if (_resistanceTimer.ReachingTimerMaxValue != true)
+            if (_resistanceTimer.StartTimer && _resistanceTimer.ReachingTimerMaxValue != true)
             {
-                _staticHealth = _enemyParametrs.CurrentHealth;
+                _enemyParametrs.CurrentHealth = _staticHealth;
             }
         }
 
         if (_enemyParametrs.CurrentHealth <= _enemyParametrs.MaxHealth * _finishingBoarder)
         {
-            if (_isLizard &&  !_isSpeedUp)
+            if (_isLizard && !_isSpeedUp)
             {
                 _enemyMovement.Speed *= 1.5f;
                 _isSpeedUp = true;
+                _lizardEffectSprite.SetActive(true);
             }
 
             if (_isRat)
@@ -62,6 +67,16 @@ public class EnemeyPattern : MonoBehaviour
                     HealArea();
                 }
             }
+        }
+
+        if (_shieldTimer.StartTimer)
+        {
+            ReloadShieldTimer();
+        }
+
+        if (_resistanceTimer.StartTimer)
+        {
+            ReloadResistanceTimer();
         }
     }
 
@@ -104,7 +119,6 @@ public class EnemeyPattern : MonoBehaviour
         {
             _shieldTimer.StopCountdown();
             ReloadResistanceTimer();
-            _staticHealth = _enemyParametrs.CurrentHealth;
         }
     }
 
@@ -115,12 +129,15 @@ public class EnemeyPattern : MonoBehaviour
         if (!_resistanceTimer.StartTimer)
         {
             _resistanceTimer.StartCountdown();
+            _staticHealth = _enemyParametrs.CurrentHealth;
+            _anteaterEffectSprite.SetActive(true);
         }
 
         if (_resistanceTimer.ReachingTimerMaxValue == true)
         {
             _resistanceTimer.StopCountdown();
             ReloadShieldTimer();
+            _anteaterEffectSprite.SetActive(false);
         }
     }
 
@@ -129,10 +146,12 @@ public class EnemeyPattern : MonoBehaviour
         _isHeal = true;
 
         gameObject.GetComponent<EnemyParametrs>().CurrentHealth += _healValue;
+        _healEffectSprite.SetActive(true);
 
         foreach (EnemyParametrs target in _healTargetsList)
         {
             target.CurrentHealth += _healValue;
+            target.gameObject.GetComponent<EnemeyPattern>().HealEffectSprite.SetActive(true);
         }
     }
 }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3238090039313323642}
   - component: {fileID: 8079058139296617466}
   - component: {fileID: 2052770505717573466}
+  - component: {fileID: 6835499392921962837}
   m_Layer: 0
   m_Name: ScriptKeeper
   m_TagString: Untagged
@@ -135,3 +136,15 @@ MonoBehaviour:
   _imageCharacterLocker: {fileID: 0}
   _imageNPC: {fileID: 0}
   _imageNPCLocker: {fileID: 0}
+--- !u!114 &6835499392921962837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9027136592783198524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7be8f14253b44448c3a12dd1a5b8f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

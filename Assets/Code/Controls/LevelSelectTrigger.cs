@@ -10,18 +10,23 @@ using UnityEngine.UI;
 
 public class LevelSelectTrigger : MonoBehaviour
 {
+    [SerializeField] private Material _activeTileMaterial;
+    [SerializeField] private Material _inactiveTileMaterial;
     [SerializeField] private GameObject _confirmPanel;
     [SerializeField] private Button _confirmButton;
     [SerializeField] private TMP_Text _confirmText;
     [SerializeField] private int _sceneIndex;
 
     private Timer _confirmDelayTimer;
+    private MeshRenderer[] _tileMeshRenderer;
+    private bool _isAvailableLevel;
     private bool _inTrigger;
     private bool _isTimer;
 
     private void Start()
     {
         _confirmDelayTimer = new Timer(1.5f);
+        UnlockLevel();
     }
 
     private void FixedUpdate()
@@ -35,11 +40,13 @@ public class LevelSelectTrigger : MonoBehaviour
     private void OnEnable()
     {
         TutorStageActivator.OnNeedsLoad += SetPanelActive;
+        ProgressSaver.OnSaveNewLevel += UnlockLevel;
     }
 
     private void OnDisable()
     {
         TutorStageActivator.OnNeedsLoad -= SetPanelActive;
+        ProgressSaver.OnSaveNewLevel -= UnlockLevel;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -57,8 +64,30 @@ public class LevelSelectTrigger : MonoBehaviour
         {
             _inTrigger = false;
             _confirmDelayTimer.StopCountdown();
-            Debug.Log(_sceneIndex);
-            Debug.Log("da");
+        }
+    }
+
+    private void UnlockLevel()
+    {
+       _tileMeshRenderer = gameObject.GetComponentsInChildren<MeshRenderer>();
+
+        if ((_sceneIndex) <= PlayerPrefs.GetInt("LevelProgress") || (_sceneIndex + 1) <= PlayerPrefs.GetInt("LevelProgress"))
+        {
+            _isAvailableLevel = true;
+
+            foreach (MeshRenderer mesh in _tileMeshRenderer)
+            {
+                mesh.material = _activeTileMaterial;
+            }
+        }
+        else
+        {
+            _isAvailableLevel = false;
+
+            foreach (MeshRenderer mesh in _tileMeshRenderer)
+            {
+                mesh.material = _inactiveTileMaterial;
+            }
         }
     }
 
@@ -74,7 +103,10 @@ public class LevelSelectTrigger : MonoBehaviour
         }
         else
         {
-            RunTimer();
+            if (_isAvailableLevel)
+            {
+                RunTimer();
+            }
         }
     }
 
