@@ -19,7 +19,7 @@ public class CharacterShoot : MonoBehaviour
     private Rigidbody _characterRb;
     private Slider _reloadSlider;
     private Camera _camera;
-    private float _attakReload = 2;
+    private float _attakReload = 1.6f;
     private float _currentReloadTime;
     private bool _isCanShoot = false;
     private bool _isDoubleShotOn;
