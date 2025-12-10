@@ -13,6 +13,10 @@ public class WinLoseController : MonoBehaviour
     [Tooltip("Панель с победой")]
     [SerializeField] private GameObject _winPanel;
 
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _winAudioClip;
+    [SerializeField] private AudioClip _defeatAudioClip;
+
     private static Action<int> _onCompliteLevel;
 
     private bool _isDeafeated = false;
@@ -57,11 +61,13 @@ public class WinLoseController : MonoBehaviour
     private void DefeatPanel()
     {
         _defeatPanel.SetActive(true);
+        _audioSource.PlayOneShot(_defeatAudioClip);
     }
 
     private void WinPanel()
     {
         _winPanel.SetActive(true);
+        _audioSource.PlayOneShot(_winAudioClip);
 
         int index = SceneManager.GetActiveScene().buildIndex + 1;
     }

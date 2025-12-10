@@ -21,17 +21,27 @@ PrefabInstance:
     - target: {fileID: 36317707910237988, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 85
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 36317707910237988, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 85
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 36317707910237988, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -92.5
       objectReference: {fileID: 0}
     - target: {fileID: 36317707910237988, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141539585875631444, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
+        type: 3}
+      propertyPath: _buttonLocker
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1141539585875631444, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
         type: 3}
@@ -83,6 +93,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: CharUpgradeButton
       objectReference: {fileID: 0}
+    - target: {fileID: 6740610116379926052, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e93c98dcaaabaaa428cf133c8af92692,
+        type: 3}
     - target: {fileID: 7817493155812157367, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
         type: 3}
       propertyPath: m_Pivot.x
@@ -216,6 +232,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3790490156632991795, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8, type: 3}
+    - {fileID: 8008530624368456418, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8, type: 3}
+    - {fileID: 717653934034581219, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8, type: 3}
+    - {fileID: 9075182541127521634, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8, type: 3}
+    - {fileID: 8988636717427836607, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8, type: 3}

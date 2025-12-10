@@ -125,6 +125,11 @@ PrefabInstance:
       propertyPath: m_Animations.Array.data[0]
       value: 
       objectReference: {fileID: 7400000, guid: 3bc9ee864dba2e84cad4c48f2d10ea61, type: 2}
+    - target: {fileID: 7015332065387704836, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7772418324337359552, guid: 55bc238f5f8c6114e84d7bc7de4ac6f4,
         type: 3}
       propertyPath: m_Name
