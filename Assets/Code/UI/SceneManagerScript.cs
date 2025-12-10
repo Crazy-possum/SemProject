@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class SceneManagerScript : MonoBehaviour
 {
+    [SerializeField] private AudioSource _clickSource;
+    [SerializeField] private AudioClip _click;
     [SerializeField] private int _sceneIndex;
 
     private Button _button;
@@ -14,6 +16,7 @@ public class SceneManagerScript : MonoBehaviour
     {
         _button = gameObject.GetComponent<Button>();
         _button.onClick.AddListener(LoadOnButton);
+        _button.onClick.AddListener(PlaySound);
     }
 
     private void OnDestroy()
@@ -24,5 +27,10 @@ public class SceneManagerScript : MonoBehaviour
     private void LoadOnButton()
     {
         SceneManager.LoadScene(_sceneIndex);
+    }
+
+    private void PlaySound()
+    {
+        _clickSource.PlayOneShot(_click);
     }
 }
