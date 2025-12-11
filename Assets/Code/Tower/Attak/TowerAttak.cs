@@ -10,6 +10,9 @@ public class TowerAttak : MonoBehaviour
     [SerializeField] private GameObject _bulletSpawnerGO;
     [Tooltip("Таймер перезарядки в сек")]
 
+    [SerializeField] private Animator _upgradeAnimator;
+    [SerializeField] private GameObject _vfxObject;
+
     [SerializeField] private Animator _mainAnimator;
     [SerializeField] private Animator _secondaryAnimator;
     [SerializeField] private GameObject _firstUpgradeSprite;
@@ -135,6 +138,8 @@ public class TowerAttak : MonoBehaviour
 
     private void OnEnable()
     {
+        DecisionButton.OnTowerUpgrade += UpgradeVfxOn;
+
         CharUpgradeViewer.OnSubscriptionTower += ResetNewTowerReloadTimerTime;
         CharacterUpgrader.OnSpeedUpTowerReload += ResetAllTowerReloadTimerTime;
 
@@ -144,6 +149,8 @@ public class TowerAttak : MonoBehaviour
 
     private void OnDisable()
     {
+        DecisionButton.OnTowerUpgrade -= UpgradeVfxOn;
+
         CharUpgradeViewer.OnSubscriptionTower -= ResetNewTowerReloadTimerTime;
         CharacterUpgrader.OnSpeedUpTowerReload -= ResetAllTowerReloadTimerTime;
 
@@ -190,6 +197,15 @@ public class TowerAttak : MonoBehaviour
     }
 
     //-----------------------Liseners--------------------------------------------------------------------------
+
+    private void UpgradeVfxOn(GameObject tower)
+    {
+        if (gameObject == tower)
+        {
+            _vfxObject.SetActive(true);
+            _upgradeAnimator.Play("VFX_TowerUpgrade", -1, 0f);
+        }
+    }
 
     public void ResetShotgunReloadTimerTime(float cutReload, GameObject tower)
     {

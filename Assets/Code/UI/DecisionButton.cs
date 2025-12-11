@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class DecisionButton : MonoBehaviour
     [SerializeField] private TowerEnum _localTowerEnum;
 
     private static Action _onTowerChanged;
+    private static Action<GameObject> _onTowerUpgrade;
 
     private Button _button;
     private TowerUpgradeSO _upgradeSO = null;
@@ -46,6 +48,7 @@ public class DecisionButton : MonoBehaviour
     public EconomyController EconomyController { get => _economyController; set => _economyController = value; }
     public GameObject CharUpgradePanel { get => _charUpgraderPanel; set => _charUpgraderPanel = value; }
     public static Action OnTowerChanged { get => _onTowerChanged; set => _onTowerChanged = value; }
+    public static Action<GameObject> OnTowerUpgrade { get => _onTowerUpgrade; set => _onTowerUpgrade = value; }
 
     private void Awake()
     {
@@ -99,7 +102,7 @@ public class DecisionButton : MonoBehaviour
 
     public void CustomizationUpgradeButton(TowerUpgradeSO upgradeSO, TowerAttak towerAttak)
     {
-        if (upgradeSO.TowerEnum == TowerEnum.Cannon_firstUpgrade || upgradeSO.TowerEnum == TowerEnum.Shotgun_firstUpgrade || 
+        if (upgradeSO.TowerEnum == TowerEnum.Cannon_firstUpgrade || upgradeSO.TowerEnum == TowerEnum.Shotgun_firstUpgrade ||
             upgradeSO.TowerEnum == TowerEnum.Catapult_firstUpgrade || upgradeSO.TowerEnum == TowerEnum.Sniper_firstUpgrade)
         {
             if (towerAttak.FirstUpgrade)
@@ -160,11 +163,25 @@ public class DecisionButton : MonoBehaviour
 
     public void CustomizationCharacterButton(CharUpgradeSO charSO)
     {
+        LockButton();
+        StartCoroutine(DelayedUnlockCheck(0.2f));
+
         _towerImage.sprite = charSO.UpgradeSprite;
         _towerNameText.text = charSO.Name;
         _towerDescriptionText.text = charSO.Description;
 
         _charUpgradeSO = charSO;
+    }
+
+    private IEnumerator DelayedUnlockCheck(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (_canUpgrade)
+        {
+            _buttonLocker.SetActive(false);
+            gameObject.GetComponent<Button>().interactable = true;
+        }
     }
 
     private void BuildTower()
@@ -191,6 +208,7 @@ public class DecisionButton : MonoBehaviour
                 _towerUpgradePanel.SetActive(false);
                 Time.timeScale = 1f;
                 _onTowerChanged?.Invoke();
+                _onTowerUpgrade?.Invoke(_tower);
             }
         }
     }

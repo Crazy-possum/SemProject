@@ -63,6 +63,7 @@ public class EnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(_speed);
         SearchWayPoint();
         CheckExitEnter(); 
 
@@ -158,7 +159,7 @@ public class EnemyMovement : MonoBehaviour
     private void UpdateMoveSpeed(float slowingMoveValue)
     {
         _speed = _speed - (_baseSpeed - (_baseSpeed * slowingMoveValue));
-        _baseSpeed = (_baseSpeed * slowingMoveValue);
+        _baseSpeed = _baseSpeed * slowingMoveValue;
     }
 
     private void SlowingDownOnHit(GameObject enemy, float slowingTimerValue, float slowingDownValue)
@@ -181,9 +182,8 @@ public class EnemyMovement : MonoBehaviour
 
         if (!_isAlreadySlowing)
         {
-            _slowDownValue = slowingDownValue;
-            _speed = _speed - (_baseSpeed - (_baseSpeed * (_slowDownValue + slowingDownValue)));
             _slowDownValue += slowingDownValue;
+            _speed = _speed - (_baseSpeed - (_baseSpeed * (_slowDownValue)));
 
             _isAlreadySlowing = true;
 

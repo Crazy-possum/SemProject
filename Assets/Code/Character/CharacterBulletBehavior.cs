@@ -59,6 +59,11 @@ public class CharacterBulletBehavior : MonoBehaviour
 
             EnemyParametrs enemyParametrs = enemy.GetComponent<EnemyParametrs>();
 
+            if (_isSlowDownOn)
+            {
+                _onHitEnemy?.Invoke(enemy.gameObject, _slowingTimerValue, _slowingDownValue);
+            }
+
             if (enemyParametrs.CurrentPaintValue < 4)
             {
                 if (_isDoublePaintOn)
@@ -73,11 +78,6 @@ public class CharacterBulletBehavior : MonoBehaviour
                 {
                     enemyParametrs.CurrentPaintValue += _painting;
                 }
-            }
-
-            if (_isSlowDownOn)
-            {
-                _onHitEnemy?.Invoke(enemy.gameObject, _slowingTimerValue, _slowingDownValue);
             }
 
             Destroy(gameObject);

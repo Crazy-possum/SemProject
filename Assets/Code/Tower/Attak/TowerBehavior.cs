@@ -82,7 +82,7 @@ public class TowerBehavior
     }
 
     public void AddLiseners()
-    {
+    { 
         TowerUpgrader.OnActivateCannonFirstUpgrade += ActivateCannonFirstUpgrade; 
         TowerUpgrader.OnActivateCannonSecondUpgrade += ActivateCannonSecondUpdate;
         TowerUpgrader.OnActivateCannonThirdUpgrade += ActivateCannonThierdUpgrade;
