@@ -26,9 +26,9 @@ MonoBehaviour:
   TowerReloadTime: 2.5
   BulletDuration: 0
   BulletDOTTime: 0
-  AttakeAngle: 60
+  AttakeAngle: 80
   TowerRange: 5
-  MaxBulletDistance: 5
+  MaxBulletDistance: 7
   BulletAmount: 4
-  TowerDamage: 85
+  TowerDamage: 120
   TowerCost: 45
