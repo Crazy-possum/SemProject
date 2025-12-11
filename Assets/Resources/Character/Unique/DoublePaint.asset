@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfc086295ddbc045a36415209ff3cb7, type: 3}
   m_Name: DoublePaint
   m_EditorClassIdentifier: 
-  Name: "\u0414\u0430\u0431\u043B \u043F\u0435\u0439\u043D\u0442"
-  Description: "4\u043D5"
+  Name: "\u0414\u0432\u043E\u0439\u043D\u043E\u0439 \u043E\u043A\u0440\u0430\u0441"
+  Description: "\u041E\u0434\u0438\u043D \u0432\u044B\u0441\u0442\u0440\u0435\u043B
+    \u043E\u043A\u0440\u0430\u0448\u0438\u0432\u0430\u0435\u0442 \u0432\u0440\u0430\u0433\u0430
+    \u0441\u0440\u0430\u0437\u0443 \u043D\u0430 50% "
   UpgradeEnum: 10
   CharUpgradeRare: 4
   UpgradeSprite: {fileID: 21300000, guid: 59fdd8baca5cb6d49ab3a52b7a6a0073, type: 3}

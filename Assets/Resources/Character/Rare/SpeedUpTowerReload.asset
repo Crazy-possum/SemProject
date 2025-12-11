@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfc086295ddbc045a36415209ff3cb7, type: 3}
   m_Name: SpeedUpTowerReload
   m_EditorClassIdentifier: 
-  Name: "\u0423\u0441\u043A\u043E\u0440\u0435\u043D\u0438\u0435 \u0431\u0430\u0448\u0435\u043D"
-  Description: "\u0449\u0434\u043B\u0448\u043E\u0440\u043F"
+  Name: "\u0423\u043C\u0435\u043D\u044C\u0448\u0435\u043D\u0438\u0435 \u043F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0438
+    \u0431\u0430\u0448\u0435\u043D"
+  Description: "\u041F\u0435\u0440\u0435\u0437\u0430\u0440\u044F\u0434\u043A\u0430
+    \u0432\u0441\u0435\u0445 \u0431\u0430\u0448\u0435\u043D \u0443\u0441\u043A\u043E\u0440\u044F\u0435\u0442\u0441\u044F
+    \u043D\u0430 15%"
   UpgradeEnum: 8
   CharUpgradeRare: 2
   UpgradeSprite: {fileID: 21300000, guid: ab9c1201d0df18a46adf38e7543fd6a0, type: 3}
