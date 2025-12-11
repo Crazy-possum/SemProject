@@ -11,8 +11,6 @@ public class OnLoad : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             _bgAudioSource.time = PlayerPrefs.GetFloat("MusicTime");
-            Debug.Log(PlayerPrefs.GetFloat("MusicTime"));
-            Debug.Log(_bgAudioSource.time);
         }
     }
 
@@ -59,7 +57,6 @@ public class OnLoad : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             PlayerPrefs.SetFloat("MusicTime", _bgAudioSource.time);
-            Debug.Log(PlayerPrefs.GetFloat("MusicTime"));
         }
     }
 }

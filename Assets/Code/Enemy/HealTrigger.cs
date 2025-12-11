@@ -34,6 +34,9 @@ public class HealTrigger : MonoBehaviour
 
     private void SearchMissingObject()
     {
-        _healTargetsList.RemoveAll(t => t.gameObject == null);
+        if (_healTargetsList != null)
+        {
+            _healTargetsList.RemoveAll(t => t.gameObject == null);
+        }
     }
 }

@@ -116,7 +116,6 @@ public class CharacterUpgrader : MonoBehaviour
 
     private void SpinUpgradesRare(DecisionButton button)
     {
-        System.Random rnd = new System.Random();
         int randomInt = Random.Range(1, 101);
 
         if (randomInt >= 1 & randomInt <= 40)

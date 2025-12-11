@@ -13,10 +13,8 @@ public class WinLoseController : MonoBehaviour
     [Tooltip("Панель с победой")]
     [SerializeField] private GameObject _winPanel;
 
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _winAudioClip;
-    [SerializeField] private AudioClip _defeatAudioClip;
-
+    private static Action _onWin;
+    private static Action _onDefeat;
     private static Action<int> _onCompliteLevel;
 
     private bool _isDeafeated = false;
@@ -26,6 +24,8 @@ public class WinLoseController : MonoBehaviour
     private int _currentEnemyListLength;
 
     public static Action<int> OnCompliteLevel { get => _onCompliteLevel; set => _onCompliteLevel = value; }
+    public static Action OnWin { get => _onWin; set => _onWin = value; }
+    public static Action OnDefeat { get => _onDefeat; set => _onDefeat = value; }
 
     private void FixedUpdate()
     {
@@ -37,8 +37,12 @@ public class WinLoseController : MonoBehaviour
         {
             _isWin = true;
         }
+        else if (_currentEnemyListLength == 0 && _currentEnemyCount == 0 && _enemySpawner.IsAllWaveSpawned)
+        {
+            _isDeafeated = true;
+        }
 
-        CheckGameComplite();
+            CheckGameComplite();
     }
 
     private void OnEnable()
@@ -61,15 +65,16 @@ public class WinLoseController : MonoBehaviour
     private void DefeatPanel()
     {
         _defeatPanel.SetActive(true);
-        _audioSource.PlayOneShot(_defeatAudioClip);
+        _onDefeat?.Invoke();
     }
 
     private void WinPanel()
     {
         _winPanel.SetActive(true);
-        _audioSource.PlayOneShot(_winAudioClip);
+        _onWin?.Invoke();
 
         int index = SceneManager.GetActiveScene().buildIndex + 1;
+        _onCompliteLevel?.Invoke(index);
     }
 
     private void CheckKillCount()
@@ -87,9 +92,9 @@ public class WinLoseController : MonoBehaviour
         else if (!_isDeafeated && _isWin)
         {
             if (SceneManager.GetActiveScene().buildIndex == 2 &&
-            PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.OwnPlay}" &&
-            PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
-            PlayerPrefs.GetString($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}") == false.ToString())
+                PlayerPrefs.GetString("TutorStage") == $"{TutorEnum.OwnPlay}" &&
+                PlayerPrefs.GetString("IsTutorDone") == true.ToString() &&
+                PlayerPrefs.GetString($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}") == false.ToString())
             {
                 TutorController.OnNewParametr?.Invoke($"{TutorConstantMaganer.ALL_ENEMIES_KILLED}");
                 TutorController.OnTutorActive?.Invoke();

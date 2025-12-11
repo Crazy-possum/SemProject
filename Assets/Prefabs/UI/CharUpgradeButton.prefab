@@ -40,12 +40,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1141539585875631444, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
         type: 3}
+      propertyPath: _bgSplashes
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141539585875631444, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
+        type: 3}
       propertyPath: _buttonLocker
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1141539585875631444, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
         type: 3}
+      propertyPath: _towerImageBg
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141539585875631444, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
+        type: 3}
       propertyPath: _towerCostText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1141539585875631444, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,
+        type: 3}
+      propertyPath: _soldSpriteObject
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1886285675565518518, guid: 14a6e1d7d5f28ed48aad35ca7dfd74c8,

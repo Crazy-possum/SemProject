@@ -586,10 +586,13 @@ MonoBehaviour:
   _charUpgraderPanel: {fileID: 0}
   _tower: {fileID: 0}
   _towerImage: {fileID: 6740610116379926052}
+  _towerImageBg: {fileID: 8251345033047953042}
+  _bgSplashes: {fileID: 5739078969302512597}
   _towerNameText: {fileID: 8555524135846798641}
   _towerCostText: {fileID: 7861587486861091412}
   _towerDescriptionText: {fileID: 3158005628735304888}
   _buttonLocker: {fileID: 8008530624368456418}
+  _soldSpriteObject: {fileID: 6179668374686072407}
   _localTowerEnum: 0
 --- !u!1 &6179668374686072407
 GameObject:
@@ -678,7 +681,7 @@ GameObject:
   - component: {fileID: 6455461394931456157}
   - component: {fileID: 2006318258170287710}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Im_Locker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -20,6 +20,8 @@ MonoBehaviour:
     \u043F\u0443\u043B\u0438"
   TowerEnum: 15
   TowerSprite: {fileID: 21300000, guid: 6ba00978094fcca44a406a3e1c40eb68, type: 3}
+  TowerSpriteBG: {fileID: 21300000, guid: 166438db520744f4fa610842960c2dd8, type: 3}
+  BgSplashes: {fileID: 21300000, guid: e458d3e0ef3918f4c9b30eabe75e8df5, type: 3}
   UpgradeIntValue: 3
   UpgradeFloatValue: 3
   AddUpgradeFloatValue: 1.1

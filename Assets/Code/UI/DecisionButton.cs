@@ -17,12 +17,17 @@ public class DecisionButton : MonoBehaviour
     [SerializeField] private GameObject _charUpgraderPanel;
     [SerializeField] private GameObject _tower;
     [SerializeField] private Image _towerImage;
+    [SerializeField] private Image _towerImageBg;
+    [SerializeField] private Image _bgSplashes;
     [SerializeField] private TMP_Text _towerNameText;
     [SerializeField] private TMP_Text _towerCostText;
     [SerializeField] private TMP_Text _towerDescriptionText;
     [SerializeField] private GameObject _buttonLocker;
+    [SerializeField] private GameObject _soldSpriteObject;
     [Tooltip("Ñêðèïò")]
     [SerializeField] private TowerEnum _localTowerEnum;
+
+    private static Action _onTowerChanged;
 
     private Button _button;
     private TowerUpgradeSO _upgradeSO = null;
@@ -40,6 +45,7 @@ public class DecisionButton : MonoBehaviour
     public TowerEnum LocalTowerEnum { get => _localTowerEnum; set => _localTowerEnum = value; }
     public EconomyController EconomyController { get => _economyController; set => _economyController = value; }
     public GameObject CharUpgradePanel { get => _charUpgraderPanel; set => _charUpgraderPanel = value; }
+    public static Action OnTowerChanged { get => _onTowerChanged; set => _onTowerChanged = value; }
 
     private void Awake()
     {
@@ -82,6 +88,8 @@ public class DecisionButton : MonoBehaviour
     public void CustomizationBuildButton(TowerSO towerSO)
     {
         _towerImage.sprite = towerSO.TowerSprite;
+        _towerImageBg.sprite = towerSO.TowerSpriteBG;
+        _bgSplashes.sprite = towerSO.BgSplashes;
         _towerNameText.text = towerSO.Name;
         _towerCostText.text = $"{ towerSO.TowerCost}";
         _towerDescriptionText.text = towerSO.Description;
@@ -97,6 +105,7 @@ public class DecisionButton : MonoBehaviour
             if (towerAttak.FirstUpgrade)
             {
                 LockButton();
+                _soldSpriteObject.SetActive(true);
                 _canUpgrade = false;
             }
             else
@@ -112,6 +121,7 @@ public class DecisionButton : MonoBehaviour
             if (towerAttak.SecondUpgrade)
             {
                 LockButton();
+                _soldSpriteObject.SetActive(true);
                 _canUpgrade = false;
             }
             else
@@ -126,7 +136,8 @@ public class DecisionButton : MonoBehaviour
         {
             if (towerAttak.ThirdUpgrade)
             {
-                LockButton();  
+                LockButton();
+                _soldSpriteObject.SetActive(true);
                 _canUpgrade = false;
             }
             else
@@ -137,7 +148,9 @@ public class DecisionButton : MonoBehaviour
             }
         }
 
-            _towerImage.sprite = upgradeSO.TowerSprite;
+        _towerImage.sprite = upgradeSO.TowerSprite;
+        _towerImageBg.sprite = upgradeSO.TowerSpriteBG;
+        _bgSplashes.sprite = upgradeSO.BgSplashes;
         _towerNameText.text = upgradeSO.Name;
         _towerCostText.text = $"{upgradeSO.UpgradeCost}";
         _towerDescriptionText.text = upgradeSO.Description;
@@ -163,6 +176,7 @@ public class DecisionButton : MonoBehaviour
                 _towerBuilder.BuildTower(_localTowerEnum);
                 _towerBuildPanel.SetActive(false);
                 Time.timeScale = 1f;
+                _onTowerChanged?.Invoke();
             }
         }
     }
@@ -176,6 +190,7 @@ public class DecisionButton : MonoBehaviour
                 _towerUpgrader.SetTowerUpgrade(_tower, _upgradeSO);
                 _towerUpgradePanel.SetActive(false);
                 Time.timeScale = 1f;
+                _onTowerChanged?.Invoke();
             }
         }
     }

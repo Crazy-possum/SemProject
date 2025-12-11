@@ -20,6 +20,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 2919374653318123894, guid: cc7a9110101a29449b6b763070ef2edf,
     type: 3}
   TowerSprite: {fileID: 21300000, guid: 2f0f422f07d1a584f8687de8758fa334, type: 3}
+  TowerSpriteBG: {fileID: 21300000, guid: d3d964fc1310c4546b5d83aef5ff9a01, type: 3}
+  BgSplashes: {fileID: 21300000, guid: 559919184c98c944f9833e9c2651e91b, type: 3}
   TowerReloadTime: 2
   BulletDuration: 5
   BulletDOTTime: 1

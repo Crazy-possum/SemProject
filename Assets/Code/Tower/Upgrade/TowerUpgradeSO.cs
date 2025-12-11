@@ -13,6 +13,8 @@ public class TowerUpgradeSO : ScriptableObject
     public TowerEnum TowerEnum;
     [Tooltip("»конка на кнопке")]
     public Sprite TowerSprite;
+    public Sprite TowerSpriteBG;
+    public Sprite BgSplashes;
     public int UpgradeIntValue;
     public float UpgradeFloatValue;
     public float AddUpgradeFloatValue;

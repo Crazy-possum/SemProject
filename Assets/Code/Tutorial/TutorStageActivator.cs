@@ -52,6 +52,11 @@ public class TutorStageActivator : MonoBehaviour
         TutorController.OnTutorActive -= SetTutorialConfig;
     }
 
+    private void FixedUpdate()
+    {
+        Debug.Log(PlayerPrefs.GetString("TutorStage"));
+    }
+
     public void SetActivePanel()
     {
         _tutorPanel.SetActive(true);

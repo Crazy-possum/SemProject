@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ClosePanelButton : MonoBehaviour
 {
     [SerializeField] private GameObject _panel;
+    [SerializeField] private Pause _pause;
     private Button _button;
 
     private void Start()
@@ -18,5 +19,10 @@ public class ClosePanelButton : MonoBehaviour
     {
         _panel.SetActive(false);
         Time.timeScale = 1.0f;
+
+        if (_pause != null)
+        {
+            _pause.CanOpen = true;
+        }
     }
 }

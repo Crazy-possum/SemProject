@@ -16,6 +16,8 @@ public class TowerSO : ScriptableObject
     public GameObject BulletPrefab;
     [Tooltip("Иконка на кнопке")]
     public Sprite TowerSprite;
+    public Sprite TowerSpriteBG;
+    public Sprite BgSplashes;
     [Tooltip("Время перезарядки")]
     public float TowerReloadTime;
     [Tooltip("Длительность действия эффекта патрона")]

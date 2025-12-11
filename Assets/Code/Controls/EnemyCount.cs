@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -5,17 +6,17 @@ public class EnemyCount : MonoBehaviour
 {
     [SerializeField] private TMP_Text _enemyScoreText;
 
-    public int Score = 0;
+    public int Score = 10;
 
     private string _enemyScore;
     private bool _isDefeat = false;
-    private int _maxScore = 5;
+    private int _maxScore = 10;
 
     public bool Defeat { get => _isDefeat; set => _isDefeat = value; }
 
     private void Start()
     {
-        _enemyScore = $"Врагов прошло: {Score} /";
+        _enemyScore = $"Мокриц живо: {Score} /";
         _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
     }
 
@@ -31,17 +32,17 @@ public class EnemyCount : MonoBehaviour
 
     private void EnemyEnterExit()
     {
-        if (Score == _maxScore - 1)
+        if (Score == 1)
         {
-            Score++;
-            _enemyScore = $"Врагов прошло: {Score} /";
+            Score--;
+            _enemyScore = $"Мокриц живо: {Score} /";
             _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
             _isDefeat = true;
         }
-        else if (Score < _maxScore - 1)
+        else if (Score > 1)
         {
-            Score++;
-            _enemyScore = $"Врагов прошло: {Score} /";
+            Score--;
+            _enemyScore = $"Мокриц живо: {Score} /";
             _enemyScoreText.text = $"{_enemyScore} {_maxScore}";
         }
     }
