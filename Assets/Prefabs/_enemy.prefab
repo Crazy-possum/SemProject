@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7761652085499804757}
   - component: {fileID: 7877361786867746534}
+  - component: {fileID: 2708800740226659530}
   m_Layer: 0
   m_Name: Heal_effect
   m_TagString: Untagged
@@ -84,6 +85,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2708800740226659530
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401178583977173737}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2d781565a01cad44bbc119487975de69, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &509929959025887692
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,6 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5216753540924378185}
   - component: {fileID: 2580999494317017853}
+  - component: {fileID: 354495146212025077}
   m_Layer: 0
   m_Name: SlowingDown_effect
   m_TagString: Untagged
@@ -269,7 +292,7 @@ Transform:
   m_GameObject: {fileID: 910603680025713417}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.069, y: -0.181, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -315,10 +338,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
-    type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: f5d58360493798e4fa354c1c72166a1e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -328,6 +350,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &354495146212025077
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910603680025713417}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4571108e98d9104394571d951361a6a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2094520267045431347
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4859639263171464993}
   - component: {fileID: 413495103672463343}
+  - component: {fileID: 313130789648771845}
   m_Layer: 0
   m_Name: Electro_effect
   m_TagString: Untagged
@@ -400,9 +444,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
-    type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: 557b9d87665b2bb4e820b98c52a309f8, type: 3}
   m_Color: {r: 0.020272732, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -413,6 +456,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &313130789648771845
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094520267045431347}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5e8ab78efee9f584c8fcab17c5b12da6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2459997053002095897
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,7 +854,6 @@ GameObject:
   - component: {fileID: 6396801065903864224}
   - component: {fileID: 1771667094165765290}
   - component: {fileID: 2455834386172449121}
-  - component: {fileID: 6946348201229030526}
   - component: {fileID: 7848377523538358666}
   m_Layer: 0
   m_Name: _enemy
@@ -882,6 +945,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyParametrs: {fileID: 1771667094165765290}
   _tolerance: 0.0004
+  _slowEffectSprite: {fileID: 910603680025713417}
 --- !u!114 &1771667094165765290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,9 +962,9 @@ MonoBehaviour:
   _healthSlider: {fileID: 1160191590600437214}
   _paintSlider: {fileID: 910998076150223797}
   _maxPaintValue: 4
+  _enemyAnimator: {fileID: 4920536294689600555}
   _electroEffectSprite: {fileID: 2094520267045431347}
   _damageEffectSprite: {fileID: 763622537556243244}
-  _slowEffectSprite: {fileID: 910603680025713417}
 --- !u!114 &2455834386172449121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -919,22 +983,6 @@ MonoBehaviour:
   _anteaterEffectSprite: {fileID: 0}
   _lizardEffectSprite: {fileID: 0}
   _healTargetsList: []
---- !u!111 &6946348201229030526
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7772418324337359552}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 40dfa40c8ad6084438624ba889851906, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 40dfa40c8ad6084438624ba889851906, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!95 &7848377523538358666
 Animator:
   serializedVersion: 5
@@ -1091,6 +1139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6607300350074880112}
   - component: {fileID: 3440997602430039241}
+  - component: {fileID: 4920536294689600555}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -1165,6 +1214,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4920536294689600555
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8570747460693820109}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7a7d88d46cc8f704681dc8f9408b313f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8685082761183963152
 GameObject:
   m_ObjectHideFlags: 0

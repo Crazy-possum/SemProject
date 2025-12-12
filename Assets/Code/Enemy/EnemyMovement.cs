@@ -6,6 +6,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private EnemyParametrs _enemyParametrs;
     [Tooltip("Погрешность пересечения с точками маршрута")]
     [SerializeField] private float _tolerance;
+    [SerializeField] private GameObject _slowEffectSprite;
 
     private static Action _onEnemyEnter;
     private EnemyEnum _enemyEnum;
@@ -63,7 +64,6 @@ public class EnemyMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(_speed);
         SearchWayPoint();
         CheckExitEnter(); 
 
@@ -197,6 +197,8 @@ public class EnemyMovement : MonoBehaviour
         _slowingDownValue = slowingDownValue;
 
         _isSlowOnce = false;
+        _slowEffectSprite.SetActive(true);
+        Debug.Log("da");
         SlowingCountdown(_enemyTarget, _slowingDownTimer, _slowingDownValue);
     }
 
@@ -214,6 +216,7 @@ public class EnemyMovement : MonoBehaviour
             slowTimer.StopCountdown();
             _isSlowOnce = true;
             _speed = _baseSpeed;
+            _slowEffectSprite.SetActive(false);
         }
     }
     #endregion

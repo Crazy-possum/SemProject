@@ -483,6 +483,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 77154978}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &77154980 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5675152161500655446, guid: 0e674f06b251ccc4c8357faaaa963f2d,
+    type: 3}
+  m_PrefabInstance: {fileID: 77154978}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &77154982 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 421292403086345636, guid: 0e674f06b251ccc4c8357faaaa963f2d,
@@ -3642,6 +3654,7 @@ MonoBehaviour:
   - {fileID: 2069101555}
   - {fileID: 1758500445}
   - {fileID: 152421489}
+  _waveCountText: {fileID: 77154980}
   _levelConfig: {fileID: 11400000, guid: 5dc89804b9b197d40ac7a22df689b8b5, type: 2}
 --- !u!114 &1262381824
 MonoBehaviour:
@@ -3656,8 +3669,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyScoreText: {fileID: 77154987}
-  _audioSource: {fileID: 902714648}
-  _audioClip: {fileID: 8300000, guid: 121e62c809ecc2e4cab0eb69d74c7dec, type: 3}
   Score: 10
 --- !u!114 &1262381825
 MonoBehaviour:
@@ -3703,9 +3714,6 @@ MonoBehaviour:
   _enemySpawner: {fileID: 1262381823}
   _defeatPanel: {fileID: 0}
   _winPanel: {fileID: 0}
-  _audioSource: {fileID: 88210959}
-  _winAudioClip: {fileID: 8300000, guid: 99c0923a6315358459ea4a478ee347ba, type: 3}
-  _defeatAudioClip: {fileID: 8300000, guid: 2e3f4df43b1826645a74124e07d93eda, type: 3}
 --- !u!114 &1262381837
 MonoBehaviour:
   m_ObjectHideFlags: 0

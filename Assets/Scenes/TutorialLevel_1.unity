@@ -511,6 +511,18 @@ Transform:
   - {fileID: 1353897887}
   m_Father: {fileID: 934039098}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1241765332 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8390352297533332971, guid: e4392b4abc61fc34cb087cf17757d8e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5713418161597066734}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1257230561 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1849075122914695222, guid: 48ce5b4f9f5af3644be28e16dfb0491c,
@@ -656,7 +668,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1373136687
 Transform:
@@ -667,7 +679,7 @@ Transform:
   m_GameObject: {fileID: 1373136684}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.19, y: 1.88, z: 0}
+  m_LocalPosition: {x: -10.36, y: 1.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2165,6 +2177,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d7adeea00470ab1438e06343c46ae586,
         type: 2}
+    - target: {fileID: 3765677676838224475, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
+      propertyPath: _waveCountText
+      value: 
+      objectReference: {fileID: 1241765332}
     - target: {fileID: 3843918185834949305, guid: e4392b4abc61fc34cb087cf17757d8e6,
         type: 3}
       propertyPath: _sceneIndex

@@ -78,8 +78,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: _sniperBullet
       objectReference: {fileID: 0}
+    - target: {fileID: 7496209941669776340, guid: 4ede4f1198493ee41b24716123f9f2d8,
+        type: 3}
+      propertyPath: _singleBulletSprite
+      value: 
+      objectReference: {fileID: 4649745062365704099}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ede4f1198493ee41b24716123f9f2d8, type: 3}
+--- !u!1 &4649745062365704099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3857683046197518493, guid: 4ede4f1198493ee41b24716123f9f2d8,
+    type: 3}
+  m_PrefabInstance: {fileID: 8434688176287207230}
+  m_PrefabAsset: {fileID: 0}

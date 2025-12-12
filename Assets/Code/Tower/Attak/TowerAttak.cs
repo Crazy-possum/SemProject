@@ -203,7 +203,7 @@ public class TowerAttak : MonoBehaviour
         if (gameObject == tower)
         {
             _vfxObject.SetActive(true);
-            _upgradeAnimator.Play("VFX_TowerUpgrade", -1, 0f);
+            _upgradeAnimator.Play("VFX_towerUpgrade", -1, 0f);
         }
     }
 

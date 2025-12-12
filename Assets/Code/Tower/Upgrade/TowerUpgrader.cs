@@ -181,8 +181,8 @@ public class TowerUpgrader : MonoBehaviour
 
     private void ActivateSniperSecondUpgrade()
     {
-        float dotDamage = _floatParametrUpgrade;
-        float dotTimerTime = _addFloatParametrUpgrade;
+        float dotTimerTime = _floatParametrUpgrade;
+        float dotDamage = _addFloatParametrUpgrade;
         int dotCount = _intParametrUpgrade;
 
         _onActivateSniperSecondUpgrade?.Invoke(dotDamage, dotTimerTime, dotCount, _towerObject);

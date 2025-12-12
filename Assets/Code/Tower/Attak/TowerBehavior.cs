@@ -114,6 +114,7 @@ public class TowerBehavior
 
     public void SpawnBullet()
     {
+        Debug.Log("bullet");
         int bulletAmount = _towerSO.BulletAmount;
 
         if (_firstUpgrade && _towerSO.TowerEnum == TowerEnum.Shotgun)
@@ -173,15 +174,15 @@ public class TowerBehavior
 
             if (_attakTimer.ReachingTimerMaxValue == true)
             {
-                if (_towerSO.TowerEnum == TowerEnum.Cannon && _firstUpgrade)
-                {
-                    ReloadDoubleShotTimer();
-                }
-
                 TowerRotate();
                 AttakTarget();
                 _onTowerShoot?.Invoke();
                 _attakTimer.StopCountdown();
+
+                if (_towerSO.TowerEnum == TowerEnum.Cannon && _firstUpgrade)
+                {
+                    ReloadDoubleShotTimer();
+                }
             }
         }
     }

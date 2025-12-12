@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -49,7 +51,7 @@ public class TowerBulletBehavior : MonoBehaviour
     //----------------------------------------------------------------------- Переменные паттернов
     private bool _isAlreadyRecoil;
     private int _tryCounter;
-
+    private int _repeatAmount;
     private bool _isStatic;
 
     //----------------------------------------------------------------------- Изменяемые переменные основных функций
@@ -70,9 +72,18 @@ public class TowerBulletBehavior : MonoBehaviour
     private int _upgateIntDistanceValue;
     private int _upgateIntAmountValue;
 
+    private Coroutine _dotCoroutine;
+    private bool _isElectricEnd;
+
     //----------------------------------------------------------------------- Переданные параметры улучшений персонажа
     private float _characterFloatDamageUpgrade;
     private float _characterFloatValueUpgrade;
+
+    //----------------------------------------------------------------------- Actions
+    private static Action<EnemyParametrs> _onDamageEnemy;
+    public static Action<EnemyParametrs> OnDamageEnemy { get => _onDamageEnemy; set => _onDamageEnemy = value; }
+    private static Action<EnemyParametrs> _onElectricEnemy;
+    public static Action<EnemyParametrs> OnElectricEnemy { get => _onElectricEnemy; set => _onElectricEnemy = value; }
 
     //----------------------------------------------------------------------- Инкапсуляция _ общие переменные
     public List<GameObject> TargetsList { get => _targetsList; set => _targetsList = value; }
@@ -175,6 +186,15 @@ public class TowerBulletBehavior : MonoBehaviour
         {
             DamageOverTime();
         }
+
+        /**if (_timerUpgradeDOT != null && _timerUpgradeDOT.StartTimer)
+        {
+            ReloadDOTTimer();
+        }
+        if (_timerUpgradeDOT != null)
+        {
+            UpdateDOT();
+        }**/
     }
 
     private void OnTriggerEnter (Collider other)
@@ -205,6 +225,8 @@ public class TowerBulletBehavior : MonoBehaviour
             {
                 DealDOTDamage();
             }
+
+            _onDamageEnemy?.Invoke(enemy);
         }
 
         if (SceneManager.GetActiveScene().buildIndex == 2 &&
@@ -329,7 +351,7 @@ public class TowerBulletBehavior : MonoBehaviour
         Vector3 baseMoveVector = (_bulletsCurrentTarget.transform.position - gameObject.transform.position).normalized;
 
         Quaternion spreadRotation = Quaternion.Euler
-            (0, 0, Random.Range(-_towerSO.AttakeAngle  / 2, _towerSO.AttakeAngle / 2));
+            (0, 0, UnityEngine.Random.Range(-_towerSO.AttakeAngle  / 2, _towerSO.AttakeAngle / 2));
 
         Vector3 move = spreadRotation * baseMoveVector;
         _movement.Set(_speed * move.x, _speed * move.y, 0);
@@ -356,7 +378,14 @@ public class TowerBulletBehavior : MonoBehaviour
         float distance = Vector3.Distance(_startBulletPosition.position, gameObject.transform.position);
         if (distance >= _maxDistance)
         {
-            Destroy(gameObject);
+            if (_towerEnum == TowerEnum.Sniper && _secondUpgrade)
+            {
+                _singleBulletSprite.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
     #endregion
@@ -415,26 +444,109 @@ public class TowerBulletBehavior : MonoBehaviour
 
     private void DealDOTDamage()
     {
-        _timerUpgradeDOT = new Timer(_upgateFloatTimerValue);
+        // Останавливаем предыдущую корутину, если есть
+        if (_dotCoroutine != null)
+            StopCoroutine(_dotCoroutine);
 
-        int repeatAmount = 0;
-        ReloadDOTTimer(repeatAmount);
+        _dotCoroutine = StartCoroutine(DOTCoroutine());
     }
 
-    private void ReloadDOTTimer(int repeatAmount)
+    private IEnumerator DOTCoroutine()
     {
-        if (repeatAmount < _upgateIntAmountValue)
+        _repeatAmount = 0;
+
+        if (_currentEnemyHealth != null)
         {
-            StartDOTTimerReload(repeatAmount);
+            _currentEnemyHealth.ElectroEffectSprite.SetActive(true);
+        }
+
+        while (_repeatAmount < _upgateIntAmountValue && _bulletsCurrentTarget != null)
+        {
+            Debug.Log(_upgateFloatTimerValue);
+            yield return new WaitForSeconds(_upgateFloatTimerValue);
+
+            Debug.Log("tut");
+            Debug.Log(_bulletsCurrentTarget);
+            Debug.Log(_currentEnemyHealth);
+
+
+            if (_bulletsCurrentTarget != null && _currentEnemyHealth != null)
+            {
+                DealDamage(_currentEnemyHealth, _upgateFloatDamageValue);
+                _repeatAmount++;
+                Debug.Log($"DOT tick {_repeatAmount}/{_upgateIntAmountValue}");
+            }
+            else
+            {
+                _currentEnemyHealth.ElectroEffectSprite.SetActive(false);
+                Destroy(gameObject);
+                break;
+            }
+        }
+
+        if (_currentEnemyHealth != null)
+        {
+            _currentEnemyHealth.ElectroEffectSprite.SetActive(false);
+            Destroy(gameObject);
+        }
+
+        _repeatAmount = 0;
+        Debug.Log("DOT finished");
+    }
+
+    private void OnDestroy()
+    {
+        if (_dotCoroutine != null)
+            StopCoroutine(_dotCoroutine);
+    }
+
+    /**private void DealDOTDamage()
+    {
+        _timerUpgradeDOT = new Timer(_upgateFloatTimerValue);
+        Debug.Log(_timerUpgradeDOT.MaxTimerValue);
+
+        _repeatAmount = 0;
+        _timerUpgradeDOT.StartCountdown();
+    }
+
+    private void ReloadDOTTimer()
+    {
+        Debug.Log("zdes");
+        _timerUpgradeDOT.Wait();
+        Debug.Log(_timerUpgradeDOT.TimerCurrentTime);
+
+        if (!_timerUpgradeDOT.StartTimer)
+        {
+            _timerUpgradeDOT.StartCountdown();
+        }
+
+        if (_timerUpgradeDOT.ReachingTimerMaxValue)
+        {
+            if (_repeatAmount < _upgateIntAmountValue && _bulletsCurrentTarget != null)
+            {
+                DealDamage(_currentEnemyHealth, _upgateFloatDamageValue);
+                _repeatAmount++;
+                _timerUpgradeDOT.StopCountdown();
+                _timerUpgradeDOT.StartCountdown();
+                Debug.Log("da");
+            }
+            else
+            {
+                _timerUpgradeDOT.StopCountdown();
+                _currentEnemyHealth.ElectroEffectSprite.SetActive(false);
+                _repeatAmount = 0;
+            }
         }
     }
 
-    private void StartDOTTimerReload(int repeatAmount)
+    private void StartDOTTimerReload()
     {
          _timerUpgradeDOT.Wait();
+        Debug.Log(_timerUpgradeDOT.TimerCurrentTime);
 
         if (_bulletsCurrentTarget != null)
         {
+            Debug.Log(_bulletsCurrentTarget);
             if (!_timerUpgradeDOT.StartTimer)
             {
                 _timerUpgradeDOT.StartCountdown();
@@ -443,12 +555,60 @@ public class TowerBulletBehavior : MonoBehaviour
             if (_timerUpgradeDOT.ReachingTimerMaxValue == true)
             {
                 _timerUpgradeDOT.StopCountdown();
-                repeatAmount += 1;
-
+                _repeatAmount += 1;
+                Debug.Log("reload");
                 DealDamage(_currentEnemyHealth, _upgateFloatDamageValue);
-                ReloadDOTTimer(repeatAmount);
+                ReloadDOTTimer();
+            }
+            else
+            {
+                _currentEnemyHealth.ElectroEffectSprite.SetActive(true);
             }
         }
     }
+
+    private void UpdateDOT()
+    {
+        if (!_timerUpgradeDOT.StartTimer)
+            return;
+
+        _timerUpgradeDOT.Wait();
+        Debug.Log(_timerUpgradeDOT.TimerCurrentTime);
+
+        // Проверяем, достиг ли таймер максимума
+        if (_timerUpgradeDOT.ReachingTimerMaxValue)
+        {
+            if (_repeatAmount < _upgateIntAmountValue && _bulletsCurrentTarget != null)
+            {
+                // Наносим урон
+                DealDamage(_currentEnemyHealth, _upgateFloatDamageValue);
+                _repeatAmount++;
+
+                // Перезапускаем таймер для следующего тика
+                _timerUpgradeDOT.StopCountdown();
+                _timerUpgradeDOT.StartCountdown();
+                Debug.Log($"DOT tick {_repeatAmount}/{_upgateIntAmountValue}");
+            }
+            else
+            {
+                // Завершаем DOT
+                _timerUpgradeDOT.StopCountdown();
+                if (_currentEnemyHealth != null)
+                {
+                    _currentEnemyHealth.ElectroEffectSprite.SetActive(false);
+                }
+                _repeatAmount = 0;
+                Debug.Log("DOT finished");
+            }
+        }
+        else if (_timerUpgradeDOT.StartTimer)
+        {
+            // Таймер работает, но еще не достиг максимума - показываем эффект
+            if (_currentEnemyHealth != null)
+            {
+                _currentEnemyHealth.ElectroEffectSprite.SetActive(true);
+            }
+        }
+    }**/
     #endregion
 }

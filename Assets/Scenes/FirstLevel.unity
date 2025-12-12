@@ -1856,6 +1856,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1972262699 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8390352297533332971, guid: e4392b4abc61fc34cb087cf17757d8e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 5713418161597066734}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1306173667874115311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2630,6 +2642,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3765677676838224475, guid: e4392b4abc61fc34cb087cf17757d8e6,
+        type: 3}
+      propertyPath: _waveCountText
+      value: 
+      objectReference: {fileID: 1972262699}
     - target: {fileID: 4580255424766514095, guid: e4392b4abc61fc34cb087cf17757d8e6,
         type: 3}
       propertyPath: m_ChildControlWidth

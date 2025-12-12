@@ -13,9 +13,9 @@ public class EnemyParametrs : MonoBehaviour
     [Tooltip("ћаксимальна€ степень покраски противника")]
     [SerializeField] private float _maxPaintValue = 4;
 
+    [SerializeField] private Animator _enemyAnimator;
     [SerializeField] private GameObject _electroEffectSprite;
     [SerializeField] private GameObject _damageEffectSprite;
-    [SerializeField] private GameObject _slowEffectSprite;
 
     private static Action _onEnemyDied;
     private float _maxHealth;
@@ -29,6 +29,7 @@ public class EnemyParametrs : MonoBehaviour
     public bool HasDamageWeekness { get => _hasDamageWeekness; set => _hasDamageWeekness = value; }
     public EnemySO EnemySO { get => _enemySO; set => _enemySO = value; }
     public float MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+    public GameObject ElectroEffectSprite { get => _electroEffectSprite; set => _electroEffectSprite = value; }
 
     void Start()
     {
@@ -45,6 +46,26 @@ public class EnemyParametrs : MonoBehaviour
         UpdateHealth();
         UpdatePainting();
     }
+
+    private void OnEnable()
+    {
+        TowerBulletBehavior.OnDamageEnemy += PlayHitAnim;
+    }
+
+    private void OnDisable()
+    {
+        TowerBulletBehavior.OnDamageEnemy = PlayHitAnim;
+    }
+
+    private void PlayHitAnim(EnemyParametrs enemy)
+    {
+        if (this == enemy)
+        {
+            _enemyAnimator.Play("Enemy_hit", -1, 0f);
+        }
+    }
+
+
 
     private void UpdateHealth()
     {

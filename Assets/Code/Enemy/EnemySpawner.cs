@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private List<GameObject> _enemyList = new List<GameObject>();
     [Tooltip("Лист с точками маршрута противников")]
     [SerializeField] private Transform[] _enemyWayPointsList;
+    [SerializeField] private TMP_Text _waveCountText;
 
     [SerializeField] private LevelSO _levelConfig;
 
@@ -21,6 +23,8 @@ public class EnemySpawner : MonoBehaviour
     private Timer _spawnTimer;
     private bool _hasActiveWave;
     private bool _isAllWaveSpawned;
+    private int _waveCount;
+    private int _waveRemained;
     private int _currentEnemyListLength;
     private int _currentWaveIndex;
     private int _currentEnemyIndex;
@@ -39,6 +43,10 @@ public class EnemySpawner : MonoBehaviour
 
         _currentWaveIndex = 0;
         _currentWave = _levelConfig.WavePresetList[_currentWaveIndex];
+
+        _waveCount = _levelConfig.WavePresetList.Count;
+        _waveRemained = 0;
+        _waveCountText.text = $"Волны: {_waveRemained} / {_waveCount}";
     }
 
     private void FixedUpdate()
@@ -148,7 +156,9 @@ public class EnemySpawner : MonoBehaviour
             _isAllWaveSpawned = true;
         }
 
-            _hasActiveWave = false;
+        _waveRemained++;
+        _waveCountText.text = $"Волны: {_waveRemained} / {_waveCount}";
+        _hasActiveWave = false;
     }
 
     private void SearchMissingObject()

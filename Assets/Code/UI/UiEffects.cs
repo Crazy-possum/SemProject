@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UiEffects : MonoBehaviour
@@ -12,11 +10,18 @@ public class UiEffects : MonoBehaviour
     private void OnEnable()
     {
         EnemyMovement.OnEnemyEnter += EnemyEnterVFX;
+        ExperienceController.OnLevelUp += LevelUpVFX;
     }
 
     private void EnemyEnterVFX()
     {
-        //_enemyEnterVFX.SetActive(true);
-       // _enemyEnterAnimator.Play("VFX_TowerUpgrade", -1, 0f);
+        _enemyEnterVFX.SetActive(true);
+        _enemyEnterAnimator.Play("VFX_enemyEnter", -1, 0f);
+    }
+
+    private void LevelUpVFX()
+    {
+        _lvlUpVFX.SetActive(true);
+        _lvlUpAnimator.Play("VFX_lvlUp", -1, 0f);
     }
 }

@@ -43,10 +43,16 @@ public partial class CatapultTowerBehavior
                     _isPaintChanged = false;
                 }
 
-                if (_isPaintChanged)
+                bool needToUpdateTarget = _isPaintChanged || _currentTarget == null || !TargetsList.Contains(_currentTarget);
+
+                if (needToUpdateTarget)
                 {
                     _currentTarget = DetermineTarget(morePaint);
                 }
+            }
+            else
+            {
+                _currentTarget = null;
             }
         }
 
@@ -109,12 +115,23 @@ public partial class CatapultTowerBehavior
         {
             List<GameObject> forRandomList = new List<GameObject>();
 
+            if (_enemyParametrsList.Count != TargetsList.Count)
+            {
+                return null;
+            }
+
             for (int i = 0; i < TargetsList.Count; i++)
             {
-                if (_enemyParametrsList[i].CurrentPaintValue == morePaint)
+                if (_enemyParametrsList[i] != null &&
+                    Mathf.Approximately(_enemyParametrsList[i].CurrentPaintValue, morePaint))
                 {
                     forRandomList.Add(TargetsList[i]);
                 }
+            }
+
+            if (forRandomList.Count == 0)
+            {
+                return TargetsList.Count > 0 ? TargetsList[0] : null;
             }
 
             System.Random rnd = new System.Random();
