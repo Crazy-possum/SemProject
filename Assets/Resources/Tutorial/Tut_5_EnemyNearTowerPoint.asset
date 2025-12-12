@@ -17,3 +17,4 @@ MonoBehaviour:
   TutorDialogSOList:
   - {fileID: 11400000, guid: 2670dc0e4f291dd4ba74bd1046cd60d1, type: 2}
   - {fileID: 11400000, guid: 5264432301efc24428f4ce90de0d2148, type: 2}
+  - {fileID: 11400000, guid: 61fe1dd151677a147babdd2a81c9ccad, type: 2}

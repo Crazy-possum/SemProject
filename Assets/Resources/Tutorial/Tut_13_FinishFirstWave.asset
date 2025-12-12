@@ -16,3 +16,4 @@ MonoBehaviour:
   TutorEnum: 13
   TutorDialogSOList:
   - {fileID: 11400000, guid: 5b6d36243059dd4489e6f0fbc46199e4, type: 2}
+  - {fileID: 11400000, guid: 444704bd654f72442a6080dfb3112203, type: 2}

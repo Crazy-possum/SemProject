@@ -24,4 +24,4 @@ MonoBehaviour:
     \u043F\u0440\u0435\u0432\u0440\u0430\u0442\u0438\u043B\u0438 \u044D\u0442\u043E
     \u0432 \u0444\u0435\u0441\u0442\u0438\u0432\u0430\u043B\u044C"
   CharacterSprite: {fileID: 21300000, guid: a273e7ce874cdcc4c8f4c910921ec0ea, type: 3}
-  NPCSprite: {fileID: 21300000, guid: c4ae7a68fe9c0e74999aa906f9cd5629, type: 3}
+  NPCSprite: {fileID: 21300000, guid: 4bba2d5b4ac97d543a93494a5a181b5b, type: 3}
